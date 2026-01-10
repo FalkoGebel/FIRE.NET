@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FireCalculator_AnnualWithdrawalAmount_Set_ArgumentOutOfRangeException" xml:space="preserve">
+    <value>AnnualWithdrawalAmount must not less than zero.</value>
+  </data>
   <data name="FireCalculator_Duration_Set_ArgumentOutOfRangeException" xml:space="preserve">
     <value>DurationInMonths has to be positive.</value>
+  </data>
+  <data name="FireCalculator_EndMonth_Set_ArgumentOutOfRangeException" xml:space="preserve">
+    <value>EndMonth must not be earlier than StartMonth.</value>
+  </data>
+  <data name="FireCalculator_MonthlyWithdrawalAmount_Set_ArgumentOutOfRangeException" xml:space="preserve">
+    <value>MonthlyWithdrawalAmount must not less than zero.</value>
   </data>
 </root>
