@@ -61,11 +61,38 @@ namespace FireDotNetLibrary.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AnnualWithdrawalAmount must not less than zero. ähnelt.
+        /// </summary>
+        public static string FireCalculator_AnnualWithdrawalAmount_Set_ArgumentOutOfRangeException {
+            get {
+                return ResourceManager.GetString("FireCalculator_AnnualWithdrawalAmount_Set_ArgumentOutOfRangeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die DurationInMonths has to be positive. ähnelt.
         /// </summary>
         public static string FireCalculator_Duration_Set_ArgumentOutOfRangeException {
             get {
                 return ResourceManager.GetString("FireCalculator_Duration_Set_ArgumentOutOfRangeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die EndMonth must not be earlier than StartMonth. ähnelt.
+        /// </summary>
+        public static string FireCalculator_EndMonth_Set_ArgumentOutOfRangeException {
+            get {
+                return ResourceManager.GetString("FireCalculator_EndMonth_Set_ArgumentOutOfRangeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die MonthlyWithdrawalAmount must not less than zero. ähnelt.
+        /// </summary>
+        public static string FireCalculator_MonthlyWithdrawalAmount_Set_ArgumentOutOfRangeException {
+            get {
+                return ResourceManager.GetString("FireCalculator_MonthlyWithdrawalAmount_Set_ArgumentOutOfRangeException", resourceCulture);
             }
         }
     }

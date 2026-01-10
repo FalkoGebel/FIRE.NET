@@ -3,7 +3,10 @@
     public class FireCalculator
     {
         private DateOnly _startMonth;
+        private DateOnly _endMonth;
         private int _durationInMonths;
+        private decimal _monthlyWithdrawalAmount;
+        private decimal _annualWithdrawalAmount;
 
         public FireCalculator()
         {
@@ -20,11 +23,23 @@
                 _startMonth = new DateOnly(value.Year, value.Month, 1);
 
                 if (DurationInMonths > 0)
-                    EndMonth = _startMonth.AddMonths(DurationInMonths).AddDays(-1);
+                    _endMonth = _startMonth.AddMonths(DurationInMonths).AddDays(-1);
             }
         }
 
-        public DateOnly EndMonth { get; set; }
+        public DateOnly EndMonth
+        {
+            get => _endMonth;
+
+            set
+            {
+                _endMonth = (new DateOnly(value.Year, value.Month, 1)).AddMonths(1).AddDays(-1);
+                _durationInMonths = (_endMonth.Year - _startMonth.Year) * 12 + _endMonth.Month - _startMonth.Month + 1;
+
+                if (_durationInMonths <= 0)
+                    throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_EndMonth_Set_ArgumentOutOfRangeException);
+            }
+        }
 
         public int DurationInMonths
         {
@@ -41,7 +56,34 @@
         }
 
         public decimal StartAmount { get; set; }
-        public decimal MonthlyWithdrawalAmount { get; set; }
-        public decimal AnnualyWithdrawalAmount { get; set; }
+
+        public decimal MonthlyWithdrawalAmount
+        {
+            get => _monthlyWithdrawalAmount;
+
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_MonthlyWithdrawalAmount_Set_ArgumentOutOfRangeException);
+
+                _monthlyWithdrawalAmount = value;
+                _annualWithdrawalAmount = value * 12;
+            }
+        }
+
+        public decimal AnnualWithdrawalAmount
+        {
+            get => _annualWithdrawalAmount;
+
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_AnnualWithdrawalAmount_Set_ArgumentOutOfRangeException);
+
+                _annualWithdrawalAmount = value;
+                _monthlyWithdrawalAmount = value / 12;
+
+            }
+        }
     }
 }
