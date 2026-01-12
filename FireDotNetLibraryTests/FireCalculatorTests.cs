@@ -188,7 +188,7 @@ namespace FireDotNetLibraryTests
         }
 
         [TestMethod]
-        public void Calculate_With_Default_Values_Returns_Collection_With_Correct_Length_And_Sum()
+        public void Calculate_With_Default_Values_Returns_Collection_With_Correct_Length()
         {
             // Arrange
             FireCalculator sut = new();
@@ -197,7 +197,7 @@ namespace FireDotNetLibraryTests
             var result = sut.GetRemainingAmounts();
 
             // Assert
-            result.Length.Should().Be(sut.DurationInMonths);
+            result.Length.Should().Be(sut.DurationInMonths + 1);
         }
 
         [TestMethod]
@@ -221,7 +221,7 @@ namespace FireDotNetLibraryTests
             var result = sut.GetRemainingAmounts();
 
             // Assert
-            result.Length.Should().Be(sut.DurationInMonths);
+            result.Length.Should().Be(sut.DurationInMonths + 1);
             if (startAmountDecimal == 0m)
             {
                 result.Sum().Should().Be(0m);
