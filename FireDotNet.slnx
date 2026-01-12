@@ -4,4 +4,5 @@
   </Folder>
   <Project Path="FireDotNetLibrary/FireDotNetLibrary.csproj" Id="da54f431-2383-4e70-9886-3cd55df2e6eb" />
   <Project Path="FireDotNetLibraryTests/FireDotNetLibraryTests.csproj" Id="0309744d-da82-41ff-96c0-3feecd6fd12b" />
+  <Project Path="FireDotNetUi/FireDotNetUi.csproj" Id="fba4f33c-0cd4-4c8b-ab06-a1835a9882a6" />
 </Solution>

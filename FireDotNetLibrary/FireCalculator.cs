@@ -85,5 +85,23 @@
 
             }
         }
+
+        public decimal[] GetRemainingAmounts()
+        {
+            decimal[] output = new decimal[DurationInMonths + 1];
+
+            if (StartAmount > 0)
+            {
+                for (int i = 0; i < output.Length; i++)
+                {
+                    if (i == 0)
+                        output[i] = StartAmount;
+                    else
+                        output[i] = output[i - 1] - MonthlyWithdrawalAmount;
+                }
+            }
+
+            return output;
+        }
     }
 }
