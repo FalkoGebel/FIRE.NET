@@ -61,7 +61,7 @@ namespace FireDotNetLibrary.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die AnnualWithdrawalAmount must not less than zero. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die AnnualWithdrawalAmount must not be less than zero. ähnelt.
         /// </summary>
         public static string FireCalculator_AnnualWithdrawalAmount_Set_ArgumentOutOfRangeException {
             get {
@@ -88,7 +88,7 @@ namespace FireDotNetLibrary.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die MonthlyWithdrawalAmount must not less than zero. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die MonthlyWithdrawalAmount must not be less than zero. ähnelt.
         /// </summary>
         public static string FireCalculator_MonthlyWithdrawalAmount_Set_ArgumentOutOfRangeException {
             get {

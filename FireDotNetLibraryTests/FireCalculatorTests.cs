@@ -149,7 +149,7 @@ namespace FireDotNetLibraryTests
             Action act = () => sut.MonthlyWithdrawalAmount = (decimal)monthlyWidthdrawalAmount;
 
             // Assert
-            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("MonthlyWithdrawalAmount must not less than zero.");
+            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("MonthlyWithdrawalAmount must not be less than zero.");
         }
 
         [TestMethod]
@@ -184,7 +184,58 @@ namespace FireDotNetLibraryTests
             Action act = () => sut.AnnualWithdrawalAmount = (decimal)annualWidthdrawalAmount;
 
             // Assert
-            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("AnnualWithdrawalAmount must not less than zero.");
+            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("AnnualWithdrawalAmount must not be less than zero.");
+        }
+
+        [TestMethod]
+        public void Calculate_With_Default_Values_Returns_Collection_With_Correct_Length_And_Sum()
+        {
+            // Arrange
+            FireCalculator sut = new();
+
+            // Act
+            var result = sut.GetRemainingAmounts();
+
+            // Assert
+            result.Length.Should().Be(sut.DurationInMonths);
+        }
+
+        [TestMethod]
+        [DataRow(0, 1000)]
+        [DataRow(1000, 0)]
+        [DataRow(360, 1)]
+        [DataRow(1500, 20)]
+        public void Calculate_Returns_Correct_Collection(double startAmount, double monthlyWithdrawalAmount)
+        {
+            decimal startAmountDecimal = (decimal)startAmount;
+            decimal monthlyWithdrawalAmountDecimal = (decimal)monthlyWithdrawalAmount;
+
+            // Arrange
+            FireCalculator sut = new()
+            {
+                StartAmount = startAmountDecimal,
+                MonthlyWithdrawalAmount = monthlyWithdrawalAmountDecimal
+            };
+
+            // Act
+            var result = sut.GetRemainingAmounts();
+
+            // Assert
+            result.Length.Should().Be(sut.DurationInMonths);
+            if (startAmountDecimal == 0m)
+            {
+                result.Sum().Should().Be(0m);
+            }
+            else if (monthlyWithdrawalAmountDecimal == 0m)
+            {
+                result.All(ra => ra == startAmountDecimal).Should().BeTrue();
+            }
+            else
+            {
+                decimal expectedFinalAmount = startAmountDecimal - (monthlyWithdrawalAmountDecimal * sut.DurationInMonths);
+                decimal actualFinalAmount = result[^1];
+                actualFinalAmount.Should().Be(expectedFinalAmount);
+            }
         }
     }
 }
