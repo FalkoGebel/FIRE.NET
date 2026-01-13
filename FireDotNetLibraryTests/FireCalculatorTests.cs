@@ -224,16 +224,20 @@ namespace FireDotNetLibraryTests
             result.Length.Should().Be(sut.DurationInMonths + 1);
             if (startAmountDecimal == 0m)
             {
-                result.Sum().Should().Be(0m);
+                result.Sum(m => m.Item2).Should().Be(0m);
             }
             else if (monthlyWithdrawalAmountDecimal == 0m)
             {
-                result.All(ra => ra == startAmountDecimal).Should().BeTrue();
+                result.All(m => m.Item2 == startAmountDecimal).Should().BeTrue();
             }
             else
             {
                 decimal expectedFinalAmount = startAmountDecimal - (monthlyWithdrawalAmountDecimal * sut.DurationInMonths);
-                decimal actualFinalAmount = result[^1];
+                DateOnly expectedFirstMonth = result[0].Item1;
+                DateOnly expectedLastMonth = result[^1].Item1;
+                decimal actualFinalAmount = result[^1].Item2;
+                expectedFirstMonth.Should().Be(sut.StartMonth);
+                expectedLastMonth.Should().Be(sut.EndMonth);
                 actualFinalAmount.Should().Be(expectedFinalAmount);
             }
         }
