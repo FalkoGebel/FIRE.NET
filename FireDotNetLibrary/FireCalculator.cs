@@ -86,18 +86,26 @@
             }
         }
 
-        public decimal[] GetRemainingAmounts()
+        public (DateOnly, decimal)[] GetRemainingAmounts()
         {
-            decimal[] output = new decimal[DurationInMonths + 1];
+            var output = new (DateOnly, decimal)[DurationInMonths + 1];
+            DateOnly currentMonth = StartMonth;
 
             if (StartAmount > 0)
             {
-                for (int i = 0; i < output.Length; i++)
+
+                for (int i = 0; i < DurationInMonths + 1; i++)
                 {
                     if (i == 0)
-                        output[i] = StartAmount;
+                    {
+                        output[i] = (currentMonth, StartAmount);
+                        currentMonth = currentMonth.AddMonths(1).AddDays(-1);
+                    }
                     else
-                        output[i] = output[i - 1] - MonthlyWithdrawalAmount;
+                    {
+                        output[i] = (currentMonth, output[i - 1].Item2 - MonthlyWithdrawalAmount);
+                        currentMonth = currentMonth.AddDays(1).AddMonths(1).AddDays(-1);
+                    }
                 }
             }
 
