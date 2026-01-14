@@ -6,12 +6,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FireDotNetUi"
         xmlns:vm="clr-namespace:FireDotNetUi.ViewModels"
+        xmlns:r="clr-namespace:FireDotNetUi.Properties"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
     <Grid>
-        <oxy:PlotView Model="{Binding PlotModelRemainingAmounts}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Label Content="{x:Static r:Resources.MainView_StartAmount_Label}" VerticalContentAlignment="Center" Margin="5,0"/>
+            <TextBox Text="{Binding StartingAmount}" MinWidth="100" VerticalContentAlignment="Center"/>
+        </StackPanel>
+        <oxy:PlotView Grid.Row="1" Model="{Binding PlotModelRemainingAmounts}"/>
     </Grid>
 </Window>

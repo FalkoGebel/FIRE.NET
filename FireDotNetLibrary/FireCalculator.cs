@@ -2,39 +2,39 @@
 {
     public class FireCalculator
     {
-        private DateOnly _startMonth;
-        private DateOnly _endMonth;
+        private DateOnly _startingMonth;
+        private DateOnly _endingMonth;
         private int _durationInMonths;
         private decimal _monthlyWithdrawalAmount;
         private decimal _annualWithdrawalAmount;
 
         public FireCalculator()
         {
-            StartMonth = DateOnly.FromDateTime(DateTime.Now);
+            StartingMonth = DateOnly.FromDateTime(DateTime.Now);
             DurationInMonths = 12 * 30; // Default to 30 years
         }
 
-        public DateOnly StartMonth
+        public DateOnly StartingMonth
         {
-            get => _startMonth;
+            get => _startingMonth;
 
             set
             {
-                _startMonth = new DateOnly(value.Year, value.Month, 1);
+                _startingMonth = new DateOnly(value.Year, value.Month, 1);
 
                 if (DurationInMonths > 0)
-                    _endMonth = _startMonth.AddMonths(DurationInMonths).AddDays(-1);
+                    _endingMonth = _startingMonth.AddMonths(DurationInMonths).AddDays(-1);
             }
         }
 
-        public DateOnly EndMonth
+        public DateOnly EndingMonth
         {
-            get => _endMonth;
+            get => _endingMonth;
 
             set
             {
-                _endMonth = (new DateOnly(value.Year, value.Month, 1)).AddMonths(1).AddDays(-1);
-                _durationInMonths = (_endMonth.Year - _startMonth.Year) * 12 + _endMonth.Month - _startMonth.Month + 1;
+                _endingMonth = (new DateOnly(value.Year, value.Month, 1)).AddMonths(1).AddDays(-1);
+                _durationInMonths = (_endingMonth.Year - _startingMonth.Year) * 12 + _endingMonth.Month - _startingMonth.Month + 1;
 
                 if (_durationInMonths <= 0)
                     throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_EndMonth_Set_ArgumentOutOfRangeException);
@@ -51,11 +51,11 @@
                     throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_Duration_Set_ArgumentOutOfRangeException);
 
                 _durationInMonths = value;
-                EndMonth = _startMonth.AddMonths(_durationInMonths).AddDays(-1);
+                EndingMonth = _startingMonth.AddMonths(_durationInMonths).AddDays(-1);
             }
         }
 
-        public decimal StartAmount { get; set; }
+        public decimal StartingAmount { get; set; }
 
         public decimal MonthlyWithdrawalAmount
         {
@@ -89,16 +89,16 @@
         public (DateOnly, decimal)[] GetRemainingAmounts()
         {
             var output = new (DateOnly, decimal)[DurationInMonths + 1];
-            DateOnly currentMonth = StartMonth;
+            DateOnly currentMonth = StartingMonth;
 
-            if (StartAmount > 0)
+            if (StartingAmount > 0)
             {
 
                 for (int i = 0; i < DurationInMonths + 1; i++)
                 {
                     if (i == 0)
                     {
-                        output[i] = (currentMonth, StartAmount);
+                        output[i] = (currentMonth, StartingAmount);
                         currentMonth = currentMonth.AddMonths(1).AddDays(-1);
                     }
                     else
