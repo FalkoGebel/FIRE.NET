@@ -1,22 +1,42 @@
-﻿using FireDotNetLibrary;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FireDotNetLibrary;
 using OxyPlot;
 using OxyPlot.Axes;
 
 namespace FireDotNetUi.ViewModels
 {
-    public class MainViewModel
+    public partial class MainViewModel : ObservableObject
     {
-        public PlotModel PlotModelRemainingAmounts { get; private set; }
+        private FireCalculator _fireCalculator;
 
         public MainViewModel()
         {
-            FireCalculator fireCalculator = new()
+            _fireCalculator = new()
             {
-                StartAmount = 1000000m,
+                StartingAmount = StartingAmount,
                 MonthlyWithdrawalAmount = 3000m
             };
+            UpdatePlotModel();
+        }
 
-            var remainingAmountMonths = fireCalculator.GetRemainingAmounts();
+        [ObservableProperty]
+        private PlotModel? _plotModelRemainingAmounts;
+
+        [ObservableProperty]
+        private int _startingAmount = 100000;
+
+        partial void OnStartingAmountChanged(int oldValue, int newValue)
+        {
+            if (oldValue != newValue)
+            {
+                _fireCalculator.StartingAmount = newValue;
+                UpdatePlotModel();
+            }
+        }
+
+        private void UpdatePlotModel()
+        {
+            var remainingAmountMonths = _fireCalculator.GetRemainingAmounts();
 
             PlotModelRemainingAmounts = new PlotModel { Title = "Remaining Amounts" };
             var lineSeries = new OxyPlot.Series.LineSeries
@@ -41,8 +61,8 @@ namespace FireDotNetUi.ViewModels
                 MinorGridlineStyle = LineStyle.Dot,
                 IsZoomEnabled = false,
                 IsPanEnabled = false,
-                Minimum = fireCalculator.StartMonth.ToDateTime(new TimeOnly()).ToOADate(),
-                Maximum = fireCalculator.EndMonth.ToDateTime(new TimeOnly()).ToOADate()
+                Minimum = _fireCalculator.StartingMonth.ToDateTime(new TimeOnly()).ToOADate(),
+                Maximum = _fireCalculator.EndingMonth.ToDateTime(new TimeOnly()).ToOADate()
             };
             PlotModelRemainingAmounts.Axes.Add(dateAxis);
 
@@ -57,6 +77,7 @@ namespace FireDotNetUi.ViewModels
                 IsPanEnabled = false
             };
             PlotModelRemainingAmounts.Axes.Add(valueAxis);
+            PlotModelRemainingAmounts.InvalidatePlot(true);
         }
     }
 }
