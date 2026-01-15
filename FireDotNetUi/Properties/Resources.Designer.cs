@@ -61,6 +61,24 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Annual Withdrawal Amount: ähnelt.
+        /// </summary>
+        public static string MainView_AnnualWithdrawalAmount_Label {
+            get {
+                return ResourceManager.GetString("MainView_AnnualWithdrawalAmount_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Monthly Withdrawal Amount: ähnelt.
+        /// </summary>
+        public static string MainView_MonthlyWithdrawalAmount_Label {
+            get {
+                return ResourceManager.GetString("MainView_MonthlyWithdrawalAmount_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Starting Amount: ähnelt.
         /// </summary>
         public static string MainView_StartAmount_Label {
