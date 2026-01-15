@@ -8,28 +8,71 @@ namespace FireDotNetUi.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         private FireCalculator _fireCalculator;
+        private decimal _startingAmount = 100000;
 
         public MainViewModel()
         {
             _fireCalculator = new()
             {
-                StartingAmount = StartingAmount,
-                MonthlyWithdrawalAmount = 3000m
+                StartingAmount = _startingAmount,
+                MonthlyWithdrawalAmount = MonthlyWithdrawalAmount
             };
+            AnnualWithdrawalAmount = _fireCalculator.AnnualWithdrawalAmount;
             UpdatePlotModel();
+
+            _startingAmountInput = _startingAmount.ToString("0.00");
         }
 
         [ObservableProperty]
         private PlotModel? _plotModelRemainingAmounts;
 
         [ObservableProperty]
-        private int _startingAmount = 100000;
+        private string _startingAmountInput = string.Empty;
 
-        partial void OnStartingAmountChanged(int oldValue, int newValue)
+        [ObservableProperty]
+        private decimal _monthlyWithdrawalAmount = 500;
+
+        [ObservableProperty]
+        private decimal _annualWithdrawalAmount;
+
+        partial void OnStartingAmountInputChanging(string? oldValue, string newValue)
+        {
+            if (oldValue == null)
+                throw new ArgumentNullException(nameof(oldValue));
+
+            if (oldValue != newValue)
+            {
+                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue))
+                {
+                    _startingAmount = parsedValue;
+                    _startingAmountInput = _startingAmount.ToString("0.00");
+                    _fireCalculator.StartingAmount = _startingAmount;
+                    UpdatePlotModel();
+                }
+                else
+                {
+                    StartingAmountInput = oldValue;
+                }
+            }
+        }
+
+        partial void OnMonthlyWithdrawalAmountChanged(decimal oldValue, decimal newValue)
         {
             if (oldValue != newValue)
             {
-                _fireCalculator.StartingAmount = newValue;
+                _fireCalculator.MonthlyWithdrawalAmount = newValue;
+                AnnualWithdrawalAmount = _fireCalculator.AnnualWithdrawalAmount;
+                UpdatePlotModel();
+            }
+        }
+
+        partial void OnAnnualWithdrawalAmountChanged(decimal oldValue, decimal newValue)
+        {
+            if (oldValue != newValue)
+            {
+                _fireCalculator.AnnualWithdrawalAmount = newValue;
+                MonthlyWithdrawalAmount = _fireCalculator.MonthlyWithdrawalAmount;
                 UpdatePlotModel();
             }
         }
@@ -44,7 +87,7 @@ namespace FireDotNetUi.ViewModels
                 StrokeThickness = 2,
                 Color = OxyColors.SkyBlue,
                 ItemsSource = remainingAmountMonths.Select(m => new DataPoint(m.Item1.ToDateTime(new TimeOnly()).ToOADate(),
-                                                                              (double)Math.Round(m.Item2, 2)))
+                                                                              m.Item2 > 0 ? (double)Math.Round(m.Item2, 2) : 0))
                                                    .ToList(),
                 TrackerFormatString = "Month: {2:MMM yyyy}\nRemaining Amount: {4:C2}"
             };
@@ -74,7 +117,8 @@ namespace FireDotNetUi.ViewModels
                 MinorGridlineStyle = LineStyle.Dot,
                 StringFormat = "C0",
                 IsZoomEnabled = false,
-                IsPanEnabled = false
+                IsPanEnabled = false,
+                Minimum = 0
             };
             PlotModelRemainingAmounts.Axes.Add(valueAxis);
             PlotModelRemainingAmounts.InvalidatePlot(true);

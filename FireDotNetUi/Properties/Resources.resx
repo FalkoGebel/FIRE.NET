@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MainView_AnnualWithdrawalAmount_Label" xml:space="preserve">
+    <value>Annual Withdrawal Amount:</value>
+  </data>
+  <data name="MainView_MonthlyWithdrawalAmount_Label" xml:space="preserve">
+    <value>Monthly Withdrawal Amount:</value>
+  </data>
   <data name="MainView_StartAmount_Label" xml:space="preserve">
     <value>Starting Amount:</value>
   </data>

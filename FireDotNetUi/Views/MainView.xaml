@@ -19,7 +19,11 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Label Content="{x:Static r:Resources.MainView_StartAmount_Label}" VerticalContentAlignment="Center" Margin="5,0"/>
-            <TextBox Text="{Binding StartingAmount}" MinWidth="100" VerticalContentAlignment="Center"/>
+            <TextBox Text="{Binding StartingAmountInput, UpdateSourceTrigger=PropertyChanged}" MinWidth="100" VerticalContentAlignment="Center"/>
+            <Label Content="{x:Static r:Resources.MainView_MonthlyWithdrawalAmount_Label}" VerticalContentAlignment="Center" Margin="5,0"/>
+            <TextBox Text="{Binding MonthlyWithdrawalAmount}" MinWidth="100" VerticalContentAlignment="Center"/>
+            <Label Content="{x:Static r:Resources.MainView_AnnualWithdrawalAmount_Label}" VerticalContentAlignment="Center" Margin="5,0"/>
+            <TextBox Text="{Binding AnnualWithdrawalAmount}" MinWidth="100" VerticalContentAlignment="Center"/>
         </StackPanel>
         <oxy:PlotView Grid.Row="1" Model="{Binding PlotModelRemainingAmounts}"/>
     </Grid>
