@@ -123,8 +123,8 @@
   <data name="FireCalculator_Duration_Set_ArgumentOutOfRangeException" xml:space="preserve">
     <value>DurationInMonths has to be positive.</value>
   </data>
-  <data name="FireCalculator_EndMonth_Set_ArgumentOutOfRangeException" xml:space="preserve">
-    <value>EndMonth must not be earlier than StartMonth.</value>
+  <data name="FireCalculator_EndingMonth_Set_ArgumentOutOfRangeException" xml:space="preserve">
+    <value>EndingMonth must not be earlier than StartingMonth.</value>
   </data>
   <data name="FireCalculator_MonthlyWithdrawalAmount_Set_ArgumentOutOfRangeException" xml:space="preserve">
     <value>MonthlyWithdrawalAmount must not be less than zero.</value>

@@ -2,12 +2,13 @@
 using FireDotNetLibrary;
 using OxyPlot;
 using OxyPlot.Axes;
+using System.Windows;
 
 namespace FireDotNetUi.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        private FireCalculator _fireCalculator;
+        private readonly FireCalculator _fireCalculator;
         private decimal _startingAmount = 100000;
 
         public MainViewModel()
@@ -21,6 +22,8 @@ namespace FireDotNetUi.ViewModels
             UpdatePlotModel();
 
             _startingAmountInput = _startingAmount.ToString("0.00");
+            _startingMonth = _fireCalculator.StartingMonth.ToDateTime(new TimeOnly());
+            _endingMonth = _fireCalculator.EndingMonth.ToDateTime(new TimeOnly());
         }
 
         [ObservableProperty]
@@ -34,6 +37,14 @@ namespace FireDotNetUi.ViewModels
 
         [ObservableProperty]
         private decimal _annualWithdrawalAmount;
+
+        // TODO - Change to Year and Month
+        [ObservableProperty]
+        private DateTime _startingMonth;
+
+        // TODO - Change to Year and Month
+        [ObservableProperty]
+        private DateTime _endingMonth;
 
         partial void OnStartingAmountInputChanging(string? oldValue, string newValue)
         {
@@ -74,6 +85,35 @@ namespace FireDotNetUi.ViewModels
                 _fireCalculator.AnnualWithdrawalAmount = newValue;
                 MonthlyWithdrawalAmount = _fireCalculator.MonthlyWithdrawalAmount;
                 UpdatePlotModel();
+            }
+        }
+
+        partial void OnStartingMonthChanged(DateTime oldValue, DateTime newValue)
+        {
+            if (oldValue != newValue)
+            {
+                _fireCalculator.StartingMonth = DateOnly.FromDateTime(newValue);
+                _startingMonth = _fireCalculator.StartingMonth.ToDateTime(new TimeOnly());
+                _endingMonth = _fireCalculator.EndingMonth.ToDateTime(new TimeOnly());
+                UpdatePlotModel();
+            }
+        }
+
+        partial void OnEndingMonthChanged(DateTime oldValue, DateTime newValue)
+        {
+            if (oldValue != newValue)
+            {
+                try
+                {
+                    _fireCalculator.EndingMonth = DateOnly.FromDateTime(newValue);
+                    _endingMonth = _fireCalculator.EndingMonth.ToDateTime(new TimeOnly());
+                    UpdatePlotModel();
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    _endingMonth = oldValue;
+                    MessageBox.Show("Ending Month must not be earlier than Starting Month", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
