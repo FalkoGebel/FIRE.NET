@@ -79,11 +79,11 @@ namespace FireDotNetLibrary.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die EndMonth must not be earlier than StartMonth. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die EndingMonth must not be earlier than StartingMonth. ähnelt.
         /// </summary>
-        public static string FireCalculator_EndMonth_Set_ArgumentOutOfRangeException {
+        public static string FireCalculator_EndingMonth_Set_ArgumentOutOfRangeException {
             get {
-                return ResourceManager.GetString("FireCalculator_EndMonth_Set_ArgumentOutOfRangeException", resourceCulture);
+                return ResourceManager.GetString("FireCalculator_EndingMonth_Set_ArgumentOutOfRangeException", resourceCulture);
             }
         }
         

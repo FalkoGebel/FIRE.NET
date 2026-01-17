@@ -33,11 +33,18 @@
 
             set
             {
-                _endingMonth = (new DateOnly(value.Year, value.Month, 1)).AddMonths(1).AddDays(-1);
-                _durationInMonths = (_endingMonth.Year - _startingMonth.Year) * 12 + _endingMonth.Month - _startingMonth.Month + 1;
+                DateOnly oldEndingMonth = _endingMonth;
 
-                if (_durationInMonths <= 0)
-                    throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_EndMonth_Set_ArgumentOutOfRangeException);
+                _endingMonth = (new DateOnly(value.Year, value.Month, 1)).AddMonths(1).AddDays(-1);
+                int newDurationInMonths = (_endingMonth.Year - _startingMonth.Year) * 12 + _endingMonth.Month - _startingMonth.Month + 1;
+
+                if (newDurationInMonths <= 0)
+                {
+                    _endingMonth = oldEndingMonth;
+                    throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_EndingMonth_Set_ArgumentOutOfRangeException);
+                }
+
+                _durationInMonths = newDurationInMonths;
             }
         }
 

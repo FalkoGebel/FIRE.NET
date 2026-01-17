@@ -8,12 +8,14 @@
         xmlns:vm="clr-namespace:FireDotNetUi.ViewModels"
         xmlns:r="clr-namespace:FireDotNetUi.Properties"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        x:Name="MainViewWindow">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -25,6 +27,10 @@
             <Label Content="{x:Static r:Resources.MainView_AnnualWithdrawalAmount_Label}" VerticalContentAlignment="Center" Margin="5,0"/>
             <TextBox Text="{Binding AnnualWithdrawalAmount}" MinWidth="100" VerticalContentAlignment="Center"/>
         </StackPanel>
-        <oxy:PlotView Grid.Row="1" Model="{Binding PlotModelRemainingAmounts}"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <DatePicker SelectedDate="{Binding StartingMonth}" Margin="5,0" VerticalContentAlignment="Center"/>
+            <DatePicker SelectedDate="{Binding EndingMonth}" Margin="5,0" VerticalContentAlignment="Center"/>
+        </StackPanel>
+        <oxy:PlotView Grid.Row="2" Model="{Binding PlotModelRemainingAmounts}"/>
     </Grid>
 </Window>

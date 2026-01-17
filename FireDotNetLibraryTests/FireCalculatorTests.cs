@@ -114,7 +114,7 @@ namespace FireDotNetLibraryTests
             Action act = () => sut.EndingMonth = newEndingMonth;
 
             // Assert
-            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("EndMonth must not be earlier than StartMonth.");
+            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("EndingMonth must not be earlier than StartingMonth.");
         }
 
         [TestMethod]
