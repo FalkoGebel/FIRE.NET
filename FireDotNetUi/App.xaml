@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:FireDotNetUi"
              StartupUri="Views/MainView.xaml">
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>
