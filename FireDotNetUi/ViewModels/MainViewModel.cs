@@ -8,8 +8,6 @@ namespace FireDotNetUi.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        // TODO - Too wide calendar popup in MonthPicker control -> style needed
-
         private readonly FireCalculator _fireCalculator;
         private decimal _startingAmount = 100000;
 
@@ -35,12 +33,13 @@ namespace FireDotNetUi.ViewModels
         private string _startingAmountInput = string.Empty;
 
         [ObservableProperty]
-        private decimal _monthlyWithdrawalAmount = 500;
+        private decimal _monthlyWithdrawalAmount = 500;     // TODO - refarctor using string analog to StartingAmountInput
 
         [ObservableProperty]
-        private decimal _annualWithdrawalAmount;
+        private decimal _annualWithdrawalAmount;          // TODO - refarctor using string analog to StartingAmountInput
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(EndingMonth))]
         private DateTime _startingMonth;
 
         [ObservableProperty]
@@ -94,8 +93,6 @@ namespace FireDotNetUi.ViewModels
             {
                 _fireCalculator.StartingMonth = DateOnly.FromDateTime(newValue);
                 _startingMonth = _fireCalculator.StartingMonth.ToDateTime(new TimeOnly());
-
-                // TODO - Update EndingMonth on MonthPicker does not work
                 _endingMonth = _fireCalculator.EndingMonth.ToDateTime(new TimeOnly());
 
                 UpdatePlotModel();
