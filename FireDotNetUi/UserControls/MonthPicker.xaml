@@ -15,7 +15,7 @@
             <Button Content="≡" Click="Button_Click" Padding="5"/>
         </StackPanel>
         <Popup x:Name="CalendarPopup" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=MonthPickerMonth}" StaysOpen="False">
-            <Calendar x:Name="MonthPickerCalendar" DisplayMode="Year" DisplayModeChanged="Calendar_DisplayModeChanged" />
+            <Calendar x:Name="MonthPickerCalendar" DisplayMode="Month" DisplayModeChanged="MonthPickerCalendar_DisplayModeChanged" Loaded="MonthPickerCalendar_Loaded" />
         </Popup>
     </Grid>
 </UserControl>

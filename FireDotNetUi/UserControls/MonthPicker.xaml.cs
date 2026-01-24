@@ -37,7 +37,7 @@ namespace FireDotNetUi.UserControls
                                                                                                     typeof(int),
                                                                                                     typeof(MonthPicker));
 
-        private void Calendar_DisplayModeChanged(object sender, CalendarModeChangedEventArgs e)
+        private void MonthPickerCalendar_DisplayModeChanged(object sender, CalendarModeChangedEventArgs e)
         {
             if (e.OldMode == CalendarMode.Year && e.NewMode != CalendarMode.Decade)
             {
@@ -48,9 +48,17 @@ namespace FireDotNetUi.UserControls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MonthPickerCalendar.DisplayMode = CalendarMode.Year;
+            //MonthPickerCalendar.DisplayMode = CalendarMode.Year;
             MonthPickerCalendar.DisplayDate = SelectedDate;
             CalendarPopup.IsOpen = true;
+        }
+
+        private void MonthPickerCalendar_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (MonthPickerCalendar.ActualWidth == 0)
+                return;
+
+            MonthPickerCalendar.DisplayMode = CalendarMode.Year;
         }
     }
 }
