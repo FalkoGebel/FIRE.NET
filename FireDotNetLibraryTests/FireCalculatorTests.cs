@@ -10,8 +10,8 @@ namespace FireDotNetLibraryTests
         public void Initialize_And_Correct_Default_Values()
         {
             // Arrange
-            var today = DateOnly.FromDateTime(DateTime.Now);
-            var expectedStartingMonth = new DateOnly(today.Year, today.Month, 1);
+            var today = DateTime.Now;
+            var expectedStartingMonth = new DateTime(today.Year, today.Month, 1);
             var expectedDurationInMonths = 12 * 30; // 30 years
             var expectedEndingMonth = expectedStartingMonth.AddMonths(expectedDurationInMonths).AddDays(-1);
 
@@ -36,13 +36,13 @@ namespace FireDotNetLibraryTests
         {
             // Arrange
             FireCalculator sut = new();
-            var newStartingMonth = new DateOnly(startingYear, startingMonth, 15);
+            var newStartingMonth = new DateTime(startingYear, startingMonth, 15);
 
             // Act
             sut.StartingMonth = newStartingMonth;
 
             // Assert
-            sut.StartingMonth.Should().Be(new DateOnly(startingYear, startingMonth, 1));
+            sut.StartingMonth.Should().Be(new DateTime(startingYear, startingMonth, 1));
             sut.EndingMonth.Should().Be(sut.StartingMonth.AddMonths(12 * 30).AddDays(-1));
         }
 
@@ -233,8 +233,8 @@ namespace FireDotNetLibraryTests
             else
             {
                 decimal expectedFinalAmount = startingAmountDecimal - (monthlyWithdrawalAmountDecimal * sut.DurationInMonths);
-                DateOnly expectedFirstMonth = result[0].Item1;
-                DateOnly expectedLastMonth = result[^1].Item1;
+                DateTime expectedFirstMonth = result[0].Item1;
+                DateTime expectedLastMonth = result[^1].Item1;
                 decimal actualFinalAmount = result[^1].Item2;
                 expectedFirstMonth.Should().Be(sut.StartingMonth);
                 expectedLastMonth.Should().Be(sut.EndingMonth);

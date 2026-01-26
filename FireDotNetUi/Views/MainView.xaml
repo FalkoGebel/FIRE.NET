@@ -22,11 +22,11 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Label Content="{x:Static r:Resources.MainView_StartAmount_Label}" VerticalContentAlignment="Center" Margin="5,0"/>
-            <TextBox Text="{Binding StartingAmountInput, UpdateSourceTrigger=PropertyChanged}" MinWidth="100" VerticalContentAlignment="Center"/>
+            <TextBox Text="{Binding StartingAmountInput, UpdateSourceTrigger=LostFocus}" MinWidth="100" VerticalContentAlignment="Center"/>
             <Label Content="{x:Static r:Resources.MainView_MonthlyWithdrawalAmount_Label}" VerticalContentAlignment="Center" Margin="5,0"/>
-            <TextBox Text="{Binding MonthlyWithdrawalAmount}" MinWidth="100" VerticalContentAlignment="Center"/>
+            <TextBox Text="{Binding MonthlyWithdrawalAmountInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" MinWidth="100" VerticalContentAlignment="Center"/>
             <Label Content="{x:Static r:Resources.MainView_AnnualWithdrawalAmount_Label}" VerticalContentAlignment="Center" Margin="5,0"/>
-            <TextBox Text="{Binding AnnualWithdrawalAmount}" MinWidth="100" VerticalContentAlignment="Center"/>
+            <TextBox Text="{Binding AnnualWithdrawalAmountInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" MinWidth="100" VerticalContentAlignment="Center"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <uc:MonthPicker SelectedDate="{Binding StartingMonth, Mode=TwoWay}" Margin="5,0" VerticalContentAlignment="Center" TextBoxWidth="100"/>

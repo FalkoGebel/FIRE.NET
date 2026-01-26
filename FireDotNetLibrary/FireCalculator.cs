@@ -2,40 +2,40 @@
 {
     public class FireCalculator
     {
-        private DateOnly _startingMonth;
-        private DateOnly _endingMonth;
+        private DateTime _startingMonth;
+        private DateTime _endingMonth;
         private int _durationInMonths;
         private decimal _monthlyWithdrawalAmount;
         private decimal _annualWithdrawalAmount;
 
         public FireCalculator()
         {
-            StartingMonth = DateOnly.FromDateTime(DateTime.Now);
+            StartingMonth = DateTime.Now;
             DurationInMonths = 12 * 30; // Default to 30 years
         }
 
-        public DateOnly StartingMonth
+        public DateTime StartingMonth
         {
             get => _startingMonth;
 
             set
             {
-                _startingMonth = new DateOnly(value.Year, value.Month, 1);
+                _startingMonth = new DateTime(value.Year, value.Month, 1);
 
                 if (DurationInMonths > 0)
                     _endingMonth = _startingMonth.AddMonths(DurationInMonths).AddDays(-1);
             }
         }
 
-        public DateOnly EndingMonth
+        public DateTime EndingMonth
         {
             get => _endingMonth;
 
             set
             {
-                DateOnly oldEndingMonth = _endingMonth;
+                DateTime oldEndingMonth = _endingMonth;
 
-                _endingMonth = (new DateOnly(value.Year, value.Month, 1)).AddMonths(1).AddDays(-1);
+                _endingMonth = (new DateTime(value.Year, value.Month, 1)).AddMonths(1).AddDays(-1);
                 int newDurationInMonths = (_endingMonth.Year - _startingMonth.Year) * 12 + _endingMonth.Month - _startingMonth.Month + 1;
 
                 if (newDurationInMonths <= 0)
@@ -93,10 +93,10 @@
             }
         }
 
-        public (DateOnly, decimal)[] GetRemainingAmounts()
+        public (DateTime, decimal)[] GetRemainingAmounts()
         {
-            var output = new (DateOnly, decimal)[DurationInMonths + 1];
-            DateOnly currentMonth = StartingMonth;
+            var output = new (DateTime, decimal)[DurationInMonths + 1];
+            DateTime currentMonth = StartingMonth;
 
             if (StartingAmount > 0)
             {
