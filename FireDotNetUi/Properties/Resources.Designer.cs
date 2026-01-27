@@ -70,6 +70,15 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Months: ähnelt.
+        /// </summary>
+        public static string MainView_DurationInMonths_Label {
+            get {
+                return ResourceManager.GetString("MainView_DurationInMonths_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Monthly Withdrawal Amount: ähnelt.
         /// </summary>
         public static string MainView_MonthlyWithdrawalAmount_Label {
@@ -84,6 +93,15 @@ namespace FireDotNetUi.Properties {
         public static string MainView_StartAmount_Label {
             get {
                 return ResourceManager.GetString("MainView_StartAmount_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die FIRE.NET ähnelt.
+        /// </summary>
+        public static string MainView_Title {
+            get {
+                return ResourceManager.GetString("MainView_Title", resourceCulture);
             }
         }
     }

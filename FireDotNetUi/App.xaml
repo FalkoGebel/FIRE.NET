@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:FireDotNetUi"
              StartupUri="Views/MainView.xaml">
     <Application.Resources>
-
+        <Style TargetType="{x:Type Window}" x:Key="WindowDefaultStyle">
+            <Setter Property="FontFamily" Value="Verdana" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
     </Application.Resources>
 </Application>
