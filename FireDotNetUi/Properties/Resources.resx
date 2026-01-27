@@ -120,10 +120,16 @@
   <data name="MainView_AnnualWithdrawalAmount_Label" xml:space="preserve">
     <value>Annual Withdrawal Amount:</value>
   </data>
+  <data name="MainView_DurationInMonths_Label" xml:space="preserve">
+    <value>Months:</value>
+  </data>
   <data name="MainView_MonthlyWithdrawalAmount_Label" xml:space="preserve">
     <value>Monthly Withdrawal Amount:</value>
   </data>
   <data name="MainView_StartAmount_Label" xml:space="preserve">
     <value>Starting Amount:</value>
+  </data>
+  <data name="MainView_Title" xml:space="preserve">
+    <value>FIRE.NET</value>
   </data>
 </root>

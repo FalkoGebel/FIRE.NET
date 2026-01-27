@@ -9,32 +9,29 @@ namespace FireDotNetUi.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         private readonly FireCalculator _fireCalculator;
-        private decimal _startingAmount = 100000;
-        private decimal _monthlyWithdrawalAmount = 500;
-        private decimal _annualWithdrawalAmount;
 
         public MainViewModel()
         {
             _fireCalculator = new()
             {
-                StartingAmount = _startingAmount,
-                MonthlyWithdrawalAmount = _monthlyWithdrawalAmount
+                StartingAmount = 100000,
+                MonthlyWithdrawalAmount = 500
             };
-            _annualWithdrawalAmount = _fireCalculator.AnnualWithdrawalAmount;
             UpdatePlotModel();
 
-            _startingAmountInput = _startingAmount.ToString("0.00");
-            _monthlyWithdrawalAmountInput = _monthlyWithdrawalAmount.ToString("0.00");
-            _annualWithdrawalAmountInput = _annualWithdrawalAmount.ToString("0.00");
+            _startingAmountInput = _fireCalculator.StartingAmount.ToString("0.00");
+            _monthlyWithdrawalAmountInput = _fireCalculator.MonthlyWithdrawalAmount.ToString("0.00");
+            _annualWithdrawalAmountInput = _fireCalculator.AnnualWithdrawalAmount.ToString("0.00");
             _startingMonth = _fireCalculator.StartingMonth;
             _endingMonth = _fireCalculator.EndingMonth;
+            _durationInMonthsInput = _fireCalculator.DurationInMonths.ToString();
         }
 
         [ObservableProperty]
         private PlotModel? _plotModelRemainingAmounts;
 
         [ObservableProperty]
-        private string _startingAmountInput = string.Empty;
+        private string _startingAmountInput;
 
         [ObservableProperty]
         private string _monthlyWithdrawalAmountInput = string.Empty;
@@ -47,7 +44,34 @@ namespace FireDotNetUi.ViewModels
         private DateTime _startingMonth;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(DurationInMonthsInput))]
         private DateTime _endingMonth;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(EndingMonth))]
+        private string _durationInMonthsInput = string.Empty;
+
+        partial void OnDurationInMonthsInputChanged(string? oldValue, string newValue)
+        {
+            if (oldValue == null)
+                throw new ArgumentNullException(nameof(oldValue));
+
+            if (oldValue != newValue)
+            {
+                if (int.TryParse(newValue, System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.CurrentCulture, out int parsedValue))
+                {
+                    _durationInMonthsInput = parsedValue.ToString();
+                    _fireCalculator.DurationInMonths = parsedValue;
+                    _endingMonth = _fireCalculator.EndingMonth;
+                    UpdatePlotModel();
+                }
+                else
+                {
+                    DurationInMonthsInput = oldValue;
+                }
+            }
+        }
 
         partial void OnStartingAmountInputChanged(string? oldValue, string newValue)
         {
@@ -59,9 +83,8 @@ namespace FireDotNetUi.ViewModels
                 if (decimal.TryParse(newValue, System.Globalization.NumberStyles.AllowDecimalPoint,
                     System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue))
                 {
-                    _startingAmount = parsedValue;
-                    _startingAmountInput = _startingAmount.ToString("0.00");
-                    _fireCalculator.StartingAmount = _startingAmount;
+                    _startingAmountInput = parsedValue.ToString("0.00");
+                    _fireCalculator.StartingAmount = parsedValue;
                     UpdatePlotModel();
                 }
                 else
@@ -81,9 +104,8 @@ namespace FireDotNetUi.ViewModels
                 if (decimal.TryParse(newValue, System.Globalization.NumberStyles.AllowDecimalPoint,
                     System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue))
                 {
-                    _monthlyWithdrawalAmount = parsedValue;
-                    _monthlyWithdrawalAmountInput = _monthlyWithdrawalAmount.ToString("0.00");
-                    _fireCalculator.MonthlyWithdrawalAmount = _monthlyWithdrawalAmount;
+                    _monthlyWithdrawalAmountInput = parsedValue.ToString("0.00");
+                    _fireCalculator.MonthlyWithdrawalAmount = parsedValue;
                     AnnualWithdrawalAmountInput = _fireCalculator.AnnualWithdrawalAmount.ToString("0.00");
                     UpdatePlotModel();
                 }
@@ -104,9 +126,8 @@ namespace FireDotNetUi.ViewModels
                 if (decimal.TryParse(newValue, System.Globalization.NumberStyles.AllowDecimalPoint,
                     System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue))
                 {
-                    _annualWithdrawalAmount = parsedValue;
-                    _annualWithdrawalAmountInput = _annualWithdrawalAmount.ToString("0.00");
-                    _fireCalculator.AnnualWithdrawalAmount = _annualWithdrawalAmount;
+                    _annualWithdrawalAmountInput = parsedValue.ToString("0.00");
+                    _fireCalculator.AnnualWithdrawalAmount = parsedValue;
                     MonthlyWithdrawalAmountInput = _fireCalculator.MonthlyWithdrawalAmount.ToString("0.00");
                     UpdatePlotModel();
                 }
@@ -124,7 +145,6 @@ namespace FireDotNetUi.ViewModels
                 _fireCalculator.StartingMonth = newValue;
                 _startingMonth = _fireCalculator.StartingMonth;
                 _endingMonth = _fireCalculator.EndingMonth;
-
                 UpdatePlotModel();
             }
         }
@@ -137,6 +157,7 @@ namespace FireDotNetUi.ViewModels
                 {
                     _fireCalculator.EndingMonth = newValue;
                     _endingMonth = _fireCalculator.EndingMonth;
+                    _durationInMonthsInput = _fireCalculator.DurationInMonths.ToString();
                     UpdatePlotModel();
                 }
                 catch (ArgumentOutOfRangeException)

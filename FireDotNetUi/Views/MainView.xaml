@@ -1,4 +1,5 @@
 ﻿<Window x:Class="FireDotNetUi.MainView"
+        x:Name="MainViewWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:oxy="http://oxyplot.org/wpf"
@@ -9,29 +10,31 @@
         xmlns:r="clr-namespace:FireDotNetUi.Properties"
         xmlns:uc="clr-namespace:FireDotNetUi.UserControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        x:Name="MainViewWindow">
+        Title="{x:Static r:Resources.MainView_Title}" WindowState="Maximized" Style="{DynamicResource ResourceKey=WindowDefaultStyle}">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Label Content="{x:Static r:Resources.MainView_StartAmount_Label}" VerticalContentAlignment="Center" Margin="5,0"/>
-            <TextBox Text="{Binding StartingAmountInput, UpdateSourceTrigger=LostFocus}" MinWidth="100" VerticalContentAlignment="Center"/>
-            <Label Content="{x:Static r:Resources.MainView_MonthlyWithdrawalAmount_Label}" VerticalContentAlignment="Center" Margin="5,0"/>
-            <TextBox Text="{Binding MonthlyWithdrawalAmountInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" MinWidth="100" VerticalContentAlignment="Center"/>
-            <Label Content="{x:Static r:Resources.MainView_AnnualWithdrawalAmount_Label}" VerticalContentAlignment="Center" Margin="5,0"/>
-            <TextBox Text="{Binding AnnualWithdrawalAmountInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" MinWidth="100" VerticalContentAlignment="Center"/>
+            <Label Content="{x:Static r:Resources.MainView_StartAmount_Label}" VerticalContentAlignment="Center" Margin="5,2,0,0"/>
+            <TextBox Text="{Binding StartingAmountInput, UpdateSourceTrigger=LostFocus}" MinWidth="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="0,2,0,0"/>
+            <Label Content="{x:Static r:Resources.MainView_MonthlyWithdrawalAmount_Label}" VerticalContentAlignment="Center" Margin="5,2,0,0"/>
+            <TextBox Text="{Binding MonthlyWithdrawalAmountInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" MinWidth="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="0,2,0,0"/>
+            <Label Content="{x:Static r:Resources.MainView_AnnualWithdrawalAmount_Label}" VerticalContentAlignment="Center" Margin="5,2,0,0"/>
+            <TextBox Text="{Binding AnnualWithdrawalAmountInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" MinWidth="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="0,2,0,0"/>
         </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <uc:MonthPicker SelectedDate="{Binding StartingMonth, Mode=TwoWay}" Margin="5,0" VerticalContentAlignment="Center" TextBoxWidth="100"/>
-            <uc:MonthPicker SelectedDate="{Binding EndingMonth, Mode=TwoWay}" Margin="5,0" VerticalContentAlignment="Center" TextBoxWidth="100"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <uc:MonthPicker SelectedDate="{Binding StartingMonth, Mode=TwoWay}" Margin="5,0" VerticalContentAlignment="Center" TextBoxWidth="150"/>
+            <uc:MonthPicker SelectedDate="{Binding EndingMonth, Mode=TwoWay}" Margin="5,0" VerticalContentAlignment="Center" TextBoxWidth="150"/>
+            <Label Content="{x:Static r:Resources.MainView_DurationInMonths_Label}" VerticalContentAlignment="Center" Margin="5,0,0,0"/>
+            <TextBox Text="{Binding DurationInMonthsInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" MinWidth="75" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
         </StackPanel>
-        <oxy:PlotView Grid.Row="2" Model="{Binding PlotModelRemainingAmounts}"/>
+        <oxy:PlotView Grid.Row="3" Model="{Binding PlotModelRemainingAmounts}"/>
     </Grid>
 </Window>
