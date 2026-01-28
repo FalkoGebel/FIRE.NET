@@ -2,7 +2,6 @@
 using FireDotNetLibrary;
 using OxyPlot;
 using OxyPlot.Axes;
-using System.Windows;
 
 namespace FireDotNetUi.ViewModels
 {
@@ -59,7 +58,8 @@ namespace FireDotNetUi.ViewModels
             if (oldValue != newValue)
             {
                 if (int.TryParse(newValue, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.CurrentCulture, out int parsedValue))
+                    System.Globalization.CultureInfo.CurrentCulture, out int parsedValue) &&
+                    parsedValue > 0)
                 {
                     _durationInMonthsInput = parsedValue.ToString();
                     _fireCalculator.DurationInMonths = parsedValue;
@@ -80,8 +80,9 @@ namespace FireDotNetUi.ViewModels
 
             if (oldValue != newValue)
             {
-                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue))
+                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue) &&
+                    parsedValue > 0)
                 {
                     _startingAmountInput = parsedValue.ToString("0.00");
                     _fireCalculator.StartingAmount = parsedValue;
@@ -101,8 +102,9 @@ namespace FireDotNetUi.ViewModels
 
             if (oldValue != newValue)
             {
-                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue))
+                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue) &&
+                    parsedValue >= 0)
                 {
                     _monthlyWithdrawalAmountInput = parsedValue.ToString("0.00");
                     _fireCalculator.MonthlyWithdrawalAmount = parsedValue;
@@ -123,8 +125,9 @@ namespace FireDotNetUi.ViewModels
 
             if (oldValue != newValue)
             {
-                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.AllowDecimalPoint,
-                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue))
+                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue) &&
+                    parsedValue >= 0)
                 {
                     _annualWithdrawalAmountInput = parsedValue.ToString("0.00");
                     _fireCalculator.AnnualWithdrawalAmount = parsedValue;
@@ -163,7 +166,6 @@ namespace FireDotNetUi.ViewModels
                 catch (ArgumentOutOfRangeException)
                 {
                     _endingMonth = oldValue;
-                    MessageBox.Show("Ending Month must not be earlier than Starting Month", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -172,7 +174,12 @@ namespace FireDotNetUi.ViewModels
         {
             var remainingAmountMonths = _fireCalculator.GetRemainingAmounts();
 
-            PlotModelRemainingAmounts = new PlotModel { Title = "Remaining Amounts" };
+            PlotModelRemainingAmounts = new PlotModel
+            {
+                Title = Properties.Resources.MainView_PlotModel_RemainingAmount,
+                DefaultFont = "Verdana",
+                DefaultFontSize = 16
+            };
             var lineSeries = new OxyPlot.Series.LineSeries
             {
                 StrokeThickness = 2,
@@ -180,7 +187,11 @@ namespace FireDotNetUi.ViewModels
                 ItemsSource = remainingAmountMonths.Select(m => new DataPoint(m.Item1.ToOADate(),
                                                                               m.Item2 > 0 ? (double)Math.Round(m.Item2, 2) : 0))
                                                    .ToList(),
-                TrackerFormatString = "Month: {2:MMM yyyy}\nRemaining Amount: {4:C2}"
+                TrackerFormatString = Properties.Resources.MainView_PlotModel_Month +
+                                      ": {2:dd.MM.yyyy}\n" +
+                                      Properties.Resources.MainView_PlotModel_RemainingAmount +
+                                      ": {4:C2}",
+                CanTrackerInterpolatePoints = false,
             };
             PlotModelRemainingAmounts.Series.Add(lineSeries);
 
@@ -188,7 +199,7 @@ namespace FireDotNetUi.ViewModels
             {
                 Position = AxisPosition.Bottom,
                 StringFormat = "MMM yyyy",
-                Title = "Month",
+                Title = Properties.Resources.MainView_PlotModel_Month,
                 IntervalType = DateTimeIntervalType.Months,
                 MinorIntervalType = DateTimeIntervalType.Months,
                 MajorGridlineStyle = LineStyle.Solid,
@@ -203,7 +214,7 @@ namespace FireDotNetUi.ViewModels
             var valueAxis = new LinearAxis
             {
                 Position = AxisPosition.Left,
-                Title = "Remaining Amount",
+                Title = Properties.Resources.MainView_PlotModel_RemainingAmount,
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
                 StringFormat = "C0",

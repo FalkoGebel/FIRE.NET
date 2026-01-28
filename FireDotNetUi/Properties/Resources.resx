@@ -126,6 +126,12 @@
   <data name="MainView_MonthlyWithdrawalAmount_Label" xml:space="preserve">
     <value>Monthly Withdrawal Amount:</value>
   </data>
+  <data name="MainView_PlotModel_RemainingAmount" xml:space="preserve">
+    <value>Remaining Amount</value>
+  </data>
+  <data name="MainView_PlotModel_Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
   <data name="MainView_StartAmount_Label" xml:space="preserve">
     <value>Starting Amount:</value>
   </data>

@@ -88,6 +88,24 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Month ähnelt.
+        /// </summary>
+        public static string MainView_PlotModel_Month {
+            get {
+                return ResourceManager.GetString("MainView_PlotModel_Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Remaining Amount ähnelt.
+        /// </summary>
+        public static string MainView_PlotModel_RemainingAmount {
+            get {
+                return ResourceManager.GetString("MainView_PlotModel_RemainingAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Starting Amount: ähnelt.
         /// </summary>
         public static string MainView_StartAmount_Label {
