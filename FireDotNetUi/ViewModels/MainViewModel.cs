@@ -177,6 +177,8 @@ namespace FireDotNetUi.ViewModels
             PlotModelRemainingAmounts = new PlotModel
             {
                 Title = Properties.Resources.MainView_PlotModel_RemainingAmount,
+                TitlePadding = 20,
+                TitleFontSize = 20,
                 DefaultFont = "Verdana",
                 DefaultFontSize = 16
             };
@@ -190,7 +192,7 @@ namespace FireDotNetUi.ViewModels
                 TrackerFormatString = Properties.Resources.MainView_PlotModel_Month +
                                       ": {2:dd.MM.yyyy}\n" +
                                       Properties.Resources.MainView_PlotModel_RemainingAmount +
-                                      ": {4:C2}",
+                                      ": {4:0,0.00}",
                 CanTrackerInterpolatePoints = false,
             };
             PlotModelRemainingAmounts.Series.Add(lineSeries);
@@ -200,6 +202,7 @@ namespace FireDotNetUi.ViewModels
                 Position = AxisPosition.Bottom,
                 StringFormat = "MMM yyyy",
                 Title = Properties.Resources.MainView_PlotModel_Month,
+                AxisTitleDistance = 20,
                 IntervalType = DateTimeIntervalType.Months,
                 MinorIntervalType = DateTimeIntervalType.Months,
                 MajorGridlineStyle = LineStyle.Solid,
@@ -215,9 +218,10 @@ namespace FireDotNetUi.ViewModels
             {
                 Position = AxisPosition.Left,
                 Title = Properties.Resources.MainView_PlotModel_RemainingAmount,
+                AxisTitleDistance = 20,
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
-                StringFormat = "C0",
+                StringFormat = "0,0.00",
                 IsZoomEnabled = false,
                 IsPanEnabled = false,
                 Minimum = 0

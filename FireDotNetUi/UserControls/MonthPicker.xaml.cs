@@ -48,7 +48,6 @@ namespace FireDotNetUi.UserControls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //MonthPickerCalendar.DisplayMode = CalendarMode.Year;
             MonthPickerCalendar.DisplayDate = SelectedDate;
             CalendarPopup.IsOpen = true;
         }
