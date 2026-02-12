@@ -17,7 +17,7 @@ Current version: v1.0.0
 ## Technologies used
 - C# / .NET / WPF
 - MVVM design pattern
-- OxyPlot for charting
+- [OxyPlot](https://github.com/oxyplot/oxyplot) for charting
 - MSTest for unit testing
 
 ## How to use
