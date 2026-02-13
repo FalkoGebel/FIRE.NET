@@ -129,4 +129,7 @@
   <data name="FireCalculator_MonthlyWithdrawalAmount_Set_ArgumentOutOfRangeException" xml:space="preserve">
     <value>MonthlyWithdrawalAmount must not be less than zero.</value>
   </data>
+  <data name="FireCalculator_AnnualInflationRate_Set_ArgumentOutOfRangeException" xml:space="preserve">
+    <value>AnnualInflationRate must not be less than zero.</value>
+  </data>
 </root>
