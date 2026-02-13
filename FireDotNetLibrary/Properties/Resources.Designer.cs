@@ -61,6 +61,15 @@ namespace FireDotNetLibrary.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AnnualInflationRate must not be less than zero. ähnelt.
+        /// </summary>
+        public static string FireCalculator_AnnualInflationRate_Set_ArgumentOutOfRangeException {
+            get {
+                return ResourceManager.GetString("FireCalculator_AnnualInflationRate_Set_ArgumentOutOfRangeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die AnnualWithdrawalAmount must not be less than zero. ähnelt.
         /// </summary>
         public static string FireCalculator_AnnualWithdrawalAmount_Set_ArgumentOutOfRangeException {

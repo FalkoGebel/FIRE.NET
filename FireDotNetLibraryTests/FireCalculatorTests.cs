@@ -25,6 +25,7 @@ namespace FireDotNetLibraryTests
             sut.StartingAmount.Should().Be(0m);
             sut.MonthlyWithdrawalAmount.Should().Be(0m);
             sut.AnnualWithdrawalAmount.Should().Be(0m);
+            sut.AnnualInflationRate.Should().Be(0m);
         }
 
         [TestMethod]
@@ -216,6 +217,7 @@ namespace FireDotNetLibraryTests
                 StartingAmount = startingAmountDecimal,
                 MonthlyWithdrawalAmount = monthlyWithdrawalAmountDecimal
             };
+            decimal expectedFinalAmount = startingAmountDecimal - (monthlyWithdrawalAmountDecimal * sut.DurationInMonths);
 
             // Act
             var result = sut.GetRemainingAmounts();
@@ -232,13 +234,64 @@ namespace FireDotNetLibraryTests
             }
             else
             {
-                decimal expectedFinalAmount = startingAmountDecimal - (monthlyWithdrawalAmountDecimal * sut.DurationInMonths);
-                DateTime expectedFirstMonth = result[0].Item1;
-                DateTime expectedLastMonth = result[^1].Item1;
-                decimal actualFinalAmount = result[^1].Item2;
-                expectedFirstMonth.Should().Be(sut.StartingMonth);
-                expectedLastMonth.Should().Be(sut.EndingMonth);
-                actualFinalAmount.Should().Be(expectedFinalAmount);
+                result[0].Item1.Should().Be(sut.StartingMonth);
+                result[^1].Item1.Should().Be(sut.EndingMonth);
+                result[^1].Item2.Should().Be(expectedFinalAmount);
+            }
+        }
+
+        [TestMethod]
+        [DataRow(-0.00001)]
+        [DataRow(-1)]
+        [DataRow(-1934.2134)]
+        public void Set_Negative_AnnualInflationRate_Throws_Exception(double annualInflationRate)
+        {
+            // Arrange
+            FireCalculator sut = new();
+
+            // Act
+            Action act = () => sut.AnnualInflationRate = (decimal)annualInflationRate;
+
+            // Assert
+            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("AnnualInflationRate must not be less than zero.");
+        }
+
+        [TestMethod]
+        [DataRow(100000, 1000, 1)]
+        [DataRow(1000, 10, 1.5)]
+        [DataRow(360, 1, 6.75)]
+        [DataRow(1500, 20, 2.2)]
+        public void Calculate_With_AnnualInflationRate_Returns_Correct_Collection(double startingAmount, double monthlyWithdrawalAmount, double annualInflationRate)
+        {
+            decimal startingAmountDecimal = (decimal)startingAmount;
+            decimal monthlyWithdrawalAmountDecimal = (decimal)monthlyWithdrawalAmount;
+            decimal monthlyInflationFactorDecimal = (decimal)annualInflationRate / 12 / 100;
+
+            // Arrange
+            FireCalculator sut = new()
+            {
+                StartingAmount = startingAmountDecimal,
+                MonthlyWithdrawalAmount = monthlyWithdrawalAmountDecimal,
+                AnnualInflationRate = (decimal)annualInflationRate
+            };
+
+            decimal[] expectedResults = new decimal[sut.DurationInMonths + 1];
+            expectedResults[0] = startingAmountDecimal;
+            for (int i = 1; i < sut.DurationInMonths + 1; i++)
+            {
+                monthlyWithdrawalAmountDecimal *= (1 + monthlyInflationFactorDecimal);
+                expectedResults[i] = expectedResults[i - 1] - monthlyWithdrawalAmountDecimal;
+            }
+
+            // Act
+            var result = sut.GetRemainingAmounts();
+
+            // Assert
+            result[0].Item1.Should().Be(sut.StartingMonth);
+            result[^1].Item1.Should().Be(sut.EndingMonth);
+            for (int i = 0; i < sut.DurationInMonths + 1; i++)
+            {
+                result[i].Item2.Should().Be(expectedResults[i]);
             }
         }
     }
