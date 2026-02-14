@@ -24,6 +24,7 @@ namespace FireDotNetUi.ViewModels
             _startingMonth = _fireCalculator.StartingMonth;
             _endingMonth = _fireCalculator.EndingMonth;
             _durationInMonthsInput = _fireCalculator.DurationInMonths.ToString();
+            _annualInflationRate = _fireCalculator.AnnualInflationRate.ToString("0.00");
         }
 
         [ObservableProperty]
@@ -49,6 +50,31 @@ namespace FireDotNetUi.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(EndingMonth))]
         private string _durationInMonthsInput = string.Empty;
+
+        [ObservableProperty]
+        private string _annualInflationRate;
+
+        partial void OnAnnualInflationRateChanged(string? oldValue, string newValue)
+        {
+            if (oldValue == null)
+                throw new ArgumentNullException(nameof(oldValue));
+
+            if (oldValue != newValue)
+            {
+                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue) &&
+                    parsedValue >= 0)
+                {
+                    _annualInflationRate = parsedValue.ToString("0.00");
+                    _fireCalculator.AnnualInflationRate = parsedValue;
+                    UpdatePlotModel();
+                }
+                else
+                {
+                    AnnualInflationRate = oldValue;
+                }
+            }
+        }
 
         partial void OnDurationInMonthsInputChanged(string? oldValue, string newValue)
         {
@@ -192,7 +218,7 @@ namespace FireDotNetUi.ViewModels
                 TrackerFormatString = Properties.Resources.MainView_PlotModel_Month +
                                       ": {2:dd.MM.yyyy}\n" +
                                       Properties.Resources.MainView_PlotModel_RemainingAmount +
-                                      ": {4:0,0.00}",
+                                      ": {4:#,0.00}",
                 CanTrackerInterpolatePoints = false,
             };
             PlotModelRemainingAmounts.Series.Add(lineSeries);
@@ -210,7 +236,8 @@ namespace FireDotNetUi.ViewModels
                 IsZoomEnabled = false,
                 IsPanEnabled = false,
                 Minimum = _fireCalculator.StartingMonth.ToOADate(),
-                Maximum = _fireCalculator.EndingMonth.ToOADate()
+                Maximum = _fireCalculator.EndingMonth.ToOADate(),
+                IntervalLength = 80
             };
             PlotModelRemainingAmounts.Axes.Add(dateAxis);
 
@@ -221,7 +248,7 @@ namespace FireDotNetUi.ViewModels
                 AxisTitleDistance = 20,
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
-                StringFormat = "0,0.00",
+                StringFormat = "#,0.00",
                 IsZoomEnabled = false,
                 IsPanEnabled = false,
                 Minimum = 0
