@@ -61,6 +61,15 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Annual Inflation Rate: ähnelt.
+        /// </summary>
+        public static string MainView_AnnualInflationRate_Label {
+            get {
+                return ResourceManager.GetString("MainView_AnnualInflationRate_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Annual Withdrawal Amount: ähnelt.
         /// </summary>
         public static string MainView_AnnualWithdrawalAmount_Label {
@@ -115,7 +124,7 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die FIRE.NET v1.0.0 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die FIRE.NET v1.1.0 ähnelt.
         /// </summary>
         public static string MainView_Title {
             get {

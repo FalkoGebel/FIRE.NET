@@ -126,6 +126,9 @@
   <data name="MainView_MonthlyWithdrawalAmount_Label" xml:space="preserve">
     <value>Monthly Withdrawal Amount:</value>
   </data>
+  <data name="MainView_AnnualInflationRate_Label" xml:space="preserve">
+    <value>Annual Inflation Rate:</value>
+  </data>
   <data name="MainView_PlotModel_RemainingAmount" xml:space="preserve">
     <value>Remaining Amount</value>
   </data>
@@ -136,6 +139,6 @@
     <value>Starting Amount:</value>
   </data>
   <data name="MainView_Title" xml:space="preserve">
-    <value>FIRE.NET</value>
+    <value>FIRE.NET v1.1.0</value>
   </data>
 </root>
