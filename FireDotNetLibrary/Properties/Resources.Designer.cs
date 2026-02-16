@@ -70,6 +70,15 @@ namespace FireDotNetLibrary.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AnnualReturn must not be less than zero. ähnelt.
+        /// </summary>
+        public static string FireCalculator_AnnualReturn_Set_ArgumentOutOfRangeException {
+            get {
+                return ResourceManager.GetString("FireCalculator_AnnualReturn_Set_ArgumentOutOfRangeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die AnnualWithdrawalAmount must not be less than zero. ähnelt.
         /// </summary>
         public static string FireCalculator_AnnualWithdrawalAmount_Set_ArgumentOutOfRangeException {
