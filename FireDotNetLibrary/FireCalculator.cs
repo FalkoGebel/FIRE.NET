@@ -8,6 +8,7 @@
         private decimal _monthlyWithdrawalAmount;
         private decimal _annualWithdrawalAmount;
         private decimal _annualInflationRate;
+        private decimal _annualReturn;
 
         public FireCalculator()
         {
@@ -107,12 +108,26 @@
             }
         }
 
+        public decimal AnnualReturn
+        {
+            get => _annualReturn;
+
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_AnnualReturn_Set_ArgumentOutOfRangeException);
+
+                _annualReturn = value;
+            }
+        }
+
         public (DateTime, decimal)[] GetRemainingAmounts()
         {
             var output = new (DateTime, decimal)[DurationInMonths + 1];
             DateTime currentMonth = StartingMonth;
             decimal currentMonthlyWithdrawalAmount = MonthlyWithdrawalAmount;
-            decimal monthlyInflationFactorDecimal = AnnualInflationRate / 12 / 100;
+            decimal monthlyInflationFactorDecimal = 1 + AnnualInflationRate / 12 / 100;
+            decimal monthlyReturnFactorDecimal = 1 + AnnualReturn / 12 / 100;
 
             if (StartingAmount > 0)
             {
@@ -125,8 +140,8 @@
                     }
                     else
                     {
-                        currentMonthlyWithdrawalAmount *= (1 + monthlyInflationFactorDecimal);
-                        output[i] = (currentMonth, output[i - 1].Item2 - currentMonthlyWithdrawalAmount);
+                        currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
+                        output[i] = (currentMonth, output[i - 1].Item2 * monthlyReturnFactorDecimal - currentMonthlyWithdrawalAmount);
                         currentMonth = currentMonth.AddDays(1).AddMonths(1).AddDays(-1);
                     }
                 }

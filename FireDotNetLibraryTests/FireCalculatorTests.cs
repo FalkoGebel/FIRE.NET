@@ -294,5 +294,57 @@ namespace FireDotNetLibraryTests
                 result[i].Item2.Should().Be(expectedResults[i]);
             }
         }
+
+        [TestMethod]
+        [DataRow(-0.00001)]
+        [DataRow(-1)]
+        [DataRow(-1934.2134)]
+        public void Set_Negative_AnnualReturn_Throws_Exception(double annualReturn)
+        {
+            // Arrange
+            FireCalculator sut = new();
+
+            // Act
+            Action act = () => sut.AnnualReturn = (decimal)annualReturn;
+
+            // Assert
+            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("AnnualReturn must not be less than zero.");
+        }
+
+        [TestMethod]
+        [DataRow(100000, 1000, 1)]
+        [DataRow(1000, 10, 1.5)]
+        [DataRow(360, 1, 6.75)]
+        [DataRow(1500, 20, 2.2)]
+        public void Calculate_With_AnnualReturn_Returns_Correct_Collection(double startingAmount, double monthlyWithdrawalAmount, double annualReturn)
+        {
+            decimal startingAmountDecimal = (decimal)startingAmount;
+            decimal monthlyWithdrawalAmountDecimal = (decimal)monthlyWithdrawalAmount;
+            decimal monthlyReturnFactorDecimal = (decimal)annualReturn / 12 / 100;
+
+            // Arrange
+            FireCalculator sut = new()
+            {
+                StartingAmount = startingAmountDecimal,
+                MonthlyWithdrawalAmount = monthlyWithdrawalAmountDecimal,
+                AnnualReturn = (decimal)annualReturn
+            };
+
+            decimal[] expectedResults = new decimal[sut.DurationInMonths + 1];
+            expectedResults[0] = startingAmountDecimal;
+            for (int i = 1; i < sut.DurationInMonths + 1; i++)
+                expectedResults[i] = expectedResults[i - 1] * (1 + monthlyReturnFactorDecimal) - monthlyWithdrawalAmountDecimal;
+
+            // Act
+            var result = sut.GetRemainingAmounts();
+
+            // Assert
+            result[0].Item1.Should().Be(sut.StartingMonth);
+            result[^1].Item1.Should().Be(sut.EndingMonth);
+            for (int i = 0; i < sut.DurationInMonths + 1; i++)
+            {
+                result[i].Item2.Should().Be(expectedResults[i]);
+            }
+        }
     }
 }
