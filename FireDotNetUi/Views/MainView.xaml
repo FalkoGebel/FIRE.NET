@@ -36,6 +36,8 @@
             <TextBox Text="{Binding DurationInMonthsInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" MinWidth="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
             <Label Content="{x:Static r:Resources.MainView_AnnualInflationRate_Label}" VerticalContentAlignment="Center" Margin="10,0,0,0"/>
             <TextBox Text="{Binding AnnualInflationRate, UpdateSourceTrigger=LostFocus}" MinWidth="75" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" />
+            <Label Content="{x:Static r:Resources.MainView_AnnualReturn_Label}" VerticalContentAlignment="Center" Margin="10,0,0,0"/>
+            <TextBox Text="{Binding AnnualReturn, UpdateSourceTrigger=LostFocus}" MinWidth="75" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" />
         </StackPanel>
         <oxy:PlotView Grid.Row="3" Model="{Binding PlotModelRemainingAmounts}"/>
     </Grid>

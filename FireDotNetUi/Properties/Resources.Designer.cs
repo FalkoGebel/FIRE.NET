@@ -70,6 +70,15 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Annual Return: ähnelt.
+        /// </summary>
+        public static string MainView_AnnualReturn_Label {
+            get {
+                return ResourceManager.GetString("MainView_AnnualReturn_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Annual Withdrawal Amount: ähnelt.
         /// </summary>
         public static string MainView_AnnualWithdrawalAmount_Label {
@@ -124,7 +133,7 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die FIRE.NET v1.1.0 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die FIRE.NET v1.2.0 ähnelt.
         /// </summary>
         public static string MainView_Title {
             get {
