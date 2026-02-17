@@ -1,6 +1,6 @@
 # FIRE.NET - Just another FIRE calculator
 
-Current version: v1.1.0
+Current version: v1.2.0
 
 ## Features
 - Shows the remaining amount for the months in a chart based on the choosen parameters
@@ -12,6 +12,7 @@ Current version: v1.1.0
 	- Ending month
 	- Number of months
 	- Annual inflation rate
+	- Annual return
 
 ![FIRE.NET](/README-Images/FIRE.NET.png)
 	 

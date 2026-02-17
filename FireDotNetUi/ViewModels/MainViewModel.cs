@@ -25,6 +25,7 @@ namespace FireDotNetUi.ViewModels
             _endingMonth = _fireCalculator.EndingMonth;
             _durationInMonthsInput = _fireCalculator.DurationInMonths.ToString();
             _annualInflationRate = _fireCalculator.AnnualInflationRate.ToString("0.00");
+            _annualReturn = _fireCalculator.AnnualReturn.ToString("0.00");
         }
 
         [ObservableProperty]
@@ -53,6 +54,31 @@ namespace FireDotNetUi.ViewModels
 
         [ObservableProperty]
         private string _annualInflationRate;
+
+        [ObservableProperty]
+        private string _annualReturn;
+
+        partial void OnAnnualReturnChanged(string? oldValue, string newValue)
+        {
+            if (oldValue == null)
+                throw new ArgumentNullException(nameof(oldValue));
+
+            if (oldValue != newValue)
+            {
+                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue) &&
+                    parsedValue >= 0)
+                {
+                    _annualReturn = parsedValue.ToString("0.00");
+                    _fireCalculator.AnnualReturn = parsedValue;
+                    UpdatePlotModel();
+                }
+                else
+                {
+                    AnnualReturn = oldValue;
+                }
+            }
+        }
 
         partial void OnAnnualInflationRateChanged(string? oldValue, string newValue)
         {
