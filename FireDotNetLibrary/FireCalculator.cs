@@ -126,8 +126,8 @@
             var output = new (DateTime, decimal)[DurationInMonths + 1];
             DateTime currentMonth = StartingMonth;
             decimal currentMonthlyWithdrawalAmount = MonthlyWithdrawalAmount;
-            decimal monthlyInflationFactorDecimal = 1 + AnnualInflationRate / 12 / 100;
-            decimal monthlyReturnFactorDecimal = 1 + AnnualReturn / 12 / 100;
+            decimal monthlyInflationFactorDecimal = (decimal)Math.Pow((double)AnnualInflationRate / 100 + 1, 1d / 12);
+            decimal monthlyReturnFactorDecimal = (decimal)Math.Pow((double)AnnualReturn / 100 + 1, 1d / 12);
 
             if (StartingAmount > 0)
             {

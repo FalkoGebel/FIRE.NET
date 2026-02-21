@@ -1,6 +1,6 @@
 # FIRE.NET - Just another FIRE calculator
 
-Current version: v1.2.0
+Current version: v1.2.1
 
 ## Features
 - Shows the remaining amount for the months in a chart based on the choosen parameters
