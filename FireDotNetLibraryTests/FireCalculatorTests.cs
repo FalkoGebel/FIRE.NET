@@ -265,7 +265,7 @@ namespace FireDotNetLibraryTests
         {
             decimal startingAmountDecimal = (decimal)startingAmount;
             decimal monthlyWithdrawalAmountDecimal = (decimal)monthlyWithdrawalAmount;
-            decimal monthlyInflationFactorDecimal = (decimal)annualInflationRate / 12 / 100;
+            decimal monthlyInflationFactorDecimal = (decimal)Math.Pow(annualInflationRate / 100 + 1, 1d / 12);
 
             // Arrange
             FireCalculator sut = new()
@@ -279,7 +279,7 @@ namespace FireDotNetLibraryTests
             expectedResults[0] = startingAmountDecimal;
             for (int i = 1; i < sut.DurationInMonths + 1; i++)
             {
-                monthlyWithdrawalAmountDecimal *= (1 + monthlyInflationFactorDecimal);
+                monthlyWithdrawalAmountDecimal *= monthlyInflationFactorDecimal;
                 expectedResults[i] = expectedResults[i - 1] - monthlyWithdrawalAmountDecimal;
             }
 
@@ -320,7 +320,7 @@ namespace FireDotNetLibraryTests
         {
             decimal startingAmountDecimal = (decimal)startingAmount;
             decimal monthlyWithdrawalAmountDecimal = (decimal)monthlyWithdrawalAmount;
-            decimal monthlyReturnFactorDecimal = (decimal)annualReturn / 12 / 100;
+            decimal monthlyReturnFactorDecimal = (decimal)Math.Pow(annualReturn / 100 + 1, 1d / 12);
 
             // Arrange
             FireCalculator sut = new()
@@ -333,7 +333,7 @@ namespace FireDotNetLibraryTests
             decimal[] expectedResults = new decimal[sut.DurationInMonths + 1];
             expectedResults[0] = startingAmountDecimal;
             for (int i = 1; i < sut.DurationInMonths + 1; i++)
-                expectedResults[i] = expectedResults[i - 1] * (1 + monthlyReturnFactorDecimal) - monthlyWithdrawalAmountDecimal;
+                expectedResults[i] = expectedResults[i - 1] * monthlyReturnFactorDecimal - monthlyWithdrawalAmountDecimal;
 
             // Act
             var result = sut.GetRemainingAmounts();

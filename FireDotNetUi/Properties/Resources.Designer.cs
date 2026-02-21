@@ -133,7 +133,7 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die FIRE.NET v1.2.0 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die FIRE.NET v1.2.1 ähnelt.
         /// </summary>
         public static string MainView_Title {
             get {
