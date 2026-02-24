@@ -9,6 +9,7 @@
         private decimal _annualWithdrawalAmount;
         private decimal _annualInflationRate;
         private decimal _annualReturn;
+        private decimal _annualVolatility;
 
         public FireCalculator()
         {
@@ -121,8 +122,76 @@
             }
         }
 
+        public decimal AnnualVolatility
+        {
+            get => _annualVolatility;
+
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_AnnualVolatility_Set_ArgumentOutOfRangeException);
+
+                _annualVolatility = value;
+            }
+        }
+
+        /// <summary>
+        /// Returns two normal distributed random numbers with the given mean and standard deviation using the Box-Muller transformation.
+        /// </summary>
+        /// <param name="random">The random object to use for generating the random numbers.</param>
+        /// <param name="mean">The given mean.</param>
+        /// <param name="standardDeviation">The given standard deviation.</param>
+        /// <returns>A tuple with two random double numbers matching a normal distribution with the given parameters.</returns>
+        private static (double, double) GetTwoNormalDistributedRandomNumbers(Random random, double mean, double standardDeviation)
+        {
+            double x1 = 1 - random.NextDouble();
+            double x2 = 1 - random.NextDouble();
+
+            double y1 = Math.Sqrt(-2.0 * Math.Log(x1)) * Math.Cos(2.0 * Math.PI * x2);
+            double y2 = Math.Sqrt(-2.0 * Math.Log(x1)) * Math.Sin(2.0 * Math.PI * x2);
+            return (y1 * standardDeviation + mean, y2 * standardDeviation + mean);
+        }
+
+        public double[] GetMonthlyReturns()
+        {
+            double[] output = new double[DurationInMonths];
+
+            if (AnnualReturn == 0)
+                return output;
+
+            double monthlyAnnualReturn = Math.Pow((double)AnnualReturn / 100 + 1, 1d / 12);
+
+            if (AnnualVolatility == 0)
+            {
+                for (int i = 0; i < DurationInMonths; i++)
+                    output[i] = (double)monthlyAnnualReturn;
+            }
+            else
+            {
+                double monthlyAnnualVolatility = Math.Pow((double)AnnualVolatility / 100 + 1, 1d / 12);
+                Random random = new();
+                List<double> monthlyReturns = [];
+
+                while (monthlyReturns.Count < DurationInMonths)
+                {
+                    (var x1, var x2) = GetTwoNormalDistributedRandomNumbers(random, monthlyAnnualReturn, monthlyAnnualVolatility);
+
+                    monthlyReturns.Add(x1);
+
+                    if (monthlyReturns.Count < DurationInMonths)
+                        monthlyReturns.Add(x2);
+                }
+
+                output = [.. monthlyReturns];
+            }
+
+            return output;
+        }
+
         public (DateTime, decimal)[] GetRemainingAmounts()
         {
+            // TODO - Add volatility to the remaining amount calculation using the new method GetMonthlyReturns()
+
             var output = new (DateTime, decimal)[DurationInMonths + 1];
             DateTime currentMonth = StartingMonth;
             decimal currentMonthlyWithdrawalAmount = MonthlyWithdrawalAmount;
