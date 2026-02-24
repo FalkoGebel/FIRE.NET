@@ -346,5 +346,51 @@ namespace FireDotNetLibraryTests
                 result[i].Item2.Should().Be(expectedResults[i]);
             }
         }
+
+        [TestMethod]
+        [DataRow(-0.00001)]
+        [DataRow(-1)]
+        [DataRow(-1934.2134)]
+        public void Set_Negative_AnnualVolatility_Throws_Exception(double annualVolatility)
+        {
+            // Arrange
+            FireCalculator sut = new();
+
+            // Act
+            Action act = () => sut.AnnualVolatility = (decimal)annualVolatility;
+
+            // Assert
+            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("AnnualVolatility must not be less than zero.");
+        }
+
+        [TestMethod]
+        [DataRow(7, 0)]
+        [DataRow(7, 14)]
+        [DataRow(15, 30)]
+        public void Get_Ten_Thousand_Aacceptable_Random_Monthly_Returns_For_Given_Mean_And_Standard_Deviation(double mean, double standardDeviation)
+        {
+            // Arrange
+            FireCalculator sut = new()
+            {
+                AnnualReturn = (decimal)mean,
+                AnnualVolatility = (decimal)standardDeviation,
+                DurationInMonths = 10000
+            };
+            decimal monthlyMean = (decimal)Math.Pow((double)sut.AnnualReturn / 100 + 1, 1d / 12),
+                    monthlyStandardDeviation = sut.AnnualVolatility > 0
+                                                 ? (decimal)Math.Pow((double)sut.AnnualVolatility / 100 + 1, 1d / 12)
+                                                 : 0;
+
+
+            // Act
+            var randomNumbers = sut.GetMonthlyReturns();
+
+            // Assert
+            randomNumbers.Length.Should().Be(sut.DurationInMonths);
+            double actualMean = randomNumbers.Average();
+            actualMean.Should().BeApproximately((double)monthlyMean, 0.02);
+            double actualStandardDeviation = Math.Sqrt(randomNumbers.Select(x => Math.Pow(x - actualMean, 2)).Average());
+            actualStandardDeviation.Should().BeApproximately((double)monthlyStandardDeviation, 0.02);
+        }
     }
 }

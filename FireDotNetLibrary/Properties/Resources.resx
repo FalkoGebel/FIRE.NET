@@ -135,4 +135,7 @@
   <data name="FireCalculator_AnnualReturn_Set_ArgumentOutOfRangeException" xml:space="preserve">
     <value>AnnualReturn must not be less than zero.</value>
   </data>
+  <data name="FireCalculator_AnnualVolatility_Set_ArgumentOutOfRangeException" xml:space="preserve">
+    <value>AnnualVolatility must not be less than zero.</value>
+  </data>
 </root>
