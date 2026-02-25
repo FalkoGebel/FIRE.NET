@@ -79,11 +79,29 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Annual Volatility: ähnelt.
+        /// </summary>
+        public static string MainView_AnnualVolatility_Label {
+            get {
+                return ResourceManager.GetString("MainView_AnnualVolatility_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Annual Withdrawal Amount: ähnelt.
         /// </summary>
         public static string MainView_AnnualWithdrawalAmount_Label {
             get {
                 return ResourceManager.GetString("MainView_AnnualWithdrawalAmount_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calculate ähnelt.
+        /// </summary>
+        public static string MainView_Calculate_Button_Content {
+            get {
+                return ResourceManager.GetString("MainView_Calculate_Button_Content", resourceCulture);
             }
         }
         
@@ -133,7 +151,7 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die FIRE.NET v1.2.1 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die FIRE.NET v1.3.0 ähnelt.
         /// </summary>
         public static string MainView_Title {
             get {

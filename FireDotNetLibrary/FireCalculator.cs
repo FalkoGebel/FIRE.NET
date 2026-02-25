@@ -5,11 +5,11 @@
         private DateTime _startingMonth;
         private DateTime _endingMonth;
         private int _durationInMonths;
-        private decimal _monthlyWithdrawalAmount;
-        private decimal _annualWithdrawalAmount;
-        private decimal _annualInflationRate;
-        private decimal _annualReturn;
-        private decimal _annualVolatility;
+        private double _monthlyWithdrawalAmount;
+        private double _annualWithdrawalAmount;
+        private double _annualInflationRate;
+        private double _annualReturn;
+        private double _annualVolatility;
 
         public FireCalculator()
         {
@@ -65,9 +65,9 @@
             }
         }
 
-        public decimal StartingAmount { get; set; }
+        public double StartingAmount { get; set; }
 
-        public decimal MonthlyWithdrawalAmount
+        public double MonthlyWithdrawalAmount
         {
             get => _monthlyWithdrawalAmount;
 
@@ -81,7 +81,7 @@
             }
         }
 
-        public decimal AnnualWithdrawalAmount
+        public double AnnualWithdrawalAmount
         {
             get => _annualWithdrawalAmount;
 
@@ -96,7 +96,7 @@
             }
         }
 
-        public decimal AnnualInflationRate
+        public double AnnualInflationRate
         {
             get => _annualInflationRate;
 
@@ -109,7 +109,7 @@
             }
         }
 
-        public decimal AnnualReturn
+        public double AnnualReturn
         {
             get => _annualReturn;
 
@@ -122,7 +122,7 @@
             }
         }
 
-        public decimal AnnualVolatility
+        public double AnnualVolatility
         {
             get => _annualVolatility;
 
@@ -152,29 +152,29 @@
             return (y1 * standardDeviation + mean, y2 * standardDeviation + mean);
         }
 
-        public double[] GetMonthlyReturns()
+        private double[] GetMonthlyReturns()
         {
             double[] output = new double[DurationInMonths];
 
             if (AnnualReturn == 0)
-                return output;
+                return output; // [.. output.Select(x => 1d)];
 
-            double monthlyAnnualReturn = Math.Pow((double)AnnualReturn / 100 + 1, 1d / 12);
+            double monthlyReturn = Math.Pow(AnnualReturn / 100 + 1, 1d / 12) - 1;
 
             if (AnnualVolatility == 0)
             {
                 for (int i = 0; i < DurationInMonths; i++)
-                    output[i] = (double)monthlyAnnualReturn;
+                    output[i] = monthlyReturn;
             }
             else
             {
-                double monthlyAnnualVolatility = Math.Pow((double)AnnualVolatility / 100 + 1, 1d / 12);
+                double monthlyVolatility = Math.Pow(AnnualVolatility / 100 + 1, 1d / 12) - 1;
                 Random random = new();
                 List<double> monthlyReturns = [];
 
                 while (monthlyReturns.Count < DurationInMonths)
                 {
-                    (var x1, var x2) = GetTwoNormalDistributedRandomNumbers(random, monthlyAnnualReturn, monthlyAnnualVolatility);
+                    (var x1, var x2) = GetTwoNormalDistributedRandomNumbers(random, monthlyReturn, monthlyVolatility);
 
                     monthlyReturns.Add(x1);
 
@@ -188,15 +188,13 @@
             return output;
         }
 
-        public (DateTime, decimal)[] GetRemainingAmounts()
+        public (DateTime, double)[] GetRemainingAmounts()
         {
-            // TODO - Add volatility to the remaining amount calculation using the new method GetMonthlyReturns()
-
-            var output = new (DateTime, decimal)[DurationInMonths + 1];
+            var output = new (DateTime, double)[DurationInMonths + 1];
             DateTime currentMonth = StartingMonth;
-            decimal currentMonthlyWithdrawalAmount = MonthlyWithdrawalAmount;
-            decimal monthlyInflationFactorDecimal = (decimal)Math.Pow((double)AnnualInflationRate / 100 + 1, 1d / 12);
-            decimal monthlyReturnFactorDecimal = (decimal)Math.Pow((double)AnnualReturn / 100 + 1, 1d / 12);
+            double currentMonthlyWithdrawalAmount = MonthlyWithdrawalAmount;
+            double monthlyInflationFactorDecimal = Math.Pow(AnnualInflationRate / 100 + 1, 1d / 12);
+            var monthlyReturns = GetMonthlyReturns();
 
             if (StartingAmount > 0)
             {
@@ -210,7 +208,7 @@
                     else
                     {
                         currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
-                        output[i] = (currentMonth, output[i - 1].Item2 * monthlyReturnFactorDecimal - currentMonthlyWithdrawalAmount);
+                        output[i] = (currentMonth, output[i - 1].Item2 * (1 + monthlyReturns[i - 1]) - currentMonthlyWithdrawalAmount);
                         currentMonth = currentMonth.AddDays(1).AddMonths(1).AddDays(-1);
                     }
                 }

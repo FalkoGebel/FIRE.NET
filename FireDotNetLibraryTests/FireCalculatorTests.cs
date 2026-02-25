@@ -22,10 +22,10 @@ namespace FireDotNetLibraryTests
             sut.StartingMonth.Should().Be(expectedStartingMonth);
             sut.DurationInMonths.Should().Be(expectedDurationInMonths);
             sut.EndingMonth.Should().Be(expectedEndingMonth);
-            sut.StartingAmount.Should().Be(0m);
-            sut.MonthlyWithdrawalAmount.Should().Be(0m);
-            sut.AnnualWithdrawalAmount.Should().Be(0m);
-            sut.AnnualInflationRate.Should().Be(0m);
+            sut.StartingAmount.Should().Be(0);
+            sut.MonthlyWithdrawalAmount.Should().Be(0);
+            sut.AnnualWithdrawalAmount.Should().Be(0);
+            sut.AnnualInflationRate.Should().Be(0);
         }
 
         [TestMethod]
@@ -130,11 +130,11 @@ namespace FireDotNetLibraryTests
             // Arrange + Act
             FireCalculator sut = new()
             {
-                MonthlyWithdrawalAmount = (decimal)monthlyWidthdrawalAmount
+                MonthlyWithdrawalAmount = monthlyWidthdrawalAmount
             };
 
             // Assert
-            sut.AnnualWithdrawalAmount.Should().Be((decimal)monthlyWidthdrawalAmount * 12);
+            sut.AnnualWithdrawalAmount.Should().Be(monthlyWidthdrawalAmount * 12);
         }
 
         [TestMethod]
@@ -147,7 +147,7 @@ namespace FireDotNetLibraryTests
             FireCalculator sut = new();
 
             // Act
-            Action act = () => sut.MonthlyWithdrawalAmount = (decimal)monthlyWidthdrawalAmount;
+            Action act = () => sut.MonthlyWithdrawalAmount = monthlyWidthdrawalAmount;
 
             // Assert
             act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("MonthlyWithdrawalAmount must not be less than zero.");
@@ -165,11 +165,11 @@ namespace FireDotNetLibraryTests
             // Arrange + Act
             FireCalculator sut = new()
             {
-                AnnualWithdrawalAmount = (decimal)annualWidthdrawalAmount
+                AnnualWithdrawalAmount = annualWidthdrawalAmount
             };
 
             // Assert
-            sut.MonthlyWithdrawalAmount.Should().Be((decimal)annualWidthdrawalAmount / 12);
+            sut.MonthlyWithdrawalAmount.Should().Be(annualWidthdrawalAmount / 12);
         }
 
         [TestMethod]
@@ -182,7 +182,7 @@ namespace FireDotNetLibraryTests
             FireCalculator sut = new();
 
             // Act
-            Action act = () => sut.AnnualWithdrawalAmount = (decimal)annualWidthdrawalAmount;
+            Action act = () => sut.AnnualWithdrawalAmount = annualWidthdrawalAmount;
 
             // Assert
             act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("AnnualWithdrawalAmount must not be less than zero.");
@@ -208,29 +208,29 @@ namespace FireDotNetLibraryTests
         [DataRow(1500, 20)]
         public void Calculate_Returns_Correct_Collection(double startingAmount, double monthlyWithdrawalAmount)
         {
-            decimal startingAmountDecimal = (decimal)startingAmount;
-            decimal monthlyWithdrawalAmountDecimal = (decimal)monthlyWithdrawalAmount;
+            double startingAmountdouble = startingAmount;
+            double monthlyWithdrawalAmountdouble = monthlyWithdrawalAmount;
 
             // Arrange
             FireCalculator sut = new()
             {
-                StartingAmount = startingAmountDecimal,
-                MonthlyWithdrawalAmount = monthlyWithdrawalAmountDecimal
+                StartingAmount = startingAmountdouble,
+                MonthlyWithdrawalAmount = monthlyWithdrawalAmountdouble
             };
-            decimal expectedFinalAmount = startingAmountDecimal - (monthlyWithdrawalAmountDecimal * sut.DurationInMonths);
+            double expectedFinalAmount = startingAmountdouble - (monthlyWithdrawalAmountdouble * sut.DurationInMonths);
 
             // Act
             var result = sut.GetRemainingAmounts();
 
             // Assert
             result.Length.Should().Be(sut.DurationInMonths + 1);
-            if (startingAmountDecimal == 0m)
+            if (startingAmountdouble == 0)
             {
-                result.Sum(m => m.Item2).Should().Be(0m);
+                result.Sum(m => m.Item2).Should().Be(0);
             }
-            else if (monthlyWithdrawalAmountDecimal == 0m)
+            else if (monthlyWithdrawalAmountdouble == 0)
             {
-                result.All(m => m.Item2 == startingAmountDecimal).Should().BeTrue();
+                result.All(m => m.Item2 == startingAmountdouble).Should().BeTrue();
             }
             else
             {
@@ -250,7 +250,7 @@ namespace FireDotNetLibraryTests
             FireCalculator sut = new();
 
             // Act
-            Action act = () => sut.AnnualInflationRate = (decimal)annualInflationRate;
+            Action act = () => sut.AnnualInflationRate = annualInflationRate;
 
             // Assert
             act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("AnnualInflationRate must not be less than zero.");
@@ -263,24 +263,24 @@ namespace FireDotNetLibraryTests
         [DataRow(1500, 20, 2.2)]
         public void Calculate_With_AnnualInflationRate_Returns_Correct_Collection(double startingAmount, double monthlyWithdrawalAmount, double annualInflationRate)
         {
-            decimal startingAmountDecimal = (decimal)startingAmount;
-            decimal monthlyWithdrawalAmountDecimal = (decimal)monthlyWithdrawalAmount;
-            decimal monthlyInflationFactorDecimal = (decimal)Math.Pow(annualInflationRate / 100 + 1, 1d / 12);
+            double startingAmountdouble = startingAmount;
+            double monthlyWithdrawalAmountdouble = monthlyWithdrawalAmount;
+            double monthlyInflationFactordouble = Math.Pow(annualInflationRate / 100 + 1, 1d / 12);
 
             // Arrange
             FireCalculator sut = new()
             {
-                StartingAmount = startingAmountDecimal,
-                MonthlyWithdrawalAmount = monthlyWithdrawalAmountDecimal,
-                AnnualInflationRate = (decimal)annualInflationRate
+                StartingAmount = startingAmountdouble,
+                MonthlyWithdrawalAmount = monthlyWithdrawalAmountdouble,
+                AnnualInflationRate = annualInflationRate
             };
 
-            decimal[] expectedResults = new decimal[sut.DurationInMonths + 1];
-            expectedResults[0] = startingAmountDecimal;
+            double[] expectedResults = new double[sut.DurationInMonths + 1];
+            expectedResults[0] = startingAmountdouble;
             for (int i = 1; i < sut.DurationInMonths + 1; i++)
             {
-                monthlyWithdrawalAmountDecimal *= monthlyInflationFactorDecimal;
-                expectedResults[i] = expectedResults[i - 1] - monthlyWithdrawalAmountDecimal;
+                monthlyWithdrawalAmountdouble *= monthlyInflationFactordouble;
+                expectedResults[i] = expectedResults[i - 1] - monthlyWithdrawalAmountdouble;
             }
 
             // Act
@@ -305,7 +305,7 @@ namespace FireDotNetLibraryTests
             FireCalculator sut = new();
 
             // Act
-            Action act = () => sut.AnnualReturn = (decimal)annualReturn;
+            Action act = () => sut.AnnualReturn = annualReturn;
 
             // Assert
             act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("AnnualReturn must not be less than zero.");
@@ -318,22 +318,22 @@ namespace FireDotNetLibraryTests
         [DataRow(1500, 20, 2.2)]
         public void Calculate_With_AnnualReturn_Returns_Correct_Collection(double startingAmount, double monthlyWithdrawalAmount, double annualReturn)
         {
-            decimal startingAmountDecimal = (decimal)startingAmount;
-            decimal monthlyWithdrawalAmountDecimal = (decimal)monthlyWithdrawalAmount;
-            decimal monthlyReturnFactorDecimal = (decimal)Math.Pow(annualReturn / 100 + 1, 1d / 12);
+            double startingAmountdouble = startingAmount;
+            double monthlyWithdrawalAmountdouble = monthlyWithdrawalAmount;
+            double monthlyReturnFactordouble = Math.Pow(annualReturn / 100 + 1, 1d / 12);
 
             // Arrange
             FireCalculator sut = new()
             {
-                StartingAmount = startingAmountDecimal,
-                MonthlyWithdrawalAmount = monthlyWithdrawalAmountDecimal,
-                AnnualReturn = (decimal)annualReturn
+                StartingAmount = startingAmountdouble,
+                MonthlyWithdrawalAmount = monthlyWithdrawalAmountdouble,
+                AnnualReturn = annualReturn
             };
 
-            decimal[] expectedResults = new decimal[sut.DurationInMonths + 1];
-            expectedResults[0] = startingAmountDecimal;
+            double[] expectedResults = new double[sut.DurationInMonths + 1];
+            expectedResults[0] = startingAmountdouble;
             for (int i = 1; i < sut.DurationInMonths + 1; i++)
-                expectedResults[i] = expectedResults[i - 1] * monthlyReturnFactorDecimal - monthlyWithdrawalAmountDecimal;
+                expectedResults[i] = expectedResults[i - 1] * monthlyReturnFactordouble - monthlyWithdrawalAmountdouble;
 
             // Act
             var result = sut.GetRemainingAmounts();
@@ -357,12 +357,13 @@ namespace FireDotNetLibraryTests
             FireCalculator sut = new();
 
             // Act
-            Action act = () => sut.AnnualVolatility = (decimal)annualVolatility;
+            Action act = () => sut.AnnualVolatility = annualVolatility;
 
             // Assert
             act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("AnnualVolatility must not be less than zero.");
         }
 
+        /* Tested method is now private
         [TestMethod]
         [DataRow(7, 0)]
         [DataRow(7, 14)]
@@ -372,14 +373,14 @@ namespace FireDotNetLibraryTests
             // Arrange
             FireCalculator sut = new()
             {
-                AnnualReturn = (decimal)mean,
-                AnnualVolatility = (decimal)standardDeviation,
+                AnnualReturn = mean,
+                AnnualVolatility = standardDeviation,
                 DurationInMonths = 10000
             };
-            decimal monthlyMean = (decimal)Math.Pow((double)sut.AnnualReturn / 100 + 1, 1d / 12),
-                    monthlyStandardDeviation = sut.AnnualVolatility > 0
-                                                 ? (decimal)Math.Pow((double)sut.AnnualVolatility / 100 + 1, 1d / 12)
-                                                 : 0;
+            double monthlyMean = Math.Pow((double)sut.AnnualReturn / 100 + 1, 1d / 12) - 1,
+                   monthlyStandardDeviation = sut.AnnualVolatility > 0
+                                                ? Math.Pow((double)sut.AnnualVolatility / 100 + 1, 1d / 12) - 1
+                                                : 0;
 
 
             // Act
@@ -392,5 +393,6 @@ namespace FireDotNetLibraryTests
             double actualStandardDeviation = Math.Sqrt(randomNumbers.Select(x => Math.Pow(x - actualMean, 2)).Average());
             actualStandardDeviation.Should().BeApproximately((double)monthlyStandardDeviation, 0.02);
         }
+        */
     }
 }

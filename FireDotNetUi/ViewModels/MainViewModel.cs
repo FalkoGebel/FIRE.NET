@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FireDotNetLibrary;
 using OxyPlot;
 using OxyPlot.Axes;
@@ -26,6 +27,7 @@ namespace FireDotNetUi.ViewModels
             _durationInMonthsInput = _fireCalculator.DurationInMonths.ToString();
             _annualInflationRate = _fireCalculator.AnnualInflationRate.ToString("0.00");
             _annualReturn = _fireCalculator.AnnualReturn.ToString("0.00");
+            _annualVolatility = _fireCalculator.AnnualVolatility.ToString("0.00");
         }
 
         [ObservableProperty]
@@ -58,6 +60,37 @@ namespace FireDotNetUi.ViewModels
         [ObservableProperty]
         private string _annualReturn;
 
+        [ObservableProperty]
+        private string _annualVolatility;
+
+        [RelayCommand]
+        private void Calculate()
+        {
+            UpdatePlotModel();
+        }
+
+        partial void OnAnnualVolatilityChanged(string? oldValue, string newValue)
+        {
+            if (oldValue == null)
+                throw new ArgumentNullException(nameof(oldValue));
+
+            if (oldValue != newValue)
+            {
+                if (double.TryParse(newValue, System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.CurrentCulture, out double parsedValue) &&
+                    parsedValue >= 0)
+                {
+                    _annualVolatility = parsedValue.ToString("0.00");
+                    _fireCalculator.AnnualVolatility = parsedValue;
+                    UpdatePlotModel();
+                }
+                else
+                {
+                    AnnualVolatility = oldValue;
+                }
+            }
+        }
+
         partial void OnAnnualReturnChanged(string? oldValue, string newValue)
         {
             if (oldValue == null)
@@ -65,8 +98,8 @@ namespace FireDotNetUi.ViewModels
 
             if (oldValue != newValue)
             {
-                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.Number,
-                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue) &&
+                if (double.TryParse(newValue, System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.CurrentCulture, out double parsedValue) &&
                     parsedValue >= 0)
                 {
                     _annualReturn = parsedValue.ToString("0.00");
@@ -87,8 +120,8 @@ namespace FireDotNetUi.ViewModels
 
             if (oldValue != newValue)
             {
-                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.Number,
-                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue) &&
+                if (double.TryParse(newValue, System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.CurrentCulture, out double parsedValue) &&
                     parsedValue >= 0)
                 {
                     _annualInflationRate = parsedValue.ToString("0.00");
@@ -109,7 +142,7 @@ namespace FireDotNetUi.ViewModels
 
             if (oldValue != newValue)
             {
-                if (int.TryParse(newValue, System.Globalization.NumberStyles.AllowDecimalPoint,
+                if (int.TryParse(newValue, System.Globalization.NumberStyles.Integer,
                     System.Globalization.CultureInfo.CurrentCulture, out int parsedValue) &&
                     parsedValue > 0)
                 {
@@ -132,8 +165,8 @@ namespace FireDotNetUi.ViewModels
 
             if (oldValue != newValue)
             {
-                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.Number,
-                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue) &&
+                if (double.TryParse(newValue, System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.CurrentCulture, out double parsedValue) &&
                     parsedValue > 0)
                 {
                     _startingAmountInput = parsedValue.ToString("0.00");
@@ -154,8 +187,8 @@ namespace FireDotNetUi.ViewModels
 
             if (oldValue != newValue)
             {
-                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.Number,
-                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue) &&
+                if (double.TryParse(newValue, System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.CurrentCulture, out double parsedValue) &&
                     parsedValue >= 0)
                 {
                     _monthlyWithdrawalAmountInput = parsedValue.ToString("0.00");
@@ -177,8 +210,8 @@ namespace FireDotNetUi.ViewModels
 
             if (oldValue != newValue)
             {
-                if (decimal.TryParse(newValue, System.Globalization.NumberStyles.Number,
-                    System.Globalization.CultureInfo.CurrentCulture, out decimal parsedValue) &&
+                if (double.TryParse(newValue, System.Globalization.NumberStyles.Number,
+                    System.Globalization.CultureInfo.CurrentCulture, out double parsedValue) &&
                     parsedValue >= 0)
                 {
                     _annualWithdrawalAmountInput = parsedValue.ToString("0.00");
