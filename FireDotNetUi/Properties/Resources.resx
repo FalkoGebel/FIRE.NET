@@ -132,6 +132,9 @@
   <data name="MainView_AnnualReturn_Label" xml:space="preserve">
     <value>Annual Return:</value>
   </data>
+  <data name="MainView_AnnualVolatility_Label" xml:space="preserve">
+    <value>Annual Volatility:</value>
+  </data>
   <data name="MainView_PlotModel_RemainingAmount" xml:space="preserve">
     <value>Remaining Amount</value>
   </data>
@@ -142,6 +145,9 @@
     <value>Starting Amount:</value>
   </data>
   <data name="MainView_Title" xml:space="preserve">
-    <value>FIRE.NET v1.2.1</value>
+    <value>FIRE.NET v1.3.0</value>
+  </data>
+  <data name="MainView_Calculate_Button_Content" xml:space="preserve">
+    <value>Calculate</value>
   </data>
 </root>
