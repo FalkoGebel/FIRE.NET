@@ -196,9 +196,10 @@ namespace FireDotNetLibraryTests
 
             // Act
             var result = sut.GetRemainingAmounts();
+            var remainingAmounts = result.ElementAt(0);
 
             // Assert
-            result.Length.Should().Be(sut.DurationInMonths + 1);
+            remainingAmounts.Count.Should().Be(sut.DurationInMonths + 1);
         }
 
         [TestMethod]
@@ -221,22 +222,25 @@ namespace FireDotNetLibraryTests
 
             // Act
             var result = sut.GetRemainingAmounts();
+            var remainingAmounts = result.ElementAt(0);
 
             // Assert
-            result.Length.Should().Be(sut.DurationInMonths + 1);
+            result.Count.Should().Be(1);
+            remainingAmounts.Count.Should().Be(sut.DurationInMonths + 1);
+
             if (startingAmountdouble == 0)
             {
-                result.Sum(m => m.Item2).Should().Be(0);
+                remainingAmounts.Sum(m => m.Item2).Should().Be(0);
             }
             else if (monthlyWithdrawalAmountdouble == 0)
             {
-                result.All(m => m.Item2 == startingAmountdouble).Should().BeTrue();
+                remainingAmounts.All(m => m.Item2 == startingAmountdouble).Should().BeTrue();
             }
             else
             {
-                result[0].Item1.Should().Be(sut.StartingMonth);
-                result[^1].Item1.Should().Be(sut.EndingMonth);
-                result[^1].Item2.Should().Be(expectedFinalAmount);
+                remainingAmounts[0].Item1.Should().Be(sut.StartingMonth);
+                remainingAmounts[^1].Item1.Should().Be(sut.EndingMonth);
+                remainingAmounts[^1].Item2.Should().Be(expectedFinalAmount);
             }
         }
 
@@ -285,13 +289,14 @@ namespace FireDotNetLibraryTests
 
             // Act
             var result = sut.GetRemainingAmounts();
+            var remainingAmounts = result.ElementAt(0);
 
             // Assert
-            result[0].Item1.Should().Be(sut.StartingMonth);
-            result[^1].Item1.Should().Be(sut.EndingMonth);
+            remainingAmounts[0].Item1.Should().Be(sut.StartingMonth);
+            remainingAmounts[^1].Item1.Should().Be(sut.EndingMonth);
             for (int i = 0; i < sut.DurationInMonths + 1; i++)
             {
-                result[i].Item2.Should().Be(expectedResults[i]);
+                remainingAmounts[i].Item2.Should().Be(expectedResults[i]);
             }
         }
 
@@ -337,13 +342,14 @@ namespace FireDotNetLibraryTests
 
             // Act
             var result = sut.GetRemainingAmounts();
+            var remainingAmounts = result.ElementAt(0);
 
             // Assert
-            result[0].Item1.Should().Be(sut.StartingMonth);
-            result[^1].Item1.Should().Be(sut.EndingMonth);
+            remainingAmounts[0].Item1.Should().Be(sut.StartingMonth);
+            remainingAmounts[^1].Item1.Should().Be(sut.EndingMonth);
             for (int i = 0; i < sut.DurationInMonths + 1; i++)
             {
-                result[i].Item2.Should().Be(expectedResults[i]);
+                remainingAmounts[i].Item2.Should().Be(expectedResults[i]);
             }
         }
 
