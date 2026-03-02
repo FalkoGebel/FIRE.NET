@@ -10,6 +10,7 @@
         private double _annualInflationRate;
         private double _annualReturn;
         private double _annualVolatility;
+        private protected int _numberOfRuns = 1;
 
         public FireCalculator()
         {
@@ -188,30 +189,37 @@
             return output;
         }
 
-        public (DateTime, double)[] GetRemainingAmounts()
+        public List<List<(DateTime, double)>> GetRemainingAmounts()
         {
-            var output = new (DateTime, double)[DurationInMonths + 1];
-            DateTime currentMonth = StartingMonth;
-            double currentMonthlyWithdrawalAmount = MonthlyWithdrawalAmount;
-            double monthlyInflationFactorDecimal = Math.Pow(AnnualInflationRate / 100 + 1, 1d / 12);
-            var monthlyReturns = GetMonthlyReturns();
+            List<List<(DateTime, double)>> output = [];
 
-            if (StartingAmount > 0)
+            for (int run = 0; run < _numberOfRuns; run++)
             {
-                for (int i = 0; i < DurationInMonths + 1; i++)
+                var currentRun = new (DateTime, double)[DurationInMonths + 1];
+                DateTime currentMonth = StartingMonth;
+                double currentMonthlyWithdrawalAmount = MonthlyWithdrawalAmount;
+                double monthlyInflationFactorDecimal = Math.Pow(AnnualInflationRate / 100 + 1, 1d / 12);
+                var monthlyReturns = GetMonthlyReturns();
+
+                if (StartingAmount > 0)
                 {
-                    if (i == 0)
+                    for (int i = 0; i < DurationInMonths + 1; i++)
                     {
-                        output[i] = (currentMonth, StartingAmount);
-                        currentMonth = currentMonth.AddMonths(1).AddDays(-1);
-                    }
-                    else
-                    {
-                        currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
-                        output[i] = (currentMonth, output[i - 1].Item2 * (1 + monthlyReturns[i - 1]) - currentMonthlyWithdrawalAmount);
-                        currentMonth = currentMonth.AddDays(1).AddMonths(1).AddDays(-1);
+                        if (i == 0)
+                        {
+                            currentRun[i] = (currentMonth, StartingAmount);
+                            currentMonth = currentMonth.AddMonths(1).AddDays(-1);
+                        }
+                        else
+                        {
+                            currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
+                            currentRun[i] = (currentMonth, currentRun[i - 1].Item2 * (1 + monthlyReturns[i - 1]) - currentMonthlyWithdrawalAmount);
+                            currentMonth = currentMonth.AddDays(1).AddMonths(1).AddDays(-1);
+                        }
                     }
                 }
+
+                output.Add([.. currentRun]);
             }
 
             return output;

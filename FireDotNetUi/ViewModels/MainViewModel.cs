@@ -257,7 +257,7 @@ namespace FireDotNetUi.ViewModels
 
         private void UpdatePlotModel()
         {
-            var remainingAmountMonths = _fireCalculator.GetRemainingAmounts();
+            var runs = _fireCalculator.GetRemainingAmounts();
 
             PlotModelRemainingAmounts = new PlotModel
             {
@@ -267,20 +267,23 @@ namespace FireDotNetUi.ViewModels
                 DefaultFont = "Verdana",
                 DefaultFontSize = 16
             };
-            var lineSeries = new OxyPlot.Series.LineSeries
+
+            foreach (var run in runs)
             {
-                StrokeThickness = 2,
-                Color = OxyColors.SkyBlue,
-                ItemsSource = remainingAmountMonths.Select(m => new DataPoint(m.Item1.ToOADate(),
-                                                                              m.Item2 > 0 ? (double)Math.Round(m.Item2, 2) : 0))
-                                                   .ToList(),
-                TrackerFormatString = Properties.Resources.MainView_PlotModel_Month +
-                                      ": {2:dd.MM.yyyy}\n" +
-                                      Properties.Resources.MainView_PlotModel_RemainingAmount +
-                                      ": {4:#,0.00}",
-                CanTrackerInterpolatePoints = false,
-            };
-            PlotModelRemainingAmounts.Series.Add(lineSeries);
+                var lineSeries = new OxyPlot.Series.LineSeries
+                {
+                    StrokeThickness = 2,
+                    Color = OxyColors.SkyBlue,
+                    ItemsSource = run.Select(m => new DataPoint(m.Item1.ToOADate(), m.Item2 > 0 ? (double)Math.Round(m.Item2, 2) : 0))
+                                     .ToList(),
+                    TrackerFormatString = Properties.Resources.MainView_PlotModel_Month +
+                                          ": {2:dd.MM.yyyy}\n" +
+                                          Properties.Resources.MainView_PlotModel_RemainingAmount +
+                                          ": {4:#,0.00}",
+                    CanTrackerInterpolatePoints = false,
+                };
+                PlotModelRemainingAmounts.Series.Add(lineSeries);
+            }
 
             var dateAxis = new DateTimeAxis
             {
