@@ -257,8 +257,6 @@ namespace FireDotNetUi.ViewModels
 
         private void UpdatePlotModel()
         {
-            var runs = _fireCalculator.GetRemainingAmounts();
-
             PlotModelRemainingAmounts = new PlotModel
             {
                 Title = Properties.Resources.MainView_PlotModel_RemainingAmount,
@@ -268,19 +266,32 @@ namespace FireDotNetUi.ViewModels
                 DefaultFontSize = 16
             };
 
-            foreach (var run in runs)
+            var runs = _fireCalculator.GetRemainingAmounts();
+            var remainingAmounts = runs;
+
+            if (runs.Count > 10)
+            {
+                runs = [.. runs.OrderByDescending(r => r.Sum(ra => ra.Item2))];
+
+                remainingAmounts.Clear();
+                remainingAmounts.Add(runs.First());
+                remainingAmounts.Add(runs[runs.Count / 2]);
+                remainingAmounts.Add(runs.Last());
+            }
+
+            foreach (var ra in remainingAmounts)
             {
                 var lineSeries = new OxyPlot.Series.LineSeries
                 {
                     StrokeThickness = 2,
                     Color = OxyColors.SkyBlue,
-                    ItemsSource = run.Select(m => new DataPoint(m.Item1.ToOADate(), m.Item2 > 0 ? (double)Math.Round(m.Item2, 2) : 0))
+                    ItemsSource = ra.Select(m => new DataPoint(m.Item1.ToOADate(), m.Item2 > 0 ? (double)Math.Round(m.Item2, 2) : 0))
                                      .ToList(),
                     TrackerFormatString = Properties.Resources.MainView_PlotModel_Month +
                                           ": {2:dd.MM.yyyy}\n" +
                                           Properties.Resources.MainView_PlotModel_RemainingAmount +
                                           ": {4:#,0.00}",
-                    CanTrackerInterpolatePoints = false,
+                    CanTrackerInterpolatePoints = false
                 };
                 PlotModelRemainingAmounts.Series.Add(lineSeries);
             }
