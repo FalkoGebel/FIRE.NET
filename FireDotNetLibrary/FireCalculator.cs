@@ -2,7 +2,7 @@
 {
     public class FireCalculator
     {
-        private const int _maxNumberOfRuns = 10000;
+        private const int _maxNumberOfRuns = 100000;
 
         private DateTime _startingMonth;
         private DateTime _endingMonth;
@@ -233,6 +233,32 @@
                 }
 
                 output.Add([.. currentRun]);
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Calculates the average values for a sequence of date-value pairs across multiple lists.
+        /// </summary>
+        /// <remarks>The method assumes that all inner lists have the same length. If the input
+        /// lists are empty, the method will return an empty list.</remarks>
+        /// <param name="lists">A list of lists, where each inner list contains tuples of a <see langword="DateTime"/>
+        /// and a double value. Each inner list must have the same number of elements.</param>
+        /// <returns>A list of tuples, each containing the <see langword="DateTime"/> of the given first list
+        /// and the average of the corresponding double values from the input lists.</returns>
+        public static List<(DateTime, double)> CalculateAverageList(List<List<(DateTime, double)>> lists)
+        {
+            List<(DateTime, double)> output = [];
+
+            for (int j = 0; j < lists[0].Count; j++)
+            {
+                double sum = 0;
+
+                for (int i = 0; i < lists.Count; i++)
+                    sum += lists[i][j].Item2;
+
+                output.Add((lists[0][j].Item1, sum / lists.Count));
             }
 
             return output;

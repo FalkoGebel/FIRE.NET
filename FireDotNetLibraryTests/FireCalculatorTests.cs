@@ -400,5 +400,44 @@ namespace FireDotNetLibraryTests
             actualStandardDeviation.Should().BeApproximately((double)monthlyStandardDeviation, 0.02);
         }
         */
+
+        [TestMethod]
+        public void Calculate_Average_List_For_List_Of_Lists()
+        {
+            // Arrange
+            Random rnd = new();
+            List<List<(DateTime, double)>> lists = [];
+            List<(DateTime, double)> averageList = [];
+            DateTime now = DateTime.Now;
+
+            for (int i = 0; i < 10000; i++)
+            {
+                List<(DateTime, double)> list = [];
+
+                for (int j = 0; j < 1000; j++)
+                {
+                    double n = rnd.NextDouble() * Int64.MaxValue;
+                    list.Add((now, n));
+                }
+
+                lists.Add(list);
+            }
+
+            for (int i = 0; i < lists[0].Count; i++)
+            {
+                double sum = 0;
+
+                for (int j = 0; j < lists.Count; j++)
+                    sum += lists[j][i].Item2;
+
+                averageList.Add((now, sum / lists.Count));
+            }
+
+            // Act
+            List<(DateTime, double)> result = FireCalculator.CalculateAverageList(lists);
+
+            // Assert
+            result.Should().BeEquivalentTo(averageList);
+        }
     }
 }
