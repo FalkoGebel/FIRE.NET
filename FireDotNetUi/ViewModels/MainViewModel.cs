@@ -272,11 +272,12 @@ namespace FireDotNetUi.ViewModels
             if (runs.Count > 10)
             {
                 runs = [.. runs.OrderByDescending(r => r.Sum(ra => ra.Item2))];
+                int numberOfOnePercent = runs.Count / 100;
 
                 remainingAmounts.Clear();
-                remainingAmounts.Add(runs.First());
-                remainingAmounts.Add(runs[runs.Count / 2]);
-                remainingAmounts.Add(runs.Last());
+                remainingAmounts.Add(FireCalculator.CalculateAverageList([.. runs.Take(numberOfOnePercent)]));
+                remainingAmounts.Add(FireCalculator.CalculateAverageList(runs[(runs.Count / 2 - numberOfOnePercent / 2)..(runs.Count / 2 + numberOfOnePercent / 2)]));
+                remainingAmounts.Add(FireCalculator.CalculateAverageList([.. runs.Skip(runs.Count - numberOfOnePercent)]));
             }
 
             foreach (var ra in remainingAmounts)
