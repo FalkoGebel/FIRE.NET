@@ -257,16 +257,18 @@ namespace FireDotNetUi.ViewModels
 
         private void UpdatePlotModel()
         {
+            var runs = _fireCalculator.GetRemainingAmounts();
+            double probabilityOfDefault = FireCalculator.CalculateProbabilityOfDefaultAsPercentage(runs);
+
             PlotModelRemainingAmounts = new PlotModel
             {
-                Title = Properties.Resources.MainView_PlotModel_RemainingAmount,
+                Title = $"{Properties.Resources.MainView_PlotModel_RemainingAmount} -> {Properties.Resources.MainView_PlotModel_ProbabilityOfDefault}: {probabilityOfDefault:0.00}%",
                 TitlePadding = 20,
                 TitleFontSize = 20,
                 DefaultFont = "Verdana",
                 DefaultFontSize = 16
             };
 
-            var runs = _fireCalculator.GetRemainingAmounts();
             var remainingAmounts = runs;
 
             if (runs.Count > 10)

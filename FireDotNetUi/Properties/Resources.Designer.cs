@@ -133,6 +133,15 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Probability Of Default ähnelt.
+        /// </summary>
+        public static string MainView_PlotModel_ProbabilityOfDefault {
+            get {
+                return ResourceManager.GetString("MainView_PlotModel_ProbabilityOfDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Remaining Amount ähnelt.
         /// </summary>
         public static string MainView_PlotModel_RemainingAmount {
@@ -151,7 +160,7 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die FIRE.NET v1.3.0 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die FIRE.NET v2.0.0 ähnelt.
         /// </summary>
         public static string MainView_Title {
             get {

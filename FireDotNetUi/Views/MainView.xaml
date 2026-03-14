@@ -42,6 +42,6 @@
             <TextBox Text="{Binding AnnualVolatility, UpdateSourceTrigger=LostFocus}" MinWidth="75" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" />
             <Button Content="{x:Static r:Resources.MainView_Calculate_Button_Content}" Command="{Binding CalculateCommand}" Margin="10,0,0,0" VerticalContentAlignment="Center" Padding="5"/>
         </StackPanel>
-        <oxy:PlotView Grid.Row="3" Model="{Binding PlotModelRemainingAmounts}"/>
+        <oxy:PlotView Grid.Row="3" Model="{Binding PlotModelRemainingAmounts}" Margin="0,10,0,0"/>
     </Grid>
 </Window>
