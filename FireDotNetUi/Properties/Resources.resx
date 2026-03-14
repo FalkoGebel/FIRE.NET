@@ -145,9 +145,12 @@
     <value>Starting Amount:</value>
   </data>
   <data name="MainView_Title" xml:space="preserve">
-    <value>FIRE.NET v1.3.0</value>
+    <value>FIRE.NET v2.0.0</value>
   </data>
   <data name="MainView_Calculate_Button_Content" xml:space="preserve">
     <value>Calculate</value>
+  </data>
+  <data name="MainView_PlotModel_ProbabilityOfDefault" xml:space="preserve">
+    <value>Probability Of Default</value>
   </data>
 </root>

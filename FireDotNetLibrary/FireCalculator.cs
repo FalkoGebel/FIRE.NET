@@ -263,5 +263,15 @@
 
             return output;
         }
+
+        /// <summary>
+        /// Calculates the probability of default for a sequence of multiple lists.
+        /// The probability of default is defined as the percentage of lists where the last double value is negative.
+        /// </summary>
+        /// <param name="lists">A list of lists, where each inner list contains tuples of a <see langword="DateTime"/>
+        /// and a double value. Each inner list must have the same number of elements.</param>
+        /// <returns>The probality of default for the given list of lists.</returns>
+        public static double CalculateProbabilityOfDefaultAsPercentage(List<List<(DateTime, double)>> lists)
+            => lists.Count(x => x.Last().Item2 < 0) / (double)lists.Count * 100;
     }
 }

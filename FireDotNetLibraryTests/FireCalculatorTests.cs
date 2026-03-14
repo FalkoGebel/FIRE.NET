@@ -439,5 +439,43 @@ namespace FireDotNetLibraryTests
             // Assert
             result.Should().BeEquivalentTo(averageList);
         }
+
+        [TestMethod]
+        [DataRow(0, 0)]
+        [DataRow(-10, 10)]
+        [DataRow(-1, 10)]
+        [DataRow(-100, 10)]
+        public void Calculate_probability_Of_Default_For_List_Of_Lists(double minValue, double maxValue)
+        {
+            // Arrange
+            Random rnd = new();
+            List<List<(DateTime, double)>> lists = [];
+            DateTime now = DateTime.Now;
+            int numberOfNegativeLastValues = 0;
+
+            for (int i = 0; i < 10000; i++)
+            {
+                List<(DateTime, double)> list = [];
+
+                for (int j = 0; j < 10; j++)
+                {
+                    double n = rnd.NextDouble() * (maxValue - minValue) + minValue;
+                    list.Add((now, n));
+                }
+
+                lists.Add(list);
+
+                if (list[^1].Item2 < 0)
+                    numberOfNegativeLastValues++;
+            }
+
+            double expectedProbabilityOfDefault = (double)numberOfNegativeLastValues / lists.Count * 100;
+
+            // Act
+            double probabilityOfDefault = FireCalculator.CalculateProbabilityOfDefaultAsPercentage(lists);
+
+            // Assert
+            probabilityOfDefault.Should().Be(expectedProbabilityOfDefault);
+        }
     }
 }
