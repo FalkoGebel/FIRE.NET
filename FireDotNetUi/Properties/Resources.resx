@@ -153,4 +153,10 @@
   <data name="MainView_PlotModel_ProbabilityOfDefault" xml:space="preserve">
     <value>Probability Of Default</value>
   </data>
+  <data name="MainView_PlotModel_Runs" xml:space="preserve">
+    <value>runs</value>
+  </data>
+  <data name="MainView_PlotModel_Seconds" xml:space="preserve">
+    <value>seconds</value>
+  </data>
 </root>

@@ -257,6 +257,7 @@ namespace FireDotNetUi.ViewModels
 
         private void UpdatePlotModel()
         {
+            DateTime startTime = DateTime.Now;
             var runs = _fireCalculator.GetRemainingAmounts();
             double probabilityOfDefault = FireCalculator.CalculateProbabilityOfDefaultAsPercentage(runs);
 
@@ -281,6 +282,9 @@ namespace FireDotNetUi.ViewModels
                 remainingAmounts.Add(FireCalculator.CalculateAverageList(runs[(runs.Count / 2 - numberOfOnePercent / 2)..(runs.Count / 2 + numberOfOnePercent / 2)]));
                 remainingAmounts.Add(FireCalculator.CalculateAverageList([.. runs.Skip(runs.Count - numberOfOnePercent)]));
             }
+
+            TimeSpan duration = DateTime.Now - startTime;
+            PlotModelRemainingAmounts.Subtitle = $"{runs.Count:#,0} {Properties.Resources.MainView_PlotModel_Runs} -> {duration.TotalSeconds:0.00} {Properties.Resources.MainView_PlotModel_Seconds}";
 
             foreach (var ra in remainingAmounts)
             {
