@@ -151,6 +151,24 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die runs ähnelt.
+        /// </summary>
+        public static string MainView_PlotModel_Runs {
+            get {
+                return ResourceManager.GetString("MainView_PlotModel_Runs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die seconds ähnelt.
+        /// </summary>
+        public static string MainView_PlotModel_Seconds {
+            get {
+                return ResourceManager.GetString("MainView_PlotModel_Seconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Starting Amount: ähnelt.
         /// </summary>
         public static string MainView_StartAmount_Label {
