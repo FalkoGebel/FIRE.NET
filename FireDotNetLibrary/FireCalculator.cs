@@ -2,8 +2,6 @@
 {
     public class FireCalculator
     {
-        private const int _maxNumberOfRuns = 100000;
-
         private DateTime _startingMonth;
         private DateTime _endingMonth;
         private int _durationInMonths;
@@ -12,12 +10,14 @@
         private double _annualInflationRate;
         private double _annualReturn;
         private double _annualVolatility;
+        private int _numberOfMultipleRuns;
         private int _numberOfRuns;
 
         public FireCalculator()
         {
             StartingMonth = DateTime.Now;
             DurationInMonths = 12 * 30; // Default to 30 years
+            _numberOfMultipleRuns = 10000;
             _numberOfRuns = 1;
         }
 
@@ -141,10 +141,24 @@
             }
         }
 
+        public int NumberOfMultipleRuns
+        {
+            get => _numberOfMultipleRuns;
+
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_NumberOfMultipleRuns_Set_ArgumentOutOfRangeException);
+
+                _numberOfMultipleRuns = value;
+                UpdateNumberOfRuns();
+            }
+        }
+
         private void UpdateNumberOfRuns()
         {
             if (AnnualVolatility != 0 && AnnualReturn != 0)
-                _numberOfRuns = _maxNumberOfRuns;
+                _numberOfRuns = NumberOfMultipleRuns;
             else
                 _numberOfRuns = 1;
         }
