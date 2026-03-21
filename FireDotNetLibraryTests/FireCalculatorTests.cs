@@ -477,5 +477,48 @@ namespace FireDotNetLibraryTests
             // Assert
             probabilityOfDefault.Should().Be(expectedProbabilityOfDefault);
         }
+
+        [TestMethod]
+        [DataRow(0)]
+        [DataRow(-1)]
+        [DataRow(-12)]
+        [DataRow(-1213)]
+        public void Set_Invalid_NumberOfMultipleRuns_Throws_Exception(int numberOfMultipleRuns)
+        {
+            // Arrange
+            FireCalculator sut = new();
+
+            // Act
+            Action act = () => sut.NumberOfMultipleRuns = numberOfMultipleRuns;
+
+            // Assert
+            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("NumberOfMultipleRuns has to be positive.");
+        }
+
+        [TestMethod]
+        [DataRow(1)]
+        [DataRow(2)]
+        [DataRow(5)]
+        [DataRow(10)]
+        [DataRow(100)]
+        [DataRow(1000)]
+        [DataRow(10000)]
+        [DataRow(100000)]
+        public void Set_Valid_NumberOfMultipleRuns_And_Get_Correct_Number_Of_Runs_From_Calculation(int numberOfMultipleRuns)
+        {
+            // Arrange
+            FireCalculator sut = new()
+            {
+                AnnualReturn = 2,
+                AnnualVolatility = 1,
+                NumberOfMultipleRuns = numberOfMultipleRuns
+            };
+
+            // Act
+            var result = sut.GetRemainingAmounts();
+
+            // Assert
+            result.Count.Should().Be(numberOfMultipleRuns);
+        }
     }
 }

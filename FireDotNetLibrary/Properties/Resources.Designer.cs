@@ -122,5 +122,14 @@ namespace FireDotNetLibrary.Properties {
                 return ResourceManager.GetString("FireCalculator_MonthlyWithdrawalAmount_Set_ArgumentOutOfRangeException", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die NumberOfMultipleRuns has to be positive. ähnelt.
+        /// </summary>
+        public static string FireCalculator_NumberOfMultipleRuns_Set_ArgumentOutOfRangeException {
+            get {
+                return ResourceManager.GetString("FireCalculator_NumberOfMultipleRuns_Set_ArgumentOutOfRangeException", resourceCulture);
+            }
+        }
     }
 }

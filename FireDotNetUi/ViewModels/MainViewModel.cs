@@ -63,10 +63,25 @@ namespace FireDotNetUi.ViewModels
         [ObservableProperty]
         private string _annualVolatility;
 
+        [ObservableProperty]
+        private int[] _numberOfMultipleRuns = [1000, 10000, 100000, 1000000];
+
+        [ObservableProperty]
+        private int _selectedNumberOfMultipleRuns = 10000;
+
         [RelayCommand]
         private void Calculate()
         {
             UpdatePlotModel();
+        }
+
+        partial void OnSelectedNumberOfMultipleRunsChanged(int oldValue, int newValue)
+        {
+            if (oldValue != newValue)
+            {
+                _fireCalculator.NumberOfMultipleRuns = newValue;
+                UpdatePlotModel();
+            }
         }
 
         partial void OnAnnualVolatilityChanged(string? oldValue, string newValue)
