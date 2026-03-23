@@ -1,4 +1,6 @@
-﻿namespace FireDotNetLibrary
+﻿using System.Collections.Concurrent;
+
+namespace FireDotNetLibrary
 {
     public class FireCalculator
     {
@@ -16,7 +18,7 @@
         public FireCalculator()
         {
             StartingMonth = DateTime.Now;
-            DurationInMonths = 12 * 30; // Default to 30 years
+            DurationInMonths = 12 * 30;
             _numberOfMultipleRuns = 10000;
             _numberOfRuns = 1;
         }
@@ -180,12 +182,12 @@
             return (y1 * standardDeviation + mean, y2 * standardDeviation + mean);
         }
 
-        private double[] GetMonthlyReturns()
+        private double[] GetMonthlyReturns(Random random)
         {
             double[] output = new double[DurationInMonths];
 
             if (AnnualReturn == 0)
-                return output; // [.. output.Select(x => 1d)];
+                return output;
 
             double monthlyReturn = Math.Pow(AnnualReturn / 100 + 1, 1d / 12) - 1;
 
@@ -197,7 +199,6 @@
             else
             {
                 double monthlyVolatility = Math.Pow(AnnualVolatility / 100 + 1, 1d / 12) - 1;
-                Random random = new();
                 List<double> monthlyReturns = [];
 
                 while (monthlyReturns.Count < DurationInMonths)
@@ -218,15 +219,16 @@
 
         public List<List<(DateTime, double)>> GetRemainingAmounts()
         {
-            List<List<(DateTime, double)>> output = [];
+            ConcurrentBag<List<(DateTime, double)>> output = [];
+            int seed = (int)DateTime.Now.Ticks;
 
-            for (int run = 0; run < _numberOfRuns; run++)
+            Parallel.For(0, _numberOfRuns, run =>
             {
                 var currentRun = new (DateTime, double)[DurationInMonths + 1];
                 DateTime currentMonth = StartingMonth;
                 double currentMonthlyWithdrawalAmount = MonthlyWithdrawalAmount;
                 double monthlyInflationFactorDecimal = Math.Pow(AnnualInflationRate / 100 + 1, 1d / 12);
-                var monthlyReturns = GetMonthlyReturns();
+                var monthlyReturns = GetMonthlyReturns(new Random(seed + run));
 
                 if (StartingAmount > 0)
                 {
@@ -247,9 +249,9 @@
                 }
 
                 output.Add([.. currentRun]);
-            }
+            });
 
-            return output;
+            return [.. output];
         }
 
         /// <summary>
