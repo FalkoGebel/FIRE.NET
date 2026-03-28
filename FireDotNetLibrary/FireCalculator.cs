@@ -14,6 +14,7 @@ namespace FireDotNetLibrary
         private double _annualVolatility;
         private int _numberOfMultipleRuns;
         private int _numberOfRuns;
+        private List<double> _monthlyWithdrawalAmounts;
 
         public FireCalculator()
         {
@@ -21,6 +22,8 @@ namespace FireDotNetLibrary
             DurationInMonths = 12 * 30;
             _numberOfMultipleRuns = 10000;
             _numberOfRuns = 1;
+            _monthlyWithdrawalAmounts = [];
+            UpdateMonthlyWithdrawalAmounts();
         }
 
         public DateTime StartingMonth
@@ -54,6 +57,7 @@ namespace FireDotNetLibrary
                 }
 
                 _durationInMonths = newDurationInMonths;
+                UpdateMonthlyWithdrawalAmounts();
             }
         }
 
@@ -71,6 +75,19 @@ namespace FireDotNetLibrary
             }
         }
 
+        private void UpdateMonthlyWithdrawalAmounts()
+        {
+            _monthlyWithdrawalAmounts = [];
+            double currentMonthlyWithdrawalAmount = MonthlyWithdrawalAmount;
+            double monthlyInflationFactorDecimal = Math.Pow(AnnualInflationRate / 100 + 1, 1d / 12);
+
+            for (int i = 0; i < DurationInMonths; i++)
+            {
+                currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
+                _monthlyWithdrawalAmounts.Add(currentMonthlyWithdrawalAmount);
+            }
+        }
+
         public double StartingAmount { get; set; }
 
         public double MonthlyWithdrawalAmount
@@ -84,6 +101,7 @@ namespace FireDotNetLibrary
 
                 _monthlyWithdrawalAmount = value;
                 _annualWithdrawalAmount = value * 12;
+                UpdateMonthlyWithdrawalAmounts();
             }
         }
 
@@ -112,6 +130,7 @@ namespace FireDotNetLibrary
                     throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_AnnualInflationRate_Set_ArgumentOutOfRangeException);
 
                 _annualInflationRate = value;
+                UpdateMonthlyWithdrawalAmounts();
             }
         }
 
@@ -226,8 +245,8 @@ namespace FireDotNetLibrary
             {
                 var currentRun = new (DateTime, double)[DurationInMonths + 1];
                 DateTime currentMonth = StartingMonth;
-                double currentMonthlyWithdrawalAmount = MonthlyWithdrawalAmount;
-                double monthlyInflationFactorDecimal = Math.Pow(AnnualInflationRate / 100 + 1, 1d / 12);
+                //               double currentMonthlyWithdrawalAmount = MonthlyWithdrawalAmount;
+                //               double monthlyInflationFactorDecimal = Math.Pow(AnnualInflationRate / 100 + 1, 1d / 12);
                 var monthlyReturns = GetMonthlyReturns(new Random(seed + run));
 
                 if (StartingAmount > 0)
@@ -241,8 +260,9 @@ namespace FireDotNetLibrary
                         }
                         else
                         {
-                            currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
-                            currentRun[i] = (currentMonth, currentRun[i - 1].Item2 * (1 + monthlyReturns[i - 1]) - currentMonthlyWithdrawalAmount);
+                            //                            currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
+                            //                            currentRun[i] = (currentMonth, currentRun[i - 1].Item2 * (1 + monthlyReturns[i - 1]) - currentMonthlyWithdrawalAmount);
+                            currentRun[i] = (currentMonth, currentRun[i - 1].Item2 * (1 + monthlyReturns[i - 1]) - _monthlyWithdrawalAmounts[i - 1]);
                             currentMonth = currentMonth.AddDays(1).AddMonths(1).AddDays(-1);
                         }
                     }
