@@ -141,4 +141,7 @@
   <data name="FireCalculator_AnnualVolatility_Set_ArgumentOutOfRangeException" xml:space="preserve">
     <value>AnnualVolatility must not be less than zero.</value>
   </data>
+  <data name="FireCalculator_AddCashFlowPeriod_ArgumentException" xml:space="preserve">
+    <value>EndingMonth has to follow StartingMonth.</value>
+  </data>
 </root>

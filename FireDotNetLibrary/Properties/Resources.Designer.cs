@@ -61,6 +61,15 @@ namespace FireDotNetLibrary.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die EndingMonth has to follow StartingMonth. ähnelt.
+        /// </summary>
+        public static string FireCalculator_AddCashFlowPeriod_ArgumentException {
+            get {
+                return ResourceManager.GetString("FireCalculator_AddCashFlowPeriod_ArgumentException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die AnnualInflationRate must not be less than zero. ähnelt.
         /// </summary>
         public static string FireCalculator_AnnualInflationRate_Set_ArgumentOutOfRangeException {
