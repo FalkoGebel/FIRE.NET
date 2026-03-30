@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using FireDotNetLibrary.Models;
+using System.Collections.Concurrent;
 
 namespace FireDotNetLibrary
 {
@@ -14,15 +15,22 @@ namespace FireDotNetLibrary
         private double _annualVolatility;
         private int _numberOfMultipleRuns;
         private int _numberOfRuns;
+        private List<CashFlowPeriod> _cashFlowPeriods;
         private List<double> _monthlyWithdrawalAmounts;
 
         public FireCalculator()
         {
-            StartingMonth = DateTime.Now;
-            DurationInMonths = 12 * 30;
+            //StartingMonth = DateTime.Now;
+            //DurationInMonths = 12 * 30;
             _numberOfMultipleRuns = 10000;
             _numberOfRuns = 1;
             _monthlyWithdrawalAmounts = [];
+
+            DateTime now = DateTime.Now,
+                     startingMonth = new(now.Year, now.Month, 1),
+                     endingMonth = startingMonth.AddMonths(12 * 30).AddDays(-1);
+            _cashFlowPeriods = [new CashFlowPeriod() { StartingMonth = startingMonth, EndingMonth = endingMonth, MonthlyAmount = 500 }];
+
             UpdateMonthlyWithdrawalAmounts();
         }
 
@@ -176,6 +184,8 @@ namespace FireDotNetLibrary
             }
         }
 
+        public List<CashFlowPeriod> CashFlowPeriods { get => _cashFlowPeriods; }
+
         private void UpdateNumberOfRuns()
         {
             if (AnnualVolatility != 0 && AnnualReturn != 0)
@@ -309,5 +319,30 @@ namespace FireDotNetLibrary
         /// <returns>The probality of default for the given list of lists.</returns>
         public static double CalculateProbabilityOfDefaultAsPercentage(List<List<(DateTime, double)>> lists)
             => lists.Count(x => x.Last().Item2 < 0) / (double)lists.Count * 100;
+
+        /// <summary>
+        /// Adds a new cash flow period with starting month and ending month based on the given values and the specified monthly amount.
+        /// </summary>
+        /// <param name="startingMonth">The starting month of the cash flow period. The day is ignored; the first day of the month is always used.</param>
+        /// <param name="endingMonth">The ending month of the cash flow period. Must follow the starting month. The day is ignored;
+        /// the last day of the month is always used.
+        /// <param name="amount">The monthly amount that will be the base for the amounts of each month during the specified period.</param>
+        /// <exception cref="ArgumentOutOfRangeException">This is triggered if the end month does not follow the start month.</exception>
+        public void AddCashFlowPeriod(DateTime startingMonth, DateTime endingMonth, double amount)
+        {
+            if (endingMonth <= startingMonth)
+                throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_AddCashFlowPeriod_ArgumentException);
+
+            _cashFlowPeriods.Add(new CashFlowPeriod()
+            {
+                StartingMonth = new DateTime(startingMonth.Year, startingMonth.Month, 1),
+                EndingMonth = (new DateTime(endingMonth.Year, endingMonth.Month, 1)).AddMonths(1).AddDays(-1),
+                MonthlyAmount = amount
+            });
+
+            // TODO - Update StartingMonth based on the earliest starting month of all cash flow periods
+            // TODO - Update EndingMonth based on the latest ending month of all cash flow periods. Update DurationInMonths accordingly.
+            // TODO - Run all tests.
+        }
     }
 }

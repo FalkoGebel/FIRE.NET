@@ -520,5 +520,73 @@ namespace FireDotNetLibraryTests
             // Assert
             result.Count.Should().Be(numberOfMultipleRuns);
         }
+
+        [TestMethod]
+        public void Init_FireCalculator_And_Get_Standard_CashFlowPeriods()
+        {
+            // Arrange
+            FireCalculator sut = new();
+            var today = DateTime.Now;
+            var expectedStartingMonth = new DateTime(today.Year, today.Month, 1);
+            var expectedEndingMonth = expectedStartingMonth.AddMonths(12 * 30).AddDays(-1);
+
+            // Act
+            var result = sut.CashFlowPeriods;
+
+            // Assert
+            result.Count.Should().Be(1);
+            result[0].StartingMonth.Should().Be(expectedStartingMonth);
+            result[0].EndingMonth.Should().Be(expectedEndingMonth);
+            result[0].MonthlyAmount.Should().Be(500);
+        }
+
+        [TestMethod]
+        [DataRow(2025, 7, 1, 2020, 9, 30, 250)]
+        [DataRow(2025, 7, 1, 2025, 7, 1, 250)]
+        [DataRow(2025, 7, 10, 2025, 7, 1, 250)]
+        [DataRow(2025, 7, 1, 1999, 8, 31, 250)]
+        public void Add_Invalid_CashFlowPeriods_Throws_Exception(int startingYear, int startingMonthNumber, int startingDay,
+            int endingYear, int endingMonthNumber, int endingDay, double amount)
+        {
+            // Arrange
+            FireCalculator sut = new();
+            var startingMonth = new DateTime(startingYear, startingMonthNumber, startingDay);
+            var endingMonth = new DateTime(endingYear, endingMonthNumber, endingDay);
+
+            // Act
+            Action act = () => sut.AddCashFlowPeriod(startingMonth, endingMonth, amount);
+
+            // Assert
+            act.Should().Throw<ArgumentException>().WithMessage("EndingMonth has to follow StartingMonth.");
+        }
+
+        [TestMethod]
+        [DataRow(2020, 7, 1, 2025, 9, 30, 250)]
+        [DataRow(2020, 7, 1, 2025, 9, 30, -250)]
+        [DataRow(2020, 7, 1, 2025, 9, 30, 0)]
+        [DataRow(2020, 7, 1, 2085, 5, 1, 0.01)]
+        [DataRow(1965, 1, 30, 1965, 1, 31, 999)]
+        [DataRow(1966, 2, 5, 2066, 1, 5, -33.33)]
+        public void Add_Another_CashFlowPeriods_And_Get_Correct_CashFlowPeriods(int startingYear, int startingMonthNumber, int startingDay,
+            int endingYear, int endingMonthNumber, int endingDay, double amount)
+        {
+            // Arrange
+            FireCalculator sut = new();
+            var startingMonth = new DateTime(startingYear, startingMonthNumber, startingDay);
+            var endingMonth = new DateTime(endingYear, endingMonthNumber, endingDay);
+            var monthAfterEndingMonth = endingMonth.AddMonths(1);
+            var expectedStartingMonth = new DateTime(startingYear, startingMonthNumber, 1);
+            var expectedEndingMonth = new DateTime(monthAfterEndingMonth.Year, monthAfterEndingMonth.Month, 1).AddDays(-1);
+
+            // Act
+            sut.AddCashFlowPeriod(startingMonth, endingMonth, amount);
+            var result = sut.CashFlowPeriods;
+
+            // Assert
+            result.Count.Should().Be(2);
+            result[1].StartingMonth.Should().Be(expectedStartingMonth);
+            result[1].EndingMonth.Should().Be(expectedEndingMonth);
+            result[1].MonthlyAmount.Should().Be(amount);
+        }
     }
 }
