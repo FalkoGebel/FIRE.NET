@@ -23,170 +23,170 @@ namespace FireDotNetLibraryTests
             sut.DurationInMonths.Should().Be(expectedDurationInMonths);
             sut.EndingMonth.Should().Be(expectedEndingMonth);
             sut.StartingAmount.Should().Be(0);
-            sut.MonthlyWithdrawalAmount.Should().Be(0);
-            sut.AnnualWithdrawalAmount.Should().Be(0);
+            //sut.MonthlyWithdrawalAmount.Should().Be(0);
+            //sut.AnnualWithdrawalAmount.Should().Be(0);
             sut.AnnualInflationRate.Should().Be(0);
         }
 
-        [TestMethod]
-        [DataRow(2024, 1)]
-        [DataRow(2039, 5)]
-        [DataRow(2010, 11)]
-        [DataRow(1999, 7)]
-        public void Set_StartMonth_Updates_EndMonth(int startingYear, int startingMonth)
-        {
-            // Arrange
-            FireCalculator sut = new();
-            var newStartingMonth = new DateTime(startingYear, startingMonth, 15);
+        //[TestMethod]
+        //[DataRow(2024, 1)]
+        //[DataRow(2039, 5)]
+        //[DataRow(2010, 11)]
+        //[DataRow(1999, 7)]
+        //public void Set_StartMonth_Updates_EndMonth(int startingYear, int startingMonth)
+        //{
+        //    // Arrange
+        //    FireCalculator sut = new();
+        //    var newStartingMonth = new DateTime(startingYear, startingMonth, 15);
 
-            // Act
-            sut.StartingMonth = newStartingMonth;
+        //    // Act
+        //    sut.StartingMonth = newStartingMonth;
 
-            // Assert
-            sut.StartingMonth.Should().Be(new DateTime(startingYear, startingMonth, 1));
-            sut.EndingMonth.Should().Be(sut.StartingMonth.AddMonths(12 * 30).AddDays(-1));
-        }
+        //    // Assert
+        //    sut.StartingMonth.Should().Be(new DateTime(startingYear, startingMonth, 1));
+        //    sut.EndingMonth.Should().Be(sut.StartingMonth.AddMonths(12 * 30).AddDays(-1));
+        //}
 
-        [TestMethod]
-        [DataRow(2 * 12)]
-        [DataRow(18)]
-        [DataRow(12 * 55)]
-        [DataRow(33 * 12 + 4)]
-        public void Set_Duration_Updates_EndMonth(int months)
-        {
-            // Arrange + Act
-            FireCalculator sut = new()
-            {
-                DurationInMonths = months
-            };
+        //[TestMethod]
+        //[DataRow(2 * 12)]
+        //[DataRow(18)]
+        //[DataRow(12 * 55)]
+        //[DataRow(33 * 12 + 4)]
+        //public void Set_Duration_Updates_EndMonth(int months)
+        //{
+        //    // Arrange + Act
+        //    FireCalculator sut = new()
+        //    {
+        //        DurationInMonths = months
+        //    };
 
-            // Assert
-            sut.EndingMonth.Should().Be(sut.StartingMonth.AddMonths(months).AddDays(-1));
-        }
+        //    // Assert
+        //    sut.EndingMonth.Should().Be(sut.StartingMonth.AddMonths(months).AddDays(-1));
+        //}
 
-        [TestMethod]
-        [DataRow(0)]
-        [DataRow(-1)]
-        [DataRow(-11)]
-        [DataRow(-15795035)]
-        public void Set_Invalid_Duration_Throws_Exception(int months)
-        {
-            // Arrange
-            FireCalculator sut = new();
+        //[TestMethod]
+        //[DataRow(0)]
+        //[DataRow(-1)]
+        //[DataRow(-11)]
+        //[DataRow(-15795035)]
+        //public void Set_Invalid_Duration_Throws_Exception(int months)
+        //{
+        //    // Arrange
+        //    FireCalculator sut = new();
 
-            // Act
-            Action act = () => sut.DurationInMonths = months;
+        //    // Act
+        //    Action act = () => sut.DurationInMonths = months;
 
-            // Assert
-            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("DurationInMonths has to be positive.");
-        }
+        //    // Assert
+        //    act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("DurationInMonths has to be positive.");
+        //}
 
-        [TestMethod]
-        [DataRow(1, 15)]
-        [DataRow(5, 10)]
-        [DataRow(11, 12)]
-        [DataRow(7, 2)]
-        [DataRow(12 * 10, 20)]
-        [DataRow(12 * 15, 1)]
-        public void Set_EndMonth_Updates_Duration(int months, int days)
-        {
-            // Arrange
-            FireCalculator sut = new();
-            var newEndingMonth = sut.StartingMonth.AddDays(-days).AddMonths(months);
+        //[TestMethod]
+        //[DataRow(1, 15)]
+        //[DataRow(5, 10)]
+        //[DataRow(11, 12)]
+        //[DataRow(7, 2)]
+        //[DataRow(12 * 10, 20)]
+        //[DataRow(12 * 15, 1)]
+        //public void Set_EndMonth_Updates_Duration(int months, int days)
+        //{
+        //    // Arrange
+        //    FireCalculator sut = new();
+        //    var newEndingMonth = sut.StartingMonth.AddDays(-days).AddMonths(months);
 
-            // Act
-            sut.EndingMonth = newEndingMonth;
+        //    // Act
+        //    sut.EndingMonth = newEndingMonth;
 
-            // Assert
-            sut.DurationInMonths.Should().Be(months);
-        }
+        //    // Assert
+        //    sut.DurationInMonths.Should().Be(months);
+        //}
 
-        [TestMethod]
-        [DataRow(0, 1)]
-        [DataRow(-1, 5)]
-        [DataRow(-11, 17)]
-        public void Set_Invalid_EndMonth_Throws_Exception(int months, int days)
-        {
-            // Arrange
-            FireCalculator sut = new();
-            var newEndingMonth = sut.StartingMonth.AddDays(-days).AddMonths(months);
+        //[TestMethod]
+        //[DataRow(0, 1)]
+        //[DataRow(-1, 5)]
+        //[DataRow(-11, 17)]
+        //public void Set_Invalid_EndMonth_Throws_Exception(int months, int days)
+        //{
+        //    // Arrange
+        //    FireCalculator sut = new();
+        //    var newEndingMonth = sut.StartingMonth.AddDays(-days).AddMonths(months);
 
-            // Act
-            Action act = () => sut.EndingMonth = newEndingMonth;
+        //    // Act
+        //    Action act = () => sut.EndingMonth = newEndingMonth;
 
-            // Assert
-            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("EndingMonth must not be earlier than StartingMonth.");
-        }
+        //    // Assert
+        //    act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("EndingMonth must not be earlier than StartingMonth.");
+        //}
 
-        [TestMethod]
-        [DataRow(100)]
-        [DataRow(5)]
-        [DataRow(12)]
-        [DataRow(2.548)]
-        [DataRow(12 * 10)]
-        [DataRow(12.63874 * 15)]
-        public void Set_MontlyWithdrawalAmount_Updates_AnnualWithdrawalAmount(double monthlyWidthdrawalAmount)
-        {
-            // Arrange + Act
-            FireCalculator sut = new()
-            {
-                MonthlyWithdrawalAmount = monthlyWidthdrawalAmount
-            };
+        //[TestMethod]
+        //[DataRow(100)]
+        //[DataRow(5)]
+        //[DataRow(12)]
+        //[DataRow(2.548)]
+        //[DataRow(12 * 10)]
+        //[DataRow(12.63874 * 15)]
+        //public void Set_MontlyWithdrawalAmount_Updates_AnnualWithdrawalAmount(double monthlyWidthdrawalAmount)
+        //{
+        //    // Arrange + Act
+        //    FireCalculator sut = new()
+        //    {
+        //        MonthlyWithdrawalAmount = monthlyWidthdrawalAmount
+        //    };
 
-            // Assert
-            sut.AnnualWithdrawalAmount.Should().Be(monthlyWidthdrawalAmount * 12);
-        }
+        //    // Assert
+        //    sut.AnnualWithdrawalAmount.Should().Be(monthlyWidthdrawalAmount * 12);
+        //}
 
-        [TestMethod]
-        [DataRow(-0.00001)]
-        [DataRow(-1)]
-        [DataRow(-1934.2134)]
-        public void Set_Invalid_MontlyWithdrawalAmount_Throws_Exception(double monthlyWidthdrawalAmount)
-        {
-            // Arrange
-            FireCalculator sut = new();
+        //[TestMethod]
+        //[DataRow(-0.00001)]
+        //[DataRow(-1)]
+        //[DataRow(-1934.2134)]
+        //public void Set_Invalid_MontlyWithdrawalAmount_Throws_Exception(double monthlyWidthdrawalAmount)
+        //{
+        //    // Arrange
+        //    FireCalculator sut = new();
 
-            // Act
-            Action act = () => sut.MonthlyWithdrawalAmount = monthlyWidthdrawalAmount;
+        //    // Act
+        //    Action act = () => sut.MonthlyWithdrawalAmount = monthlyWidthdrawalAmount;
 
-            // Assert
-            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("MonthlyWithdrawalAmount must not be less than zero.");
-        }
+        //    // Assert
+        //    act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("MonthlyWithdrawalAmount must not be less than zero.");
+        //}
 
-        [TestMethod]
-        [DataRow(100)]
-        [DataRow(5)]
-        [DataRow(12)]
-        [DataRow(2.548)]
-        [DataRow(12 * 10)]
-        [DataRow(12.63874 * 15)]
-        public void Set_AnnualWithdrawalAmount_Updates_MontlyWithdrawalAmount(double annualWidthdrawalAmount)
-        {
-            // Arrange + Act
-            FireCalculator sut = new()
-            {
-                AnnualWithdrawalAmount = annualWidthdrawalAmount
-            };
+        //[TestMethod]
+        //[DataRow(100)]
+        //[DataRow(5)]
+        //[DataRow(12)]
+        //[DataRow(2.548)]
+        //[DataRow(12 * 10)]
+        //[DataRow(12.63874 * 15)]
+        //public void Set_AnnualWithdrawalAmount_Updates_MontlyWithdrawalAmount(double annualWidthdrawalAmount)
+        //{
+        //    // Arrange + Act
+        //    FireCalculator sut = new()
+        //    {
+        //        AnnualWithdrawalAmount = annualWidthdrawalAmount
+        //    };
 
-            // Assert
-            sut.MonthlyWithdrawalAmount.Should().Be(annualWidthdrawalAmount / 12);
-        }
+        //    // Assert
+        //    sut.MonthlyWithdrawalAmount.Should().Be(annualWidthdrawalAmount / 12);
+        //}
 
-        [TestMethod]
-        [DataRow(-0.00001)]
-        [DataRow(-1)]
-        [DataRow(-1934.2134)]
-        public void Set_Invalid_AnnualWithdrawalAmount_Throws_Exception(double annualWidthdrawalAmount)
-        {
-            // Arrange
-            FireCalculator sut = new();
+        //[TestMethod]
+        //[DataRow(-0.00001)]
+        //[DataRow(-1)]
+        //[DataRow(-1934.2134)]
+        //public void Set_Invalid_AnnualWithdrawalAmount_Throws_Exception(double annualWidthdrawalAmount)
+        //{
+        //    // Arrange
+        //    FireCalculator sut = new();
 
-            // Act
-            Action act = () => sut.AnnualWithdrawalAmount = annualWidthdrawalAmount;
+        //    // Act
+        //    Action act = () => sut.AnnualWithdrawalAmount = annualWidthdrawalAmount;
 
-            // Assert
-            act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("AnnualWithdrawalAmount must not be less than zero.");
-        }
+        //    // Assert
+        //    act.Should().Throw<ArgumentOutOfRangeException>().WithMessage("AnnualWithdrawalAmount must not be less than zero.");
+        //}
 
         [TestMethod]
         public void Calculate_With_Default_Values_Returns_Collection_With_Correct_Length()
@@ -203,22 +203,21 @@ namespace FireDotNetLibraryTests
         }
 
         [TestMethod]
-        [DataRow(0, 1000)]
-        [DataRow(1000, 0)]
-        [DataRow(360, 1)]
-        [DataRow(1500, 20)]
-        public void Calculate_Returns_Correct_Collection(double startingAmount, double monthlyWithdrawalAmount)
+        [DataRow(0)]
+        [DataRow(1000)]
+        [DataRow(360)]
+        [DataRow(1500)]
+        public void Calculate_Returns_Correct_Collection(double startingAmount)
         {
-            double startingAmountdouble = startingAmount;
-            double monthlyWithdrawalAmountdouble = monthlyWithdrawalAmount;
+            double monthlyWithdrawalAmount = 500;
 
             // Arrange
             FireCalculator sut = new()
             {
-                StartingAmount = startingAmountdouble,
-                MonthlyWithdrawalAmount = monthlyWithdrawalAmountdouble
+                StartingAmount = startingAmount,
+                //MonthlyWithdrawalAmount = monthlyWithdrawalAmountdouble
             };
-            double expectedFinalAmount = startingAmountdouble - (monthlyWithdrawalAmountdouble * sut.DurationInMonths);
+            double expectedFinalAmount = startingAmount - (monthlyWithdrawalAmount * sut.DurationInMonths);
 
             // Act
             var result = sut.GetRemainingAmounts();
@@ -228,13 +227,13 @@ namespace FireDotNetLibraryTests
             result.Count.Should().Be(1);
             remainingAmounts.Count.Should().Be(sut.DurationInMonths + 1);
 
-            if (startingAmountdouble == 0)
+            if (startingAmount == 0)
             {
                 remainingAmounts.Sum(m => m.Item2).Should().Be(0);
             }
-            else if (monthlyWithdrawalAmountdouble == 0)
+            else if (monthlyWithdrawalAmount == 0)
             {
-                remainingAmounts.All(m => m.Item2 == startingAmountdouble).Should().BeTrue();
+                remainingAmounts.All(m => m.Item2 == startingAmount).Should().BeTrue();
             }
             else
             {
@@ -261,30 +260,29 @@ namespace FireDotNetLibraryTests
         }
 
         [TestMethod]
-        [DataRow(100000, 1000, 1)]
-        [DataRow(1000, 10, 1.5)]
-        [DataRow(360, 1, 6.75)]
-        [DataRow(1500, 20, 2.2)]
-        public void Calculate_With_AnnualInflationRate_Returns_Correct_Collection(double startingAmount, double monthlyWithdrawalAmount, double annualInflationRate)
+        [DataRow(100000, 1)]
+        [DataRow(1000, 1.5)]
+        [DataRow(360, 6.75)]
+        [DataRow(1500, 2.2)]
+        public void Calculate_With_AnnualInflationRate_Returns_Correct_Collection(double startingAmount, double annualInflationRate)
         {
-            double startingAmountdouble = startingAmount;
-            double monthlyWithdrawalAmountdouble = monthlyWithdrawalAmount;
-            double monthlyInflationFactordouble = Math.Pow(annualInflationRate / 100 + 1, 1d / 12);
+            double monthlyWithdrawalAmount = 500;
+            double monthlyInflationFactor = Math.Pow(annualInflationRate / 100 + 1, 1d / 12);
 
             // Arrange
             FireCalculator sut = new()
             {
-                StartingAmount = startingAmountdouble,
-                MonthlyWithdrawalAmount = monthlyWithdrawalAmountdouble,
+                StartingAmount = startingAmount,
+                //MonthlyWithdrawalAmount = monthlyWithdrawalAmountdouble,
                 AnnualInflationRate = annualInflationRate
             };
 
             double[] expectedResults = new double[sut.DurationInMonths + 1];
-            expectedResults[0] = startingAmountdouble;
+            expectedResults[0] = startingAmount;
             for (int i = 1; i < sut.DurationInMonths + 1; i++)
             {
-                monthlyWithdrawalAmountdouble *= monthlyInflationFactordouble;
-                expectedResults[i] = expectedResults[i - 1] - monthlyWithdrawalAmountdouble;
+                monthlyWithdrawalAmount *= monthlyInflationFactor;
+                expectedResults[i] = expectedResults[i - 1] - monthlyWithdrawalAmount;
             }
 
             // Act
@@ -317,28 +315,27 @@ namespace FireDotNetLibraryTests
         }
 
         [TestMethod]
-        [DataRow(100000, 1000, 1)]
-        [DataRow(1000, 10, 1.5)]
-        [DataRow(360, 1, 6.75)]
-        [DataRow(1500, 20, 2.2)]
-        public void Calculate_With_AnnualReturn_Returns_Correct_Collection(double startingAmount, double monthlyWithdrawalAmount, double annualReturn)
+        [DataRow(100000, 1)]
+        [DataRow(1000, 1.5)]
+        [DataRow(360, 6.75)]
+        [DataRow(1500, 2.2)]
+        public void Calculate_With_AnnualReturn_Returns_Correct_Collection(double startingAmount, double annualReturn)
         {
-            double startingAmountdouble = startingAmount;
-            double monthlyWithdrawalAmountdouble = monthlyWithdrawalAmount;
-            double monthlyReturnFactordouble = Math.Pow(annualReturn / 100 + 1, 1d / 12);
+            double monthlyWithdrawalAmount = 500;
+            double monthlyReturnFactor = Math.Pow(annualReturn / 100 + 1, 1d / 12);
 
             // Arrange
             FireCalculator sut = new()
             {
-                StartingAmount = startingAmountdouble,
-                MonthlyWithdrawalAmount = monthlyWithdrawalAmountdouble,
+                StartingAmount = startingAmount,
+                //MonthlyWithdrawalAmount = monthlyWithdrawalAmountdouble,
                 AnnualReturn = annualReturn
             };
 
             double[] expectedResults = new double[sut.DurationInMonths + 1];
-            expectedResults[0] = startingAmountdouble;
+            expectedResults[0] = startingAmount;
             for (int i = 1; i < sut.DurationInMonths + 1; i++)
-                expectedResults[i] = expectedResults[i - 1] * monthlyReturnFactordouble - monthlyWithdrawalAmountdouble;
+                expectedResults[i] = expectedResults[i - 1] * monthlyReturnFactor - monthlyWithdrawalAmount;
 
             // Act
             var result = sut.GetRemainingAmounts();
