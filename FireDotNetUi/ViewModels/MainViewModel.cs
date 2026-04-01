@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FireDotNetLibrary;
+using FireDotNetLibrary.Models;
 using OxyPlot;
 using OxyPlot.Axes;
 
@@ -8,9 +9,9 @@ namespace FireDotNetUi.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        // TODO - Add part to show cash flow periods
-        // TODO - Add option to add cash flow periods
-        // TODO - Clean code
+        // TODO - Add button to add cash flow period to list -> opens the new view through a service class
+        // TODO - Finalize cash flow period view and view model
+        // TODO - Clean the code
 
         private readonly FireCalculator _fireCalculator;
 
@@ -26,6 +27,7 @@ namespace FireDotNetUi.ViewModels
             _startingAmountInput = _fireCalculator.StartingAmount.ToString("0.00");
             //_monthlyWithdrawalAmountInput = _fireCalculator.MonthlyWithdrawalAmount.ToString("0.00");
             //_annualWithdrawalAmountInput = _fireCalculator.AnnualWithdrawalAmount.ToString("0.00");
+            _cashFlowPeriods = [.. _fireCalculator.CashFlowPeriods];
             _startingMonth = _fireCalculator.StartingMonth;
             _endingMonth = _fireCalculator.EndingMonth;
             _durationInMonthsInput = _fireCalculator.DurationInMonths.ToString();
@@ -39,6 +41,9 @@ namespace FireDotNetUi.ViewModels
 
         [ObservableProperty]
         private string _startingAmountInput;
+
+        [ObservableProperty]
+        private List<CashFlowPeriod> _cashFlowPeriods;
 
         //[ObservableProperty]
         //private string _monthlyWithdrawalAmountInput = string.Empty;
@@ -152,6 +157,11 @@ namespace FireDotNetUi.ViewModels
                     AnnualInflationRate = oldValue;
                 }
             }
+        }
+
+        partial void OnCashFlowPeriodsChanged(List<CashFlowPeriod>? oldValue, List<CashFlowPeriod> newValue)
+        {
+            throw new NotImplementedException();
         }
 
         //partial void OnDurationInMonthsInputChanged(string? oldValue, string newValue)
