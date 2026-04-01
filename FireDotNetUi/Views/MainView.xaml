@@ -6,6 +6,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FireDotNetUi"
+        xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
         xmlns:vm="clr-namespace:FireDotNetUi.ViewModels"
         xmlns:r="clr-namespace:FireDotNetUi.Properties"
         xmlns:uc="clr-namespace:FireDotNetUi.UserControls"
@@ -19,6 +20,7 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="200"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal">
@@ -43,6 +45,19 @@
             <ComboBox ItemsSource="{Binding NumberOfMultipleRuns}" SelectedItem="{Binding SelectedNumberOfMultipleRuns, Mode=TwoWay}" Margin="10,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="150" ItemStringFormat="#,0"/>
             <Button Content="{x:Static r:Resources.MainView_Calculate_Button_Content}" Command="{Binding CalculateCommand}" Margin="10,0,0,0" VerticalContentAlignment="Center" Padding="5"/>
         </StackPanel>
-        <oxy:PlotView Grid.Row="3" Model="{Binding PlotModelRemainingAmounts}" Margin="0,10,0,0"/>
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <ListView ItemsSource="{Binding CashFlowPeriods}" Height="200">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="{Binding StartingMonth, StringFormat='MMMM yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" Width="150" IsReadOnly="True" Margin="10,5,0,5" />
+                            <TextBox Text="{Binding EndingMonth, StringFormat='MMMM yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" Width="150" IsReadOnly="True" Margin="10,5,0,5" />
+                            <TextBox Text="{Binding MonthlyAmount, StringFormat='#,0.00', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" Width="150" IsReadOnly="True" Margin="10,5,10,5" HorizontalContentAlignment="Right"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <oxy:PlotView Grid.Row="4" Model="{Binding PlotModelRemainingAmounts}" Margin="0,10,0,0"/>
     </Grid>
 </Window>
