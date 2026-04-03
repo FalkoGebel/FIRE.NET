@@ -185,5 +185,68 @@ namespace FireDotNetUi.Properties {
                 return ResourceManager.GetString("MainView_Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cancel ähnelt.
+        /// </summary>
+        public static string NewCashFlowPeriodView_Button_Content_Cancel {
+            get {
+                return ResourceManager.GetString("NewCashFlowPeriodView_Button_Content_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Submit ähnelt.
+        /// </summary>
+        public static string NewCashFlowPeriodView_Button_Content_Submit {
+            get {
+                return ResourceManager.GetString("NewCashFlowPeriodView_Button_Content_Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Months: ähnelt.
+        /// </summary>
+        public static string NewCashFlowPeriodView_Label_DurationInMonths {
+            get {
+                return ResourceManager.GetString("NewCashFlowPeriodView_Label_DurationInMonths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ending Month: ähnelt.
+        /// </summary>
+        public static string NewCashFlowPeriodView_Label_EndingMonth {
+            get {
+                return ResourceManager.GetString("NewCashFlowPeriodView_Label_EndingMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Monthly Amount: ähnelt.
+        /// </summary>
+        public static string NewCashFlowPeriodView_Label_MonthlyAmount {
+            get {
+                return ResourceManager.GetString("NewCashFlowPeriodView_Label_MonthlyAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Starting Month: ähnelt.
+        /// </summary>
+        public static string NewCashFlowPeriodView_Label_StartingMonth {
+            get {
+                return ResourceManager.GetString("NewCashFlowPeriodView_Label_StartingMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Cash Flow Period ähnelt.
+        /// </summary>
+        public static string NewCashFlowPeriodView_Title {
+            get {
+                return ResourceManager.GetString("NewCashFlowPeriodView_Title", resourceCulture);
+            }
+        }
     }
 }

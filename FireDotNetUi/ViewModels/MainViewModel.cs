@@ -4,6 +4,7 @@ using FireDotNetLibrary;
 using FireDotNetLibrary.Models;
 using OxyPlot;
 using OxyPlot.Axes;
+using System.Windows;
 
 namespace FireDotNetUi.ViewModels
 {
@@ -161,7 +162,7 @@ namespace FireDotNetUi.ViewModels
 
         partial void OnCashFlowPeriodsChanged(List<CashFlowPeriod>? oldValue, List<CashFlowPeriod> newValue)
         {
-            throw new NotImplementedException();
+            MessageBox.Show("Cash flow periods changed. This functionality is not implemented yet.");
         }
 
         //partial void OnDurationInMonthsInputChanged(string? oldValue, string newValue)
