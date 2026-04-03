@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MainView_AnnualWithdrawalAmount_Label" xml:space="preserve">
+  <data name="MainView_Label_AnnualWithdrawalAmount" xml:space="preserve">
     <value>Annual Withdrawal Amount:</value>
   </data>
-  <data name="MainView_DurationInMonths_Label" xml:space="preserve">
+  <data name="MainView_Label_DurationInMonths" xml:space="preserve">
     <value>Months:</value>
   </data>
-  <data name="MainView_MonthlyWithdrawalAmount_Label" xml:space="preserve">
+  <data name="MainView_Label_MonthlyWithdrawalAmount" xml:space="preserve">
     <value>Monthly Withdrawal Amount:</value>
   </data>
   <data name="NewCashFlowPeriodView_Label_MonthlyAmount" xml:space="preserve">
@@ -138,13 +138,7 @@
   <data name="NewCashFlowPeriodView_Label_EndingMonth" xml:space="preserve">
     <value>Ending Month:</value>
   </data>
-  <data name="MainView_AnnualInflationRate_Label" xml:space="preserve">
-    <value>Annual Inflation Rate:</value>
-  </data>
-  <data name="MainView_AnnualReturn_Label" xml:space="preserve">
-    <value>Annual Return:</value>
-  </data>
-  <data name="MainView_AnnualVolatility_Label" xml:space="preserve">
+  <data name="MainView_Label_AnnualVolatility" xml:space="preserve">
     <value>Annual Volatility:</value>
   </data>
   <data name="MainView_PlotModel_RemainingAmount" xml:space="preserve">
@@ -153,7 +147,7 @@
   <data name="MainView_PlotModel_Month" xml:space="preserve">
     <value>Month</value>
   </data>
-  <data name="MainView_StartAmount_Label" xml:space="preserve">
+  <data name="MainView_Label_StartAmount" xml:space="preserve">
     <value>Starting Amount:</value>
   </data>
   <data name="MainView_Title" xml:space="preserve">
@@ -168,8 +162,11 @@
   <data name="NewCashFlowPeriodView_Button_Content_Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="MainView_Calculate_Button_Content" xml:space="preserve">
+  <data name="MainView_Button_Content_Calculate" xml:space="preserve">
     <value>Calculate</value>
+  </data>
+  <data name="MainView_Button_Content_AddCashFlowPeriod" xml:space="preserve">
+    <value>Add</value>
   </data>
   <data name="MainView_PlotModel_ProbabilityOfDefault" xml:space="preserve">
     <value>Probability Of Default</value>
@@ -179,5 +176,11 @@
   </data>
   <data name="MainView_PlotModel_Seconds" xml:space="preserve">
     <value>seconds</value>
+  </data>
+  <data name="MainView_Label_AnnualInflationRate" xml:space="preserve">
+    <value>Annual Inflation Rate:</value>
+  </data>
+  <data name="MainView_Label_AnnualReturn" xml:space="preserve">
+    <value>Annual Return:</value>
   </data>
 </root>

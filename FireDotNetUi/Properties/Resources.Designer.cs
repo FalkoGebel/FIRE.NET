@@ -61,65 +61,83 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Annual Inflation Rate: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add ähnelt.
         /// </summary>
-        public static string MainView_AnnualInflationRate_Label {
+        public static string MainView_Button_Content_AddCashFlowPeriod {
             get {
-                return ResourceManager.GetString("MainView_AnnualInflationRate_Label", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Annual Return: ähnelt.
-        /// </summary>
-        public static string MainView_AnnualReturn_Label {
-            get {
-                return ResourceManager.GetString("MainView_AnnualReturn_Label", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Annual Volatility: ähnelt.
-        /// </summary>
-        public static string MainView_AnnualVolatility_Label {
-            get {
-                return ResourceManager.GetString("MainView_AnnualVolatility_Label", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Annual Withdrawal Amount: ähnelt.
-        /// </summary>
-        public static string MainView_AnnualWithdrawalAmount_Label {
-            get {
-                return ResourceManager.GetString("MainView_AnnualWithdrawalAmount_Label", resourceCulture);
+                return ResourceManager.GetString("MainView_Button_Content_AddCashFlowPeriod", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Calculate ähnelt.
         /// </summary>
-        public static string MainView_Calculate_Button_Content {
+        public static string MainView_Button_Content_Calculate {
             get {
-                return ResourceManager.GetString("MainView_Calculate_Button_Content", resourceCulture);
+                return ResourceManager.GetString("MainView_Button_Content_Calculate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Annual Inflation Rate: ähnelt.
+        /// </summary>
+        public static string MainView_Label_AnnualInflationRate {
+            get {
+                return ResourceManager.GetString("MainView_Label_AnnualInflationRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Annual Return: ähnelt.
+        /// </summary>
+        public static string MainView_Label_AnnualReturn {
+            get {
+                return ResourceManager.GetString("MainView_Label_AnnualReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Annual Volatility: ähnelt.
+        /// </summary>
+        public static string MainView_Label_AnnualVolatility {
+            get {
+                return ResourceManager.GetString("MainView_Label_AnnualVolatility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Annual Withdrawal Amount: ähnelt.
+        /// </summary>
+        public static string MainView_Label_AnnualWithdrawalAmount {
+            get {
+                return ResourceManager.GetString("MainView_Label_AnnualWithdrawalAmount", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Months: ähnelt.
         /// </summary>
-        public static string MainView_DurationInMonths_Label {
+        public static string MainView_Label_DurationInMonths {
             get {
-                return ResourceManager.GetString("MainView_DurationInMonths_Label", resourceCulture);
+                return ResourceManager.GetString("MainView_Label_DurationInMonths", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Monthly Withdrawal Amount: ähnelt.
         /// </summary>
-        public static string MainView_MonthlyWithdrawalAmount_Label {
+        public static string MainView_Label_MonthlyWithdrawalAmount {
             get {
-                return ResourceManager.GetString("MainView_MonthlyWithdrawalAmount_Label", resourceCulture);
+                return ResourceManager.GetString("MainView_Label_MonthlyWithdrawalAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Starting Amount: ähnelt.
+        /// </summary>
+        public static string MainView_Label_StartAmount {
+            get {
+                return ResourceManager.GetString("MainView_Label_StartAmount", resourceCulture);
             }
         }
         
@@ -165,15 +183,6 @@ namespace FireDotNetUi.Properties {
         public static string MainView_PlotModel_Seconds {
             get {
                 return ResourceManager.GetString("MainView_PlotModel_Seconds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Starting Amount: ähnelt.
-        /// </summary>
-        public static string MainView_StartAmount_Label {
-            get {
-                return ResourceManager.GetString("MainView_StartAmount_Label", resourceCulture);
             }
         }
         

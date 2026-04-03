@@ -6,6 +6,16 @@ namespace FireDotNetUi.ViewModels
 {
     public partial class NewCashFlowPeriodViewModel : ObservableObject
     {
+        public NewCashFlowPeriodViewModel() { }
+
+        public NewCashFlowPeriodViewModel(DateTime startingMonth, DateTime endingMonth)
+        {
+            StartingMonth = startingMonth;
+            EndingMonth = endingMonth;
+            DurationInMonthsInput = ((EndingMonth.Year - StartingMonth.Year) * 12 + EndingMonth.Month - StartingMonth.Month + 1).ToString();
+            MonthlyAmountInput = "0.00";
+        }
+
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(EndingMonth))]
         private DateTime _startingMonth;
@@ -22,15 +32,20 @@ namespace FireDotNetUi.ViewModels
         private string _monthlyAmountInput = string.Empty;
 
         [RelayCommand]
-        private void Cancel(Window window)
+        private static void Cancel(Window window)
         {
-            MessageBox.Show("Cancel. This functionality is not implemented yet.");
+            window.Close();
         }
 
         [RelayCommand]
-        private void Submit(Window window)
+        private static void Submit(Window window)
         {
-            MessageBox.Show("Submit. This functionality is not implemented yet.");
+
+            window.DialogResult = true;
+            window.Close();
         }
+
+        // TODO - Add validation for the inputs -> take old code from MainViewModel
+        // TODO - submit button only enabled if the inputs are valid
     }
 }
