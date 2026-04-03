@@ -2,8 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using FireDotNetLibrary;
 using FireDotNetLibrary.Models;
+using FireDotNetUi.Services;
 using OxyPlot;
 using OxyPlot.Axes;
+using System.Collections.ObjectModel;
 
 namespace FireDotNetUi.ViewModels
 {
@@ -12,6 +14,7 @@ namespace FireDotNetUi.ViewModels
         // TODO - Add button to add cash flow period to list -> opens the new view through a service class
         // TODO - Finalize cash flow period view and view model
         // TODO - Clean the code
+        // TODO - Add remove button for cash flow periods
 
         private readonly FireCalculator _fireCalculator;
 
@@ -43,7 +46,7 @@ namespace FireDotNetUi.ViewModels
         private string _startingAmountInput;
 
         [ObservableProperty]
-        private List<CashFlowPeriod> _cashFlowPeriods;
+        private ObservableCollection<CashFlowPeriod> _cashFlowPeriods;
 
         //[ObservableProperty]
         //private string _monthlyWithdrawalAmountInput = string.Empty;
@@ -82,6 +85,21 @@ namespace FireDotNetUi.ViewModels
         private void Calculate()
         {
             UpdatePlotModel();
+        }
+
+        [RelayCommand]
+        private void AddNewCashFlowPeriods()
+        {
+            ViewHandlingService viewHandlingService = new();
+
+            if (viewHandlingService.ShowNewCashFlowPeriodDialog(StartingMonth, EndingMonth))
+            {
+                _fireCalculator.AddCashFlowPeriod(viewHandlingService.NewCashFlowPeriodStartingMonth,
+                                                  viewHandlingService.NewCashFlowPeriodEndingMonth,
+                                                  viewHandlingService.NewCashFlowPeriodEndingMonthyAmount);
+                CashFlowPeriods = [.. _fireCalculator.CashFlowPeriods];
+                UpdatePlotModel();
+            }
         }
 
         partial void OnSelectedNumberOfMultipleRunsChanged(int oldValue, int newValue)
@@ -157,11 +175,6 @@ namespace FireDotNetUi.ViewModels
                     AnnualInflationRate = oldValue;
                 }
             }
-        }
-
-        partial void OnCashFlowPeriodsChanged(List<CashFlowPeriod>? oldValue, List<CashFlowPeriod> newValue)
-        {
-            throw new NotImplementedException();
         }
 
         //partial void OnDurationInMonthsInputChanged(string? oldValue, string newValue)
