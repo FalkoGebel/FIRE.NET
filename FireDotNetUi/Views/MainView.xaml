@@ -42,7 +42,7 @@
             <TextBox Text="{Binding AnnualReturn, UpdateSourceTrigger=LostFocus}" MinWidth="75" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" />
             <Label Content="{x:Static r:Resources.MainView_Label_AnnualVolatility}" VerticalContentAlignment="Center" Margin="10,0,0,0"/>
             <TextBox Text="{Binding AnnualVolatility, UpdateSourceTrigger=LostFocus}" MinWidth="75" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" />
-            <ComboBox ItemsSource="{Binding NumberOfMultipleRuns}" SelectedItem="{Binding SelectedNumberOfMultipleRuns, Mode=TwoWay}" Margin="10,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="150" ItemStringFormat="#,0"/>
+            <ComboBox ItemsSource="{Binding NumberOfMultipleRuns}" SelectedItem="{Binding SelectedNumberOfMultipleRuns, Mode=TwoWay}" Margin="10,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="150"/>
             <Button Content="{x:Static r:Resources.MainView_Button_Content_Calculate}" Command="{Binding CalculateCommand}" Margin="10,0,0,0" VerticalContentAlignment="Center" Padding="5"/>
         </StackPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal">
