@@ -89,8 +89,8 @@ namespace FireDotNetLibrary
             foreach (var cashFlowPeriod in _cashFlowPeriods)
             {
                 double currentMonthlyWithdrawalAmount = cashFlowPeriod.MonthlyAmount;
-                int firstIndex = cashFlowPeriod.StartingMonth.Month - StartingMonth.Month,
-                    lastIndex = DurationInMonths - 1 - (EndingMonth.Month - cashFlowPeriod.EndingMonth.Month);
+                int firstIndex = ((cashFlowPeriod.StartingMonth.Year - StartingMonth.Year) * 12 + cashFlowPeriod.StartingMonth.Month - StartingMonth.Month),
+                    lastIndex = DurationInMonths - 1 - ((EndingMonth.Year - cashFlowPeriod.EndingMonth.Year) * 12 + EndingMonth.Month - cashFlowPeriod.EndingMonth.Month);//(EndingMonth.Month - cashFlowPeriod.EndingMonth.Month);
 
                 for (int i = 0; i < DurationInMonths; i++)
                 {

@@ -76,7 +76,7 @@ namespace FireDotNetUi.ViewModels
         private string _annualVolatility;
 
         [ObservableProperty]
-        private int[] _numberOfMultipleRuns = [1000, 10000, 100000, 1000000];
+        private int[] _numberOfMultipleRuns = [1000, 10000, 100000, 1000000];   // TODO - check formatting of numbers in UI -> maybe change from int to string
 
         [ObservableProperty]
         private int _selectedNumberOfMultipleRuns = 10000;
@@ -98,6 +98,9 @@ namespace FireDotNetUi.ViewModels
                                                   viewHandlingService.NewCashFlowPeriodEndingMonth,
                                                   viewHandlingService.NewCashFlowPeriodEndingMonthyAmount);
                 CashFlowPeriods = [.. _fireCalculator.CashFlowPeriods];
+                StartingMonth = _fireCalculator.StartingMonth;
+                EndingMonth = _fireCalculator.EndingMonth;
+                DurationInMonthsInput = _fireCalculator.DurationInMonths.ToString();
                 UpdatePlotModel();
             }
         }
