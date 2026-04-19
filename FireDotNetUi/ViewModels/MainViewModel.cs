@@ -11,9 +11,7 @@ namespace FireDotNetUi.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        // TODO - Add button to add cash flow period to list -> opens the new view through a service class
         // TODO - Finalize cash flow period view and view model
-        // TODO - Clean the code
         // TODO - Add remove button for cash flow periods
 
         private readonly FireCalculator _fireCalculator;
@@ -23,13 +21,10 @@ namespace FireDotNetUi.ViewModels
             _fireCalculator = new()
             {
                 StartingAmount = 100000,
-                //MonthlyWithdrawalAmount = 500
             };
             UpdatePlotModel();
 
             _startingAmountInput = _fireCalculator.StartingAmount.ToString("0.00");
-            //_monthlyWithdrawalAmountInput = _fireCalculator.MonthlyWithdrawalAmount.ToString("0.00");
-            //_annualWithdrawalAmountInput = _fireCalculator.AnnualWithdrawalAmount.ToString("0.00");
             _cashFlowPeriods = [.. _fireCalculator.CashFlowPeriods];
             _startingMonth = _fireCalculator.StartingMonth;
             _endingMonth = _fireCalculator.EndingMonth;
@@ -47,12 +42,6 @@ namespace FireDotNetUi.ViewModels
 
         [ObservableProperty]
         private ObservableCollection<CashFlowPeriod> _cashFlowPeriods;
-
-        //[ObservableProperty]
-        //private string _monthlyWithdrawalAmountInput = string.Empty;
-
-        //[ObservableProperty]
-        //private string _annualWithdrawalAmountInput = string.Empty;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(EndingMonth))]
@@ -180,29 +169,6 @@ namespace FireDotNetUi.ViewModels
             }
         }
 
-        //partial void OnDurationInMonthsInputChanged(string? oldValue, string newValue)
-        //{
-        //    if (oldValue == null)
-        //        throw new ArgumentNullException(nameof(oldValue));
-
-        //    if (oldValue != newValue)
-        //    {
-        //        if (int.TryParse(newValue, System.Globalization.NumberStyles.Integer,
-        //            System.Globalization.CultureInfo.CurrentCulture, out int parsedValue) &&
-        //            parsedValue > 0)
-        //        {
-        //            _durationInMonthsInput = parsedValue.ToString();
-        //            _fireCalculator.DurationInMonths = parsedValue;
-        //            _endingMonth = _fireCalculator.EndingMonth;
-        //            UpdatePlotModel();
-        //        }
-        //        else
-        //        {
-        //            DurationInMonthsInput = oldValue;
-        //        }
-        //    }
-        //}
-
         partial void OnStartingAmountInputChanged(string? oldValue, string newValue)
         {
             if (oldValue == null)
@@ -225,57 +191,10 @@ namespace FireDotNetUi.ViewModels
             }
         }
 
-        //partial void OnMonthlyWithdrawalAmountInputChanged(string? oldValue, string newValue)
-        //{
-        //    if (oldValue == null)
-        //        throw new ArgumentNullException(nameof(oldValue));
-
-        //    if (oldValue != newValue)
-        //    {
-        //        if (double.TryParse(newValue, System.Globalization.NumberStyles.Number,
-        //            System.Globalization.CultureInfo.CurrentCulture, out double parsedValue) &&
-        //            parsedValue >= 0)
-        //        {
-        //            _monthlyWithdrawalAmountInput = parsedValue.ToString("0.00");
-        //            _fireCalculator.MonthlyWithdrawalAmount = parsedValue;
-        //            AnnualWithdrawalAmountInput = _fireCalculator.AnnualWithdrawalAmount.ToString("0.00");
-        //            UpdatePlotModel();
-        //        }
-        //        else
-        //        {
-        //            MonthlyWithdrawalAmountInput = oldValue;
-        //        }
-        //    }
-        //}
-
-        //partial void OnAnnualWithdrawalAmountInputChanged(string? oldValue, string newValue)
-        //{
-        //    if (oldValue == null)
-        //        throw new ArgumentNullException(nameof(oldValue));
-
-        //    if (oldValue != newValue)
-        //    {
-        //        if (double.TryParse(newValue, System.Globalization.NumberStyles.Number,
-        //            System.Globalization.CultureInfo.CurrentCulture, out double parsedValue) &&
-        //            parsedValue >= 0)
-        //        {
-        //            _annualWithdrawalAmountInput = parsedValue.ToString("0.00");
-        //            _fireCalculator.AnnualWithdrawalAmount = parsedValue;
-        //            MonthlyWithdrawalAmountInput = _fireCalculator.MonthlyWithdrawalAmount.ToString("0.00");
-        //            UpdatePlotModel();
-        //        }
-        //        else
-        //        {
-        //            AnnualWithdrawalAmountInput = oldValue;
-        //        }
-        //    }
-        //}
-
         partial void OnStartingMonthChanged(DateTime oldValue, DateTime newValue)
         {
             if (oldValue != newValue)
             {
-                //_fireCalculator.StartingMonth = newValue;
                 _startingMonth = _fireCalculator.StartingMonth;
                 _endingMonth = _fireCalculator.EndingMonth;
                 UpdatePlotModel();
@@ -288,7 +207,6 @@ namespace FireDotNetUi.ViewModels
             {
                 try
                 {
-                    //_fireCalculator.EndingMonth = newValue;
                     _endingMonth = _fireCalculator.EndingMonth;
                     _durationInMonthsInput = _fireCalculator.DurationInMonths.ToString();
                     UpdatePlotModel();
