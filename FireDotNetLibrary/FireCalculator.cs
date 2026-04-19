@@ -8,82 +8,45 @@ namespace FireDotNetLibrary
         private DateTime _startingMonth;
         private DateTime _endingMonth;
         private int _durationInMonths;
-        //private double _monthlyWithdrawalAmount;
-        //private double _annualWithdrawalAmount;
         private double _annualInflationRate;
         private double _annualReturn;
         private double _annualVolatility;
         private int _numberOfMultipleRuns;
         private int _numberOfRuns;
-        private List<CashFlowPeriod> _cashFlowPeriods;
-        private List<double> _monthlyWithdrawalAmounts;
+        private readonly List<CashFlowPeriod> _cashFlowPeriods;
+        private List<double> _monthlyCashFlowAmounts;
 
         public FireCalculator()
         {
             _numberOfMultipleRuns = 10000;
             _numberOfRuns = 1;
-            _monthlyWithdrawalAmounts = [];
+            _monthlyCashFlowAmounts = [];
 
             DateTime now = DateTime.Now,
                      startingMonth = new(now.Year, now.Month, 1),
                      endingMonth = startingMonth.AddMonths(12 * 30).AddDays(-1);
-            _cashFlowPeriods = [new CashFlowPeriod() { StartingMonth = startingMonth, EndingMonth = endingMonth, MonthlyAmount = 500 }];
+            _cashFlowPeriods = [new CashFlowPeriod() { StartingMonth = startingMonth, EndingMonth = endingMonth, MonthlyAmount = -500 }];
             UpdateValuesFromCashFlowPeriods();
         }
 
         public DateTime StartingMonth
         {
             get => _startingMonth;
-
-            //set
-            //{
-            //    _startingMonth = new DateTime(value.Year, value.Month, 1);
-
-            //    if (DurationInMonths > 0)
-            //        _endingMonth = _startingMonth.AddMonths(DurationInMonths).AddDays(-1);
-            //}
         }
 
         public DateTime EndingMonth
         {
             get => _endingMonth;
-
-            //set
-            //{
-            //    DateTime oldEndingMonth = _endingMonth;
-
-            //    _endingMonth = (new DateTime(value.Year, value.Month, 1)).AddMonths(1).AddDays(-1);
-            //    int newDurationInMonths = (_endingMonth.Year - _startingMonth.Year) * 12 + _endingMonth.Month - _startingMonth.Month + 1;
-
-            //    if (newDurationInMonths <= 0)
-            //    {
-            //        _endingMonth = oldEndingMonth;
-            //        throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_EndingMonth_Set_ArgumentOutOfRangeException);
-            //    }
-
-            //    _durationInMonths = newDurationInMonths;
-            //    UpdateMonthlyWithdrawalAmounts();
-            //}
         }
 
         public int DurationInMonths
         {
             get => _durationInMonths;
-
-            //set
-            //{
-            //    if (value <= 0)
-            //        throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_Duration_Set_ArgumentOutOfRangeException);
-
-            //    _durationInMonths = value;
-            //    EndingMonth = _startingMonth.AddMonths(_durationInMonths).AddDays(-1);
-            //}
         }
 
         private void UpdateMonthlyWithdrawalAmounts()
         {
             double[] newMonthlyWithdrawalAmounts = new double[DurationInMonths];
-            //_monthlyWithdrawalAmounts = [];
             double monthlyInflationFactorDecimal = Math.Pow(AnnualInflationRate / 100 + 1, 1d / 12);
 
             foreach (var cashFlowPeriod in _cashFlowPeriods)
@@ -95,47 +58,16 @@ namespace FireDotNetLibrary
                 for (int i = 0; i < DurationInMonths; i++)
                 {
                     currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
-                    //_monthlyWithdrawalAmounts.Add(currentMonthlyWithdrawalAmount);
 
                     if (i >= firstIndex && i <= lastIndex)
                         newMonthlyWithdrawalAmounts[i] += currentMonthlyWithdrawalAmount;
                 }
             }
 
-            _monthlyWithdrawalAmounts = [.. newMonthlyWithdrawalAmounts];
+            _monthlyCashFlowAmounts = [.. newMonthlyWithdrawalAmounts];
         }
 
         public double StartingAmount { get; set; }
-
-        //public double MonthlyWithdrawalAmount
-        //{
-        //    get => _monthlyWithdrawalAmount;
-
-        //    set
-        //    {
-        //        if (value < 0)
-        //            throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_MonthlyWithdrawalAmount_Set_ArgumentOutOfRangeException);
-
-        //        _monthlyWithdrawalAmount = value;
-        //        _annualWithdrawalAmount = value * 12;
-        //        UpdateMonthlyWithdrawalAmounts();
-        //    }
-        //}
-
-        //public double AnnualWithdrawalAmount
-        //{
-        //    get => _annualWithdrawalAmount;
-
-        //    set
-        //    {
-        //        if (value < 0)
-        //            throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_AnnualWithdrawalAmount_Set_ArgumentOutOfRangeException);
-
-        //        _annualWithdrawalAmount = value;
-        //        _monthlyWithdrawalAmount = value / 12;
-
-        //    }
-        //}
 
         public double AnnualInflationRate
         {
@@ -264,8 +196,6 @@ namespace FireDotNetLibrary
             {
                 var currentRun = new (DateTime, double)[DurationInMonths + 1];
                 DateTime currentMonth = StartingMonth;
-                //               double currentMonthlyWithdrawalAmount = MonthlyWithdrawalAmount;
-                //               double monthlyInflationFactorDecimal = Math.Pow(AnnualInflationRate / 100 + 1, 1d / 12);
                 var monthlyReturns = GetMonthlyReturns(new Random(seed + run));
 
                 if (StartingAmount > 0)
@@ -279,9 +209,7 @@ namespace FireDotNetLibrary
                         }
                         else
                         {
-                            //                            currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
-                            //                            currentRun[i] = (currentMonth, currentRun[i - 1].Item2 * (1 + monthlyReturns[i - 1]) - currentMonthlyWithdrawalAmount);
-                            currentRun[i] = (currentMonth, currentRun[i - 1].Item2 * (1 + monthlyReturns[i - 1]) - _monthlyWithdrawalAmounts[i - 1]);
+                            currentRun[i] = (currentMonth, currentRun[i - 1].Item2 * (1 + monthlyReturns[i - 1]) + _monthlyCashFlowAmounts[i - 1]);
                             currentMonth = currentMonth.AddDays(1).AddMonths(1).AddDays(-1);
                         }
                     }
