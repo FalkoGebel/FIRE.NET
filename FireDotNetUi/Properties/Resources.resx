@@ -135,6 +135,15 @@
   <data name="NewCashFlowPeriodView_Label_DurationInMonths" xml:space="preserve">
     <value>Months:</value>
   </data>
+  <data name="MainView_CashFlowPeriods_Header_EndingMonth" xml:space="preserve">
+    <value>Ending Month</value>
+  </data>
+  <data name="MainView_CashFlowPeriods_Header_StartingMonth" xml:space="preserve">
+    <value>Starting Month</value>
+  </data>
+  <data name="MainView_CashFlowPeriods_Header_MonthlyAmount" xml:space="preserve">
+    <value>Monthly Amount</value>
+  </data>
   <data name="NewCashFlowPeriodView_Label_EndingMonth" xml:space="preserve">
     <value>Ending Month:</value>
   </data>

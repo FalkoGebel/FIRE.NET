@@ -12,7 +12,6 @@ namespace FireDotNetUi.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        // TODO - Finalize cash flow period view and view model
         // TODO - Add remove button for cash flow periods
 
         private readonly FireCalculator _fireCalculator;

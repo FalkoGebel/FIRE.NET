@@ -26,10 +26,6 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Label Content="{x:Static r:Resources.MainView_Label_StartAmount}" VerticalContentAlignment="Center" Margin="5,5,0,0"/>
             <TextBox Text="{Binding StartingAmountInput, UpdateSourceTrigger=LostFocus}" MinWidth="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="0,5,0,0"/>
-            <!--<Label Content="{x:Static r:Resources.MainView_MonthlyWithdrawalAmount_Label}" VerticalContentAlignment="Center" Margin="10,5,0,0"/>
-            <TextBox Text="{Binding MonthlyWithdrawalAmountInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" MinWidth="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="0,5,0,0"/>
-            <Label Content="{x:Static r:Resources.MainView_AnnualWithdrawalAmount_Label}" VerticalContentAlignment="Center" Margin="10,5,0,0"/>
-            <TextBox Text="{Binding AnnualWithdrawalAmountInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" MinWidth="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="0,5,0,0"/>-->
             <uc:MonthPicker SelectedDate="{Binding StartingMonth, Mode=TwoWay}" Margin="10,5,0,0" VerticalContentAlignment="Center" TextBoxWidth="150" IsEnabled="False"/>
             <uc:MonthPicker SelectedDate="{Binding EndingMonth, Mode=TwoWay}" Margin="10,5,0,0" VerticalContentAlignment="Center" TextBoxWidth="150" IsEnabled="False"/>
             <Label Content="{x:Static r:Resources.MainView_Label_DurationInMonths}" VerticalContentAlignment="Center" Margin="10,5,0,0"/>
@@ -47,15 +43,22 @@
         </StackPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal">
             <ListView ItemsSource="{Binding CashFlowPeriods}" Height="180" Margin="10">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox Text="{Binding StartingMonth, StringFormat='MMMM yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" Width="150" IsReadOnly="True" Margin="10,5,0,5" />
-                            <TextBox Text="{Binding EndingMonth, StringFormat='MMMM yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" Width="150" IsReadOnly="True" Margin="10,5,0,5" />
-                            <TextBox Text="{Binding MonthlyAmount, StringFormat='#,0.00', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" Width="150" IsReadOnly="True" Margin="10,5,10,5" HorizontalContentAlignment="Right"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
+                <ListView.View>
+                    <GridView AllowsColumnReorder="False">
+                        <GridViewColumn
+                            DisplayMemberBinding="{Binding Path=StartingMonth, StringFormat='MMMM yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"
+                            Header="{x:Static r:Resources.MainView_CashFlowPeriods_Header_StartingMonth}"
+                            Width="150"/>
+                        <GridViewColumn
+                            DisplayMemberBinding="{Binding Path=EndingMonth, StringFormat='MMMM yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"
+                            Header="{x:Static r:Resources.MainView_CashFlowPeriods_Header_EndingMonth}"
+                            Width="150"/>
+                        <GridViewColumn
+                            DisplayMemberBinding="{Binding Path=MonthlyAmount, StringFormat='#,0.00', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"
+                            Header="{x:Static r:Resources.MainView_CashFlowPeriods_Header_MonthlyAmount}"
+                            Width="150"/>
+                    </GridView>
+                </ListView.View>
             </ListView>
             <StackPanel>
                 <Button Content="{x:Static r:Resources.MainView_Button_Content_AddCashFlowPeriod}" Command="{Binding AddNewCashFlowPeriodsCommand}" Margin="10,15,10,0" VerticalContentAlignment="Center" Padding="5"/>
