@@ -79,6 +79,33 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ending Month ähnelt.
+        /// </summary>
+        public static string MainView_CashFlowPeriods_Header_EndingMonth {
+            get {
+                return ResourceManager.GetString("MainView_CashFlowPeriods_Header_EndingMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Monthly Amount ähnelt.
+        /// </summary>
+        public static string MainView_CashFlowPeriods_Header_MonthlyAmount {
+            get {
+                return ResourceManager.GetString("MainView_CashFlowPeriods_Header_MonthlyAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Starting Month ähnelt.
+        /// </summary>
+        public static string MainView_CashFlowPeriods_Header_StartingMonth {
+            get {
+                return ResourceManager.GetString("MainView_CashFlowPeriods_Header_StartingMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Annual Inflation Rate: ähnelt.
         /// </summary>
         public static string MainView_Label_AnnualInflationRate {

@@ -6,12 +6,12 @@ using FireDotNetUi.Services;
 using OxyPlot;
 using OxyPlot.Axes;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace FireDotNetUi.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        // TODO - Finalize cash flow period view and view model
         // TODO - Add remove button for cash flow periods
 
         private readonly FireCalculator _fireCalculator;
@@ -32,6 +32,8 @@ namespace FireDotNetUi.ViewModels
             _annualInflationRate = _fireCalculator.AnnualInflationRate.ToString("0.00");
             _annualReturn = _fireCalculator.AnnualReturn.ToString("0.00");
             _annualVolatility = _fireCalculator.AnnualVolatility.ToString("0.00");
+            _numberOfMultipleRuns = [.. _numberOfMultipleRuns.Select(n => int.Parse(n).ToString("#,0"))];
+            _selectedNumberOfMultipleRuns = int.Parse(_selectedNumberOfMultipleRuns).ToString("#,0");
         }
 
         [ObservableProperty]
@@ -65,10 +67,10 @@ namespace FireDotNetUi.ViewModels
         private string _annualVolatility;
 
         [ObservableProperty]
-        private int[] _numberOfMultipleRuns = [1000, 10000, 100000, 1000000];   // TODO - check formatting of numbers in UI -> maybe change from int to string
+        private string[] _numberOfMultipleRuns = ["1000", "10000", "100000", "1000000"];
 
         [ObservableProperty]
-        private int _selectedNumberOfMultipleRuns = 10000;
+        private string _selectedNumberOfMultipleRuns = "10000";
 
         [RelayCommand]
         private void Calculate()
@@ -94,11 +96,11 @@ namespace FireDotNetUi.ViewModels
             }
         }
 
-        partial void OnSelectedNumberOfMultipleRunsChanged(int oldValue, int newValue)
+        partial void OnSelectedNumberOfMultipleRunsChanged(string? oldValue, string newValue)
         {
             if (oldValue != newValue)
             {
-                _fireCalculator.NumberOfMultipleRuns = newValue;
+                _fireCalculator.NumberOfMultipleRuns = int.Parse(newValue, NumberStyles.AllowThousands);
                 UpdatePlotModel();
             }
         }
@@ -110,8 +112,8 @@ namespace FireDotNetUi.ViewModels
 
             if (oldValue != newValue)
             {
-                if (double.TryParse(newValue, System.Globalization.NumberStyles.Number,
-                    System.Globalization.CultureInfo.CurrentCulture, out double parsedValue) &&
+                if (double.TryParse(newValue, NumberStyles.Number,
+                    CultureInfo.CurrentCulture, out double parsedValue) &&
                     parsedValue >= 0)
                 {
                     _annualVolatility = parsedValue.ToString("0.00");
@@ -132,8 +134,8 @@ namespace FireDotNetUi.ViewModels
 
             if (oldValue != newValue)
             {
-                if (double.TryParse(newValue, System.Globalization.NumberStyles.Number,
-                    System.Globalization.CultureInfo.CurrentCulture, out double parsedValue) &&
+                if (double.TryParse(newValue, NumberStyles.Number,
+                    CultureInfo.CurrentCulture, out double parsedValue) &&
                     parsedValue >= 0)
                 {
                     _annualReturn = parsedValue.ToString("0.00");
@@ -154,8 +156,8 @@ namespace FireDotNetUi.ViewModels
 
             if (oldValue != newValue)
             {
-                if (double.TryParse(newValue, System.Globalization.NumberStyles.Number,
-                    System.Globalization.CultureInfo.CurrentCulture, out double parsedValue) &&
+                if (double.TryParse(newValue, NumberStyles.Number,
+                    CultureInfo.CurrentCulture, out double parsedValue) &&
                     parsedValue >= 0)
                 {
                     _annualInflationRate = parsedValue.ToString("0.00");
@@ -176,8 +178,8 @@ namespace FireDotNetUi.ViewModels
 
             if (oldValue != newValue)
             {
-                if (double.TryParse(newValue, System.Globalization.NumberStyles.Number,
-                    System.Globalization.CultureInfo.CurrentCulture, out double parsedValue) &&
+                if (double.TryParse(newValue, NumberStyles.Number,
+                    CultureInfo.CurrentCulture, out double parsedValue) &&
                     parsedValue > 0)
                 {
                     _startingAmountInput = parsedValue.ToString("0.00");
