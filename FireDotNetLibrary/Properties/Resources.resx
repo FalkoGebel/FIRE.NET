@@ -144,10 +144,4 @@
   <data name="FireCalculator_AddCashFlowPeriod_ArgumentException" xml:space="preserve">
     <value>EndingMonth has to follow StartingMonth.</value>
   </data>
-  <data name="FireCalculator_RemoveCashFlowPeriod_InvalidIndex_ArgumentException" xml:space="preserve">
-    <value>Invalid index to remove.</value>
-  </data>
-  <data name="FireCalculator_RemoveCashFlowPeriod_ToFewPeriods_ArgumentException" xml:space="preserve">
-    <value>Only one cash flow period left. Last period must not be removed.</value>
-  </data>
 </root>

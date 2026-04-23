@@ -42,7 +42,9 @@
             <Button Content="{x:Static r:Resources.MainView_Button_Content_Calculate}" Command="{Binding CalculateCommand}" Margin="10,0,0,0" VerticalContentAlignment="Center" Padding="5"/>
         </StackPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal">
-            <ListView ItemsSource="{Binding CashFlowPeriods}" Height="180" Margin="10" SelectionMode="Single" SelectedIndex="{Binding SelectedCashFlowPeriodIndex, Mode=TwoWay}">
+            <ListView ItemsSource="{Binding CashFlowPeriods}"
+                      Height="180" Margin="10" SelectionMode="Single"
+                      SelectedItem="{Binding SelectedCashFlowPeriod, Mode=TwoWay}">
                 <ListView.View>
                     <GridView AllowsColumnReorder="False">
                         <GridViewColumn

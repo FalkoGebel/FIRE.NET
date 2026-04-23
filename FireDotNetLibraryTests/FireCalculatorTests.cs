@@ -422,50 +422,18 @@ namespace FireDotNetLibraryTests
         }
 
         [TestMethod]
-        [DataRow(-250)]
-        [DataRow(250)]
-        [DataRow(-1)]
-        [DataRow(2)]
-        public void Remove_Invalid_CashFlowPeriod_Throws_Exception(int indexToRemove)
-        {
-            // Arrange
-            FireCalculator sut = new();
-            sut.AddCashFlowPeriod(sut.StartingMonth, sut.EndingMonth, 100);
-
-
-            // Act
-            Action act = () => sut.RemoveCashFlowPeriod(indexToRemove);
-
-            // Assert
-            act.Should().Throw<ArgumentException>().WithMessage("Invalid index to remove.");
-        }
-
-        [TestMethod]
-        [DataRow(0)]
-        public void Remove_Last_CashFlowPeriod_Throws_Exception(int indexToRemove)
-        {
-            // Arrange
-            FireCalculator sut = new();
-
-            // Act
-            Action act = () => sut.RemoveCashFlowPeriod(indexToRemove);
-
-            // Assert
-            act.Should().Throw<ArgumentException>().WithMessage("Only one cash flow period left. Last period must not be removed.");
-        }
-
-        [TestMethod]
-        [DataRow(2020, 7, 1, 2025, 9, 30, -250, 0)]
-        [DataRow(2020, 7, 1, 2025, 9, 30, 250, 0)]
-        [DataRow(2020, 7, 1, 2025, 9, 30, 0, 0)]
-        [DataRow(2020, 7, 1, 2085, 5, 1, -0.01, 0)]
-        [DataRow(1965, 1, 30, 1965, 1, 31, -999, 0)]
-        [DataRow(1966, 2, 5, 2066, 1, 5, 33.33, 0)]
+        [DataRow(2020, 7, 1, 2025, 9, 30, -250)]
+        [DataRow(2020, 7, 1, 2025, 9, 30, 250)]
+        [DataRow(2020, 7, 1, 2025, 9, 30, 0)]
+        [DataRow(2020, 7, 1, 2085, 5, 1, -0.01)]
+        [DataRow(1965, 1, 30, 1965, 1, 31, -999)]
+        [DataRow(1966, 2, 5, 2066, 1, 5, 33.33)]
         public void Remove_Default_CashFlowPeriod_And_Get_Correct_CashFlowPeriods(int startingYear, int startingMonthNumber, int startingDay,
-            int endingYear, int endingMonthNumber, int endingDay, double cashFlowAmount, int indexToRemove)
+            int endingYear, int endingMonthNumber, int endingDay, double cashFlowAmount)
         {
             // Arrange
             FireCalculator sut = new();
+            var cashFlowPeriodToDelete = sut.CashFlowPeriods[0];
             var startingMonth = new DateTime(startingYear, startingMonthNumber, startingDay);
             var endingMonth = new DateTime(endingYear, endingMonthNumber, endingDay);
             var monthAfterEndingMonth = endingMonth.AddMonths(1);
@@ -474,7 +442,7 @@ namespace FireDotNetLibraryTests
             sut.AddCashFlowPeriod(startingMonth, endingMonth, cashFlowAmount);
 
             // Act
-            sut.RemoveCashFlowPeriod(indexToRemove);
+            sut.RemoveCashFlowPeriod(cashFlowPeriodToDelete);
             var result = sut.CashFlowPeriods;
 
             // Assert

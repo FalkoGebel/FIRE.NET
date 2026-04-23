@@ -288,15 +288,17 @@ namespace FireDotNetLibrary
             UpdateMonthlyWithdrawalAmounts();
         }
 
-        public void RemoveCashFlowPeriod(int indexToRemove)
+        /// <summary>
+        /// Removes the first occurence of the given cash flow period from the cash flow periods, if there are at least two cash flow periods.
+        /// If the given cash flow period is not in the list of cash flow periods, no changes will be made.
+        /// </summary>
+        /// <param name="cashFlowPeriodToDelete">The cash flow period to remove.</param>
+        public void RemoveCashFlowPeriod(CashFlowPeriod cashFlowPeriodToDelete)
         {
-            if (_cashFlowPeriods.Count == 1)
-                throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_RemoveCashFlowPeriod_ToFewPeriods_ArgumentException);
+            if (_cashFlowPeriods.Count <= 1)
+                return;
 
-            if (indexToRemove < 0 || indexToRemove >= _cashFlowPeriods.Count)
-                throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_RemoveCashFlowPeriod_InvalidIndex_ArgumentException);
-
-            _cashFlowPeriods.RemoveAt(indexToRemove);
+            _cashFlowPeriods.Remove(cashFlowPeriodToDelete);
             UpdateValuesFromCashFlowPeriods();
         }
     }
