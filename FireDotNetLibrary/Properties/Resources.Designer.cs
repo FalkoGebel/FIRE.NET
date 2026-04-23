@@ -140,5 +140,23 @@ namespace FireDotNetLibrary.Properties {
                 return ResourceManager.GetString("FireCalculator_NumberOfMultipleRuns_Set_ArgumentOutOfRangeException", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid index to remove. ähnelt.
+        /// </summary>
+        public static string FireCalculator_RemoveCashFlowPeriod_InvalidIndex_ArgumentException {
+            get {
+                return ResourceManager.GetString("FireCalculator_RemoveCashFlowPeriod_InvalidIndex_ArgumentException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Only one cash flow period left. Last period must not be removed. ähnelt.
+        /// </summary>
+        public static string FireCalculator_RemoveCashFlowPeriod_ToFewPeriods_ArgumentException {
+            get {
+                return ResourceManager.GetString("FireCalculator_RemoveCashFlowPeriod_ToFewPeriods_ArgumentException", resourceCulture);
+            }
+        }
     }
 }

@@ -79,6 +79,15 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Remove ähnelt.
+        /// </summary>
+        public static string MainView_Button_Content_RemoveCashFlowPeriod {
+            get {
+                return ResourceManager.GetString("MainView_Button_Content_RemoveCashFlowPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Ending Month ähnelt.
         /// </summary>
         public static string MainView_CashFlowPeriods_Header_EndingMonth {

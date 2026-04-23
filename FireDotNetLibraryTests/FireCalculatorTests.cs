@@ -377,7 +377,7 @@ namespace FireDotNetLibraryTests
         [DataRow(2025, 7, 1, 2025, 7, 1, -250)]
         [DataRow(2025, 7, 10, 2025, 7, 1, -250)]
         [DataRow(2025, 7, 1, 1999, 8, 31, -250)]
-        public void Add_Invalid_CashFlowPeriods_Throws_Exception(int startingYear, int startingMonthNumber, int startingDay,
+        public void Add_Invalid_CashFlowPeriod_Throws_Exception(int startingYear, int startingMonthNumber, int startingDay,
             int endingYear, int endingMonthNumber, int endingDay, double cashFlowAmount)
         {
             // Arrange
@@ -399,7 +399,7 @@ namespace FireDotNetLibraryTests
         [DataRow(2020, 7, 1, 2085, 5, 1, -0.01)]
         [DataRow(1965, 1, 30, 1965, 1, 31, -999)]
         [DataRow(1966, 2, 5, 2066, 1, 5, 33.33)]
-        public void Add_Another_CashFlowPeriods_And_Get_Correct_CashFlowPeriods(int startingYear, int startingMonthNumber, int startingDay,
+        public void Add_Another_CashFlowPeriod_And_Get_Correct_CashFlowPeriods(int startingYear, int startingMonthNumber, int startingDay,
             int endingYear, int endingMonthNumber, int endingDay, double cashFlowAmount)
         {
             // Arrange
@@ -419,6 +419,69 @@ namespace FireDotNetLibraryTests
             result[1].StartingMonth.Should().Be(expectedStartingMonth);
             result[1].EndingMonth.Should().Be(expectedEndingMonth);
             result[1].MonthlyAmount.Should().Be(cashFlowAmount);
+        }
+
+        [TestMethod]
+        [DataRow(-250)]
+        [DataRow(250)]
+        [DataRow(-1)]
+        [DataRow(2)]
+        public void Remove_Invalid_CashFlowPeriod_Throws_Exception(int indexToRemove)
+        {
+            // Arrange
+            FireCalculator sut = new();
+            sut.AddCashFlowPeriod(sut.StartingMonth, sut.EndingMonth, 100);
+
+
+            // Act
+            Action act = () => sut.RemoveCashFlowPeriod(indexToRemove);
+
+            // Assert
+            act.Should().Throw<ArgumentException>().WithMessage("Invalid index to remove.");
+        }
+
+        [TestMethod]
+        [DataRow(0)]
+        public void Remove_Last_CashFlowPeriod_Throws_Exception(int indexToRemove)
+        {
+            // Arrange
+            FireCalculator sut = new();
+
+            // Act
+            Action act = () => sut.RemoveCashFlowPeriod(indexToRemove);
+
+            // Assert
+            act.Should().Throw<ArgumentException>().WithMessage("Only one cash flow period left. Last period must not be removed.");
+        }
+
+        [TestMethod]
+        [DataRow(2020, 7, 1, 2025, 9, 30, -250, 0)]
+        [DataRow(2020, 7, 1, 2025, 9, 30, 250, 0)]
+        [DataRow(2020, 7, 1, 2025, 9, 30, 0, 0)]
+        [DataRow(2020, 7, 1, 2085, 5, 1, -0.01, 0)]
+        [DataRow(1965, 1, 30, 1965, 1, 31, -999, 0)]
+        [DataRow(1966, 2, 5, 2066, 1, 5, 33.33, 0)]
+        public void Remove_Default_CashFlowPeriod_And_Get_Correct_CashFlowPeriods(int startingYear, int startingMonthNumber, int startingDay,
+            int endingYear, int endingMonthNumber, int endingDay, double cashFlowAmount, int indexToRemove)
+        {
+            // Arrange
+            FireCalculator sut = new();
+            var startingMonth = new DateTime(startingYear, startingMonthNumber, startingDay);
+            var endingMonth = new DateTime(endingYear, endingMonthNumber, endingDay);
+            var monthAfterEndingMonth = endingMonth.AddMonths(1);
+            var expectedStartingMonth = new DateTime(startingYear, startingMonthNumber, 1);
+            var expectedEndingMonth = new DateTime(monthAfterEndingMonth.Year, monthAfterEndingMonth.Month, 1).AddDays(-1);
+            sut.AddCashFlowPeriod(startingMonth, endingMonth, cashFlowAmount);
+
+            // Act
+            sut.RemoveCashFlowPeriod(indexToRemove);
+            var result = sut.CashFlowPeriods;
+
+            // Assert
+            result.Count.Should().Be(1);
+            result[0].StartingMonth.Should().Be(expectedStartingMonth);
+            result[0].EndingMonth.Should().Be(expectedEndingMonth);
+            result[0].MonthlyAmount.Should().Be(cashFlowAmount);
         }
     }
 }

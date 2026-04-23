@@ -287,5 +287,17 @@ namespace FireDotNetLibrary
             _durationInMonths = (_endingMonth.Year - _startingMonth.Year) * 12 + _endingMonth.Month - _startingMonth.Month + 1;
             UpdateMonthlyWithdrawalAmounts();
         }
+
+        public void RemoveCashFlowPeriod(int indexToRemove)
+        {
+            if (_cashFlowPeriods.Count == 1)
+                throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_RemoveCashFlowPeriod_ToFewPeriods_ArgumentException);
+
+            if (indexToRemove < 0 || indexToRemove >= _cashFlowPeriods.Count)
+                throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_RemoveCashFlowPeriod_InvalidIndex_ArgumentException);
+
+            _cashFlowPeriods.RemoveAt(indexToRemove);
+            UpdateValuesFromCashFlowPeriods();
+        }
     }
 }

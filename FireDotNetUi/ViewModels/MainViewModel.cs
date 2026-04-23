@@ -12,7 +12,7 @@ namespace FireDotNetUi.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        // TODO - Add remove button for cash flow periods
+        // TODO - sort cash flow periods -> removing by index has to be regarded
 
         private readonly FireCalculator _fireCalculator;
 
@@ -72,6 +72,9 @@ namespace FireDotNetUi.ViewModels
         [ObservableProperty]
         private string _selectedNumberOfMultipleRuns = "10000";
 
+        [ObservableProperty]
+        private int? _selectedCashFlowPeriodIndex;
+
         [RelayCommand]
         private void Calculate()
         {
@@ -79,7 +82,7 @@ namespace FireDotNetUi.ViewModels
         }
 
         [RelayCommand]
-        private void AddNewCashFlowPeriods()
+        private void AddNewCashFlowPeriod()
         {
             ViewHandlingService viewHandlingService = new();
 
@@ -88,12 +91,27 @@ namespace FireDotNetUi.ViewModels
                 _fireCalculator.AddCashFlowPeriod(viewHandlingService.NewCashFlowPeriodStartingMonth,
                                                   viewHandlingService.NewCashFlowPeriodEndingMonth,
                                                   viewHandlingService.NewCashFlowPeriodEndingMonthyAmount);
-                CashFlowPeriods = [.. _fireCalculator.CashFlowPeriods];
-                StartingMonth = _fireCalculator.StartingMonth;
-                EndingMonth = _fireCalculator.EndingMonth;
-                DurationInMonthsInput = _fireCalculator.DurationInMonths.ToString();
-                UpdatePlotModel();
+                UpdateCashFlowPeriodsAndPlot();
             }
+        }
+
+        [RelayCommand]
+        private void RemoveSelectedCashFlowPeriod()
+        {
+            if (SelectedCashFlowPeriodIndex.HasValue && CashFlowPeriods.Count > 1)
+            {
+                _fireCalculator.RemoveCashFlowPeriod(SelectedCashFlowPeriodIndex.Value);
+                UpdateCashFlowPeriodsAndPlot();
+            }
+        }
+
+        private void UpdateCashFlowPeriodsAndPlot()
+        {
+            CashFlowPeriods = [.. _fireCalculator.CashFlowPeriods];
+            StartingMonth = _fireCalculator.StartingMonth;
+            EndingMonth = _fireCalculator.EndingMonth;
+            DurationInMonthsInput = _fireCalculator.DurationInMonths.ToString();
+            UpdatePlotModel();
         }
 
         partial void OnSelectedNumberOfMultipleRunsChanged(string? oldValue, string newValue)

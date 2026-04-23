@@ -177,6 +177,9 @@
   <data name="MainView_Button_Content_AddCashFlowPeriod" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="MainView_Button_Content_RemoveCashFlowPeriod" xml:space="preserve">
+    <value>Remove</value>
+  </data>
   <data name="MainView_PlotModel_ProbabilityOfDefault" xml:space="preserve">
     <value>Probability Of Default</value>
   </data>
