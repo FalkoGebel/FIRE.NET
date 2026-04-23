@@ -73,7 +73,7 @@ namespace FireDotNetUi.ViewModels
         private string _selectedNumberOfMultipleRuns = "10000";
 
         [ObservableProperty]
-        private int? _selectedCashFlowPeriodIndex;
+        private CashFlowPeriod? _selectedCashFlowPeriod;
 
         [RelayCommand]
         private void Calculate()
@@ -98,9 +98,9 @@ namespace FireDotNetUi.ViewModels
         [RelayCommand]
         private void RemoveSelectedCashFlowPeriod()
         {
-            if (SelectedCashFlowPeriodIndex.HasValue && CashFlowPeriods.Count > 1)
+            if (SelectedCashFlowPeriod != null)
             {
-                _fireCalculator.RemoveCashFlowPeriod(SelectedCashFlowPeriodIndex.Value);
+                _fireCalculator.RemoveCashFlowPeriod(SelectedCashFlowPeriod);
                 UpdateCashFlowPeriodsAndPlot();
             }
         }
