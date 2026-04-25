@@ -13,7 +13,7 @@ namespace FireDotNetLibrary
         private double _annualVolatility;
         private int _numberOfMultipleRuns;
         private int _numberOfRuns;
-        private readonly List<CashFlowPeriod> _cashFlowPeriods;
+        private List<CashFlowPeriod> _cashFlowPeriods;
         private List<double> _monthlyCashFlowAmounts;
 
         public FireCalculator()
@@ -282,6 +282,7 @@ namespace FireDotNetLibrary
 
         private void UpdateValuesFromCashFlowPeriods()
         {
+            _cashFlowPeriods = [.. _cashFlowPeriods.OrderBy(x => x.StartingMonth).ThenBy(x => x.EndingMonth).ThenBy(x => x.MonthlyAmount)];
             _startingMonth = _cashFlowPeriods.Min(x => x.StartingMonth);
             _endingMonth = _cashFlowPeriods.Max(x => x.EndingMonth);
             _durationInMonths = (_endingMonth.Year - _startingMonth.Year) * 12 + _endingMonth.Month - _startingMonth.Month + 1;
