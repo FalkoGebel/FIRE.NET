@@ -169,6 +169,15 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number Of Runs: ähnelt.
+        /// </summary>
+        public static string MainView_Label_NumberOfMultipleRuns {
+            get {
+                return ResourceManager.GetString("MainView_Label_NumberOfMultipleRuns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Starting Amount: ähnelt.
         /// </summary>
         public static string MainView_Label_StartAmount {

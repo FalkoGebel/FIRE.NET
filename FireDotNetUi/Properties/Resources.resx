@@ -126,6 +126,9 @@
   <data name="MainView_Label_MonthlyWithdrawalAmount" xml:space="preserve">
     <value>Monthly Withdrawal Amount:</value>
   </data>
+  <data name="MainView_Label_NumberOfMultipleRuns" xml:space="preserve">
+    <value>Number Of Runs:</value>
+  </data>
   <data name="NewCashFlowPeriodView_Label_MonthlyAmount" xml:space="preserve">
     <value>Monthly Amount:</value>
   </data>
