@@ -393,14 +393,14 @@ namespace FireDotNetLibraryTests
         }
 
         [TestMethod]
-        [DataRow(2020, 7, 1, 2025, 9, 30, -250)]
-        [DataRow(2020, 7, 1, 2025, 9, 30, 250)]
-        [DataRow(2020, 7, 1, 2025, 9, 30, 0)]
-        [DataRow(2020, 7, 1, 2085, 5, 1, -0.01)]
-        [DataRow(1965, 1, 30, 1965, 1, 31, -999)]
-        [DataRow(1966, 2, 5, 2066, 1, 5, 33.33)]
+        [DataRow(2020, 7, 1, 2025, 9, 30, -250, 0)]
+        [DataRow(2020, 7, 1, 2025, 9, 30, 250, 0)]
+        [DataRow(2020, 7, 1, 2025, 9, 30, 0, 0)]
+        [DataRow(2020, 7, 1, 2085, 5, 1, -0.01, 0)]
+        [DataRow(1965, 1, 30, 1965, 1, 31, -999, 0)]
+        [DataRow(1966, 2, 5, 2066, 1, 5, 33.33, 0)]
         public void Add_Another_CashFlowPeriod_And_Get_Correct_CashFlowPeriods(int startingYear, int startingMonthNumber, int startingDay,
-            int endingYear, int endingMonthNumber, int endingDay, double cashFlowAmount)
+            int endingYear, int endingMonthNumber, int endingDay, double cashFlowAmount, int indexToCheck)
         {
             // Arrange
             FireCalculator sut = new();
@@ -416,9 +416,9 @@ namespace FireDotNetLibraryTests
 
             // Assert
             result.Count.Should().Be(2);
-            result[1].StartingMonth.Should().Be(expectedStartingMonth);
-            result[1].EndingMonth.Should().Be(expectedEndingMonth);
-            result[1].MonthlyAmount.Should().Be(cashFlowAmount);
+            result[indexToCheck].StartingMonth.Should().Be(expectedStartingMonth);
+            result[indexToCheck].EndingMonth.Should().Be(expectedEndingMonth);
+            result[indexToCheck].MonthlyAmount.Should().Be(cashFlowAmount);
         }
 
         [TestMethod]

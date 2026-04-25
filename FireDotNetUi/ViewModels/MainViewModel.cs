@@ -12,7 +12,8 @@ namespace FireDotNetUi.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        // TODO - sort cash flow periods -> removing by index has to be regarded
+        // TODO - rearange UI
+        // TODO - add list with monthly cash flow amounts
 
         private readonly FireCalculator _fireCalculator;
 
