@@ -58,30 +58,59 @@
                     <TextBox Text="{Binding DurationInMonthsInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" MinWidth="50" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="0,5,0,0" IsReadOnly="True"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <ListView ItemsSource="{Binding CashFlowPeriods}"
-                      Height="180" SelectionMode="Single"
-                      SelectedItem="{Binding SelectedCashFlowPeriod, Mode=TwoWay}">
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="False">
-                                <GridViewColumn
-                            DisplayMemberBinding="{Binding Path=StartingMonth, StringFormat='MMMM yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"
-                            Header="{x:Static r:Resources.MainView_CashFlowPeriods_Header_StartingMonth}"
-                            Width="160"/>
-                                <GridViewColumn
-                            DisplayMemberBinding="{Binding Path=EndingMonth, StringFormat='MMMM yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"
-                            Header="{x:Static r:Resources.MainView_CashFlowPeriods_Header_EndingMonth}"
-                            Width="160"/>
-                                <GridViewColumn
-                            DisplayMemberBinding="{Binding Path=MonthlyAmount, StringFormat='#,0.00', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"
-                            Header="{x:Static r:Resources.MainView_CashFlowPeriods_Header_MonthlyAmount}"
-                            Width="160"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    <StackPanel>
-                        <Button Content="{x:Static r:Resources.MainView_Button_Content_RemoveCashFlowPeriod}" Command="{Binding RemoveSelectedCashFlowPeriodCommand}" VerticalContentAlignment="Center" Padding="5" Margin="5,0,0,5"/>
-                        <Button Content="{x:Static r:Resources.MainView_Button_Content_AddCashFlowPeriod}" Command="{Binding AddNewCashFlowPeriodCommand}" VerticalContentAlignment="Center" Padding="5" Margin="5,0,0,0"/>
-                    </StackPanel>
+                    <TabControl>
+                        <TabItem Header="{x:Static r:Resources.MainView_TabControl_Header_CashFlowPeriods}">
+                            <TabItem.Content>
+                                <StackPanel Orientation="Horizontal" Height="180">
+                                    <ListView ItemsSource="{Binding CashFlowPeriods}"
+                                              Height="180" SelectionMode="Single"
+                                              SelectedItem="{Binding SelectedCashFlowPeriod, Mode=TwoWay}">
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="False">
+                                                <GridViewColumn
+                                                    DisplayMemberBinding="{Binding Path=StartingMonth, StringFormat='MMMM yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"
+                                                    Header="{x:Static r:Resources.MainView_CashFlowPeriods_Header_StartingMonth}"
+                                                    Width="165"/>
+                                                <GridViewColumn
+                                                    DisplayMemberBinding="{Binding Path=EndingMonth, StringFormat='MMMM yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"
+                                                    Header="{x:Static r:Resources.MainView_CashFlowPeriods_Header_EndingMonth}"
+                                                    Width="165"/>
+                                                <GridViewColumn
+                                                    DisplayMemberBinding="{Binding Path=MonthlyAmount, StringFormat='#,0.00', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"
+                                                    Header="{x:Static r:Resources.MainView_CashFlowPeriods_Header_MonthlyAmount}"
+                                                    Width="165"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                    <StackPanel>
+                                        <Button Content="{x:Static r:Resources.MainView_Button_Content_RemoveCashFlowPeriod}" Command="{Binding RemoveSelectedCashFlowPeriodCommand}" VerticalContentAlignment="Center" Padding="5" Margin="5,0,0,5"/>
+                                        <Button Content="{x:Static r:Resources.MainView_Button_Content_AddCashFlowPeriod}" Command="{Binding AddNewCashFlowPeriodCommand}" VerticalContentAlignment="Center" Padding="5" Margin="5,0,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </TabItem.Content>
+                        </TabItem>
+                        <TabItem Header="{x:Static r:Resources.MainView_TabControl_Header_MonthlyAmounts}">
+                            <TabItem.Content>
+                                <StackPanel Orientation="Horizontal" Height="180">
+                                    <ListView ItemsSource="{Binding MonthlyCashFlowAmounts}"
+                                              Height="180" SelectionMode="Single">
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="False">
+                                                <GridViewColumn
+                                                    DisplayMemberBinding="{Binding Path=EndOfMonth, StringFormat='MMMM yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"
+                                                    Header="{x:Static r:Resources.MainView_MonthlyCashFlowAmounts_Header_Month}"
+                                                    Width="165"/>
+                                                <GridViewColumn
+                                                    DisplayMemberBinding="{Binding Path=MonthlyAmount, StringFormat='#,0.00', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"
+                                                    Header="{x:Static r:Resources.MainView_MonthlyCashFlowAmounts_Header_MonthlyAmount}"
+                                                    Width="165"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </StackPanel>
+                            </TabItem.Content>
+                        </TabItem>
+                    </TabControl>
                 </StackPanel>
             </StackPanel>
         </Grid>

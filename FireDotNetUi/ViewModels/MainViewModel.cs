@@ -12,8 +12,6 @@ namespace FireDotNetUi.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        // TODO - add list with monthly cash flow amounts
-
         private readonly FireCalculator _fireCalculator;
 
         public MainViewModel()
@@ -25,7 +23,6 @@ namespace FireDotNetUi.ViewModels
             UpdatePlotModel();
 
             _startingAmountInput = _fireCalculator.StartingAmount.ToString("0.00");
-            _cashFlowPeriods = [.. _fireCalculator.CashFlowPeriods];
             _startingMonth = _fireCalculator.StartingMonth;
             _endingMonth = _fireCalculator.EndingMonth;
             _durationInMonthsInput = _fireCalculator.DurationInMonths.ToString();
@@ -34,6 +31,8 @@ namespace FireDotNetUi.ViewModels
             _annualVolatility = _fireCalculator.AnnualVolatility.ToString("0.00");
             _numberOfMultipleRuns = [.. _numberOfMultipleRuns.Select(n => int.Parse(n).ToString("#,0"))];
             _selectedNumberOfMultipleRuns = int.Parse(_selectedNumberOfMultipleRuns).ToString("#,0");
+            _cashFlowPeriods = [.. _fireCalculator.CashFlowPeriods];
+            _monthlyCashFlowAmounts = [.. _fireCalculator.MonthlyCashFlowAmounts];
         }
 
         [ObservableProperty]
@@ -41,9 +40,6 @@ namespace FireDotNetUi.ViewModels
 
         [ObservableProperty]
         private string _startingAmountInput;
-
-        [ObservableProperty]
-        private ObservableCollection<CashFlowPeriod> _cashFlowPeriods;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(EndingMonth))]
@@ -73,7 +69,13 @@ namespace FireDotNetUi.ViewModels
         private string _selectedNumberOfMultipleRuns = "10000";
 
         [ObservableProperty]
+        private ObservableCollection<CashFlowPeriod> _cashFlowPeriods;
+
+        [ObservableProperty]
         private CashFlowPeriod? _selectedCashFlowPeriod;
+
+        [ObservableProperty]
+        private ObservableCollection<MonthlyCashFlowAmount> _monthlyCashFlowAmounts;
 
         [RelayCommand]
         private void Calculate()
@@ -240,6 +242,7 @@ namespace FireDotNetUi.ViewModels
 
         private void UpdatePlotModel()
         {
+            MonthlyCashFlowAmounts = [.. _fireCalculator.MonthlyCashFlowAmounts];
             DateTime startTime = DateTime.Now;
             var runs = _fireCalculator.GetRemainingAmounts();
             double probabilityOfDefault = FireCalculator.CalculateProbabilityOfDefaultAsPercentage(runs);

@@ -187,6 +187,24 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ending Month ähnelt.
+        /// </summary>
+        public static string MainView_MonthlyCashFlowAmounts_Header_Month {
+            get {
+                return ResourceManager.GetString("MainView_MonthlyCashFlowAmounts_Header_Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Amount ähnelt.
+        /// </summary>
+        public static string MainView_MonthlyCashFlowAmounts_Header_MonthlyAmount {
+            get {
+                return ResourceManager.GetString("MainView_MonthlyCashFlowAmounts_Header_MonthlyAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Month ähnelt.
         /// </summary>
         public static string MainView_PlotModel_Month {
@@ -228,6 +246,24 @@ namespace FireDotNetUi.Properties {
         public static string MainView_PlotModel_Seconds {
             get {
                 return ResourceManager.GetString("MainView_PlotModel_Seconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cash Flow Periods ähnelt.
+        /// </summary>
+        public static string MainView_TabControl_Header_CashFlowPeriods {
+            get {
+                return ResourceManager.GetString("MainView_TabControl_Header_CashFlowPeriods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Monthly Amounts ähnelt.
+        /// </summary>
+        public static string MainView_TabControl_Header_MonthlyAmounts {
+            get {
+                return ResourceManager.GetString("MainView_TabControl_Header_MonthlyAmounts", resourceCulture);
             }
         }
         
