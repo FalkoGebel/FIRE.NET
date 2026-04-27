@@ -14,7 +14,7 @@ namespace FireDotNetLibrary
         private int _numberOfMultipleRuns;
         private int _numberOfRuns;
         private List<CashFlowPeriod> _cashFlowPeriods;
-        private List<double> _monthlyCashFlowAmounts;
+        private List<MonthlyCashFlowAmount> _monthlyCashFlowAmounts;
 
         public FireCalculator()
         {
@@ -42,29 +42,6 @@ namespace FireDotNetLibrary
         public int DurationInMonths
         {
             get => _durationInMonths;
-        }
-
-        private void UpdateMonthlyWithdrawalAmounts()
-        {
-            double[] newMonthlyWithdrawalAmounts = new double[DurationInMonths];
-            double monthlyInflationFactorDecimal = Math.Pow(AnnualInflationRate / 100 + 1, 1d / 12);
-
-            foreach (var cashFlowPeriod in _cashFlowPeriods)
-            {
-                double currentMonthlyWithdrawalAmount = cashFlowPeriod.MonthlyAmount;
-                int firstIndex = ((cashFlowPeriod.StartingMonth.Year - StartingMonth.Year) * 12 + cashFlowPeriod.StartingMonth.Month - StartingMonth.Month),
-                    lastIndex = DurationInMonths - 1 - ((EndingMonth.Year - cashFlowPeriod.EndingMonth.Year) * 12 + EndingMonth.Month - cashFlowPeriod.EndingMonth.Month);//(EndingMonth.Month - cashFlowPeriod.EndingMonth.Month);
-
-                for (int i = 0; i < DurationInMonths; i++)
-                {
-                    currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
-
-                    if (i >= firstIndex && i <= lastIndex)
-                        newMonthlyWithdrawalAmounts[i] += currentMonthlyWithdrawalAmount;
-                }
-            }
-
-            _monthlyCashFlowAmounts = [.. newMonthlyWithdrawalAmounts];
         }
 
         public double StartingAmount { get; set; }
@@ -126,6 +103,34 @@ namespace FireDotNetLibrary
         }
 
         public List<CashFlowPeriod> CashFlowPeriods { get => _cashFlowPeriods; }
+        public List<MonthlyCashFlowAmount> MonthlyCashFlowAmounts { get => _monthlyCashFlowAmounts; }
+
+        private void UpdateMonthlyWithdrawalAmounts()
+        {
+            MonthlyCashFlowAmount[] newMonthlyWithdrawalAmounts = new MonthlyCashFlowAmount[DurationInMonths];
+
+            for (int i = 0; i < DurationInMonths; i++)
+                newMonthlyWithdrawalAmounts[i] = new MonthlyCashFlowAmount() { EndOfMonth = StartingMonth.AddMonths(i + 1).AddDays(-1), MonthlyAmount = 0 };
+
+            double monthlyInflationFactorDecimal = Math.Pow(AnnualInflationRate / 100 + 1, 1d / 12);
+
+            foreach (var cashFlowPeriod in _cashFlowPeriods)
+            {
+                double currentMonthlyWithdrawalAmount = cashFlowPeriod.MonthlyAmount;
+                int firstIndex = ((cashFlowPeriod.StartingMonth.Year - StartingMonth.Year) * 12 + cashFlowPeriod.StartingMonth.Month - StartingMonth.Month),
+                    lastIndex = DurationInMonths - 1 - ((EndingMonth.Year - cashFlowPeriod.EndingMonth.Year) * 12 + EndingMonth.Month - cashFlowPeriod.EndingMonth.Month);
+
+                for (int i = 0; i < DurationInMonths; i++)
+                {
+                    currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
+
+                    if (i >= firstIndex && i <= lastIndex)
+                        newMonthlyWithdrawalAmounts[i].MonthlyAmount += currentMonthlyWithdrawalAmount;
+                }
+            }
+
+            _monthlyCashFlowAmounts = [.. newMonthlyWithdrawalAmounts];
+        }
 
         private void UpdateNumberOfRuns()
         {
@@ -209,7 +214,7 @@ namespace FireDotNetLibrary
                         }
                         else
                         {
-                            currentRun[i] = (currentMonth, currentRun[i - 1].Item2 * (1 + monthlyReturns[i - 1]) + _monthlyCashFlowAmounts[i - 1]);
+                            currentRun[i] = (currentMonth, currentRun[i - 1].Item2 * (1 + monthlyReturns[i - 1]) + _monthlyCashFlowAmounts[i - 1].MonthlyAmount);
                             currentMonth = currentMonth.AddDays(1).AddMonths(1).AddDays(-1);
                         }
                     }

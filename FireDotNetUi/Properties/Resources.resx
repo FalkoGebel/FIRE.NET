@@ -141,6 +141,9 @@
   <data name="MainView_CashFlowPeriods_Header_EndingMonth" xml:space="preserve">
     <value>Ending Month</value>
   </data>
+  <data name="MainView_MonthlyCashFlowAmounts_Header_Month" xml:space="preserve">
+    <value>Ending Month</value>
+  </data>
   <data name="MainView_CashFlowPeriods_Header_StartingMonth" xml:space="preserve">
     <value>Starting Month</value>
   </data>
@@ -164,6 +167,12 @@
   </data>
   <data name="MainView_Title" xml:space="preserve">
     <value>FIRE.NET v2.0.0</value>
+  </data>
+  <data name="MainView_TabControl_Header_CashFlowPeriods" xml:space="preserve">
+    <value>Cash Flow Periods</value>
+  </data>
+  <data name="MainView_TabControl_Header_MonthlyAmounts" xml:space="preserve">
+    <value>Monthly Amounts</value>
   </data>
   <data name="NewCashFlowPeriodView_Title" xml:space="preserve">
     <value>New Cash Flow Period</value>
@@ -197,5 +206,8 @@
   </data>
   <data name="MainView_Label_AnnualReturn" xml:space="preserve">
     <value>Annual Return:</value>
+  </data>
+  <data name="MainView_MonthlyCashFlowAmounts_Header_MonthlyAmount" xml:space="preserve">
+    <value>Amount</value>
   </data>
 </root>
