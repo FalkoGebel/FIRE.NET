@@ -1,23 +1,23 @@
 # FIRE.NET - Just another FIRE calculator
 
-Current version: v2.0.0
+Current version: v3.0.0
 
 ## Features
 - Shows the remaining amount for the months in a chart and the probability of default based on the choosen parameters
 - Changing any of the following parameters will update the dependent parameters, the chart and the probability of default:
 	- Starting amount
-	- Monthly withdrawal amount
-	- Annual withdrawal amount
-	- Starting month
-	- Ending month
-	- Number of months
 	- Annual inflation rate
 	- Annual return
 	- Annual volatility
+	- Cash flow periods with starting month, ending month and amount of the cash flow
 - Pressing button **_Calculate_** will also update the chart and the probability of default
 - When using an annual return and an annual volatility, there will be a calculation of possible outcomes based on 100,000 simulations - the chart will show three lines: the average values of the top 1,000 outcomes, the average of the median 1,000 outcomes and the average values of the lowest 1,000 outcomes
 
 ![FIRE.NET](/README-Images/FIRE.NET.png)
+
+- The monthly cash flow amounts over all the time are also shown in a separate table
+
+![Monthly cashflow amounts](/README-Images/MonthlyCashflowAmounts.png)
 	 
 ## Technologies used
 - C# / .NET / WPF
