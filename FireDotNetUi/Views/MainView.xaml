@@ -15,6 +15,23 @@
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
+
+    <Window.Resources>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+
+        <DataTemplate x:Key="MonthlyAmount">
+            <TextBlock HorizontalAlignment="Right">
+                <TextBlock.Text>
+                    <Binding Path="MonthlyAmount"
+                             StringFormat='#,0.00'
+                             ConverterCulture="{x:Static gl:CultureInfo.CurrentCulture}"/>
+                </TextBlock.Text>
+            </TextBlock>
+        </DataTemplate>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -76,9 +93,10 @@
                                                     Header="{x:Static r:Resources.MainView_CashFlowPeriods_Header_EndingMonth}"
                                                     Width="165"/>
                                                 <GridViewColumn
-                                                    DisplayMemberBinding="{Binding Path=MonthlyAmount, StringFormat='#,0.00', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"
                                                     Header="{x:Static r:Resources.MainView_CashFlowPeriods_Header_MonthlyAmount}"
-                                                    Width="165"/>
+                                                    Width="165"
+                                                    CellTemplate="{StaticResource MonthlyAmount}">
+                                                </GridViewColumn>
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
@@ -101,9 +119,10 @@
                                                     Header="{x:Static r:Resources.MainView_MonthlyCashFlowAmounts_Header_Month}"
                                                     Width="165"/>
                                                 <GridViewColumn
-                                                    DisplayMemberBinding="{Binding Path=MonthlyAmount, StringFormat='#,0.00', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"
                                                     Header="{x:Static r:Resources.MainView_MonthlyCashFlowAmounts_Header_MonthlyAmount}"
-                                                    Width="165"/>
+                                                    Width="165"
+                                                    CellTemplate="{StaticResource MonthlyAmount}">
+                                                </GridViewColumn>
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
