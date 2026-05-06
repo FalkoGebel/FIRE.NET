@@ -61,6 +61,33 @@ namespace FireDotNetLibrary.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die From analysis start ähnelt.
+        /// </summary>
+        public static string Enums_InflationOptions_FromAnalysisStart {
+            get {
+                return ResourceManager.GetString("Enums_InflationOptions_FromAnalysisStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die From period start ähnelt.
+        /// </summary>
+        public static string Enums_InflationOptions_FromPeriodStart {
+            get {
+                return ResourceManager.GetString("Enums_InflationOptions_FromPeriodStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No inflation ähnelt.
+        /// </summary>
+        public static string Enums_InflationOptions_NoInflation {
+            get {
+                return ResourceManager.GetString("Enums_InflationOptions_NoInflation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die EndingMonth has to follow StartingMonth. ähnelt.
         /// </summary>
         public static string FireCalculator_AddCashFlowPeriod_ArgumentException {

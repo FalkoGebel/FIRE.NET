@@ -144,4 +144,13 @@
   <data name="FireCalculator_AddCashFlowPeriod_ArgumentException" xml:space="preserve">
     <value>EndingMonth has to follow StartingMonth.</value>
   </data>
+  <data name="Enums_InflationOptions_NoInflation" xml:space="preserve">
+    <value>No inflation</value>
+  </data>
+  <data name="Enums_InflationOptions_FromPeriodStart" xml:space="preserve">
+    <value>From period start</value>
+  </data>
+  <data name="Enums_InflationOptions_FromAnalysisStart" xml:space="preserve">
+    <value>From analysis start</value>
+  </data>
 </root>
