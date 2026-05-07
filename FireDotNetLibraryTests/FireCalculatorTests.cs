@@ -423,7 +423,7 @@ namespace FireDotNetLibraryTests
             result[indexToCheck].StartingMonth.Should().Be(expectedStartingMonth);
             result[indexToCheck].EndingMonth.Should().Be(expectedEndingMonth);
             result[indexToCheck].MonthlyAmount.Should().Be(cashFlowAmount);
-            result[indexToCheck].InflationOption.Should().Be(InflationOptions.NoInflation);
+            result[indexToCheck].InflationOption.Should().Be(InflationOptions.FromAnalysisStart);
             monthlyCashFlowAmounts[0].EndOfMonth.Should().Be(sut.StartingMonth.AddMonths(1).AddDays(-1));
             monthlyCashFlowAmounts[^1].EndOfMonth.Should().Be(sut.EndingMonth);
         }
