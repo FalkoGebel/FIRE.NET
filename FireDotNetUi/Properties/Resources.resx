@@ -138,8 +138,14 @@
   <data name="NewCashFlowPeriodView_Label_DurationInMonths" xml:space="preserve">
     <value>Months:</value>
   </data>
+  <data name="NewCashFlowPeriodView_Label_InflationOption" xml:space="preserve">
+    <value>Inflation Option:</value>
+  </data>
   <data name="MainView_CashFlowPeriods_Header_EndingMonth" xml:space="preserve">
     <value>Ending Month</value>
+  </data>
+  <data name="MainView_CashFlowPeriods_Header_InflationOption" xml:space="preserve">
+    <value>Inflation Option</value>
   </data>
   <data name="MainView_MonthlyCashFlowAmounts_Header_Month" xml:space="preserve">
     <value>Ending Month</value>

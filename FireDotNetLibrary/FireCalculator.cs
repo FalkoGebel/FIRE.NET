@@ -123,12 +123,12 @@ namespace FireDotNetLibrary
 
                 for (int i = 0; i < DurationInMonths; i++)
                 {
-                    if (cashFlowPeriod.InflationOption == InflationOptions.FromAnalysisStart)
+                    if (cashFlowPeriod.InflationOption == InflationOption.FromAnalysisStart)
                         currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
 
                     if (i >= firstIndex && i <= lastIndex)
                     {
-                        if (cashFlowPeriod.InflationOption == InflationOptions.FromPeriodStart)
+                        if (cashFlowPeriod.InflationOption == InflationOption.FromPeriodStart)
                             currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
 
                         newMonthlyWithdrawalAmounts[i].MonthlyAmount += currentMonthlyWithdrawalAmount;
@@ -278,7 +278,7 @@ namespace FireDotNetLibrary
         /// <param name="amount">The monthly amount that will be the base for the amounts of each month during the specified period.</param>
         /// <param name="inflationOption">The inflation option to apply to the cash flow period.</param>
         /// <exception cref="ArgumentOutOfRangeException">This is triggered if the end month does not follow the start month.</exception>
-        public void AddCashFlowPeriod(DateTime startingMonth, DateTime endingMonth, double amount, InflationOptions inflationOption = InflationOptions.FromAnalysisStart)
+        public void AddCashFlowPeriod(DateTime startingMonth, DateTime endingMonth, double amount, InflationOption inflationOption = InflationOption.FromAnalysisStart)
         {
             if (endingMonth <= startingMonth)
                 throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_AddCashFlowPeriod_ArgumentException);

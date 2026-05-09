@@ -16,7 +16,7 @@ namespace FireDotNetLibraryTests
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
-            InflationOptions inflationOption = InflationOptions.NoInflation;
+            InflationOption inflationOption = InflationOption.NoInflation;
 
             // Act
             string description = inflationOption.GetDisplayDescription();

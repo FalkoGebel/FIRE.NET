@@ -2,7 +2,7 @@
 
 namespace FireDotNetLibrary
 {
-    public enum InflationOptions
+    public enum InflationOption
     {
         [Display(Description = "Enums_InflationOptions_FromAnalysisStart", ResourceType = typeof(Properties.Resources))]
         FromAnalysisStart = 0,

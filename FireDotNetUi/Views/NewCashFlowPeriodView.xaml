@@ -19,19 +19,49 @@
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{x:Static r:Resources.NewCashFlowPeriodView_Label_StartingMonth}" VerticalContentAlignment="Center" Margin="10,5,5,5" Width="165"/>
-            <uc:MonthPicker SelectedDate="{Binding StartingMonth, Mode=TwoWay}" Margin="0,5,10,5" VerticalContentAlignment="Center" TextBoxWidth="150" />
+            <uc:MonthPicker SelectedDate="{Binding StartingMonth, Mode=TwoWay}"
+                            Margin="0,5,10,5"
+                            VerticalContentAlignment="Center"
+                            TextBoxWidth="225" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{x:Static r:Resources.NewCashFlowPeriodView_Label_EndingMonth}" VerticalContentAlignment="Center" Margin="10,5,5,5" Width="165"/>
-            <uc:MonthPicker SelectedDate="{Binding EndingMonth, Mode=TwoWay}" Margin="0,5,10,5" VerticalContentAlignment="Center" TextBoxWidth="150" />
+            <uc:MonthPicker SelectedDate="{Binding EndingMonth, Mode=TwoWay}"
+                            Margin="0,5,10,5"
+                            VerticalContentAlignment="Center"
+                            TextBoxWidth="225" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{x:Static r:Resources.NewCashFlowPeriodView_Label_DurationInMonths}" VerticalContentAlignment="Center" Margin="10,5,5,5" Width="165"/>
-            <TextBox Text="{Binding DurationInMonthsInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" Width="170" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="0,5,10,5"/>
+            <TextBox Text="{Binding DurationInMonthsInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                     Width="250"
+                     VerticalContentAlignment="Center"
+                     HorizontalContentAlignment="Right"
+                     Margin="0,5,10,5"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{x:Static r:Resources.NewCashFlowPeriodView_Label_MonthlyAmount}" VerticalContentAlignment="Center" Margin="10,5,5,5" Width="165"/>
-            <TextBox Text="{Binding MonthlyAmountInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" Width="170" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="0,5,10,5"/>
+            <TextBox Text="{Binding MonthlyAmountInput, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                     Width="250"
+                     VerticalContentAlignment="Center"
+                     HorizontalContentAlignment="Right"
+                     Margin="0,5,10,5"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{x:Static r:Resources.NewCashFlowPeriodView_Label_InflationOption}" VerticalContentAlignment="Center" Margin="10,5,5,5" Width="165"/>
+            <ComboBox ItemsSource="{Binding InflationOptions}"
+                      SelectedItem="{Binding SelectedInflationOption, Mode=TwoWay}"
+                      SelectedIndex="0"
+                      Margin="0,5,10,5"
+                      VerticalContentAlignment="Center"
+                      HorizontalContentAlignment="Right"
+                      Width="250">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Description}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
             <Button Content="{x:Static r:Resources.NewCashFlowPeriodView_Button_Content_Cancel}" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=NewCashFlowPeriodViewWindow}" Margin="10,5,5,5" Padding="5" IsCancel="True" IsDefault="True" />

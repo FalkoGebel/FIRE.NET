@@ -423,7 +423,7 @@ namespace FireDotNetLibraryTests
             result[indexToCheck].StartingMonth.Should().Be(expectedStartingMonth);
             result[indexToCheck].EndingMonth.Should().Be(expectedEndingMonth);
             result[indexToCheck].MonthlyAmount.Should().Be(cashFlowAmount);
-            result[indexToCheck].InflationOption.Should().Be(InflationOptions.FromAnalysisStart);
+            result[indexToCheck].InflationOption.Should().Be(InflationOption.FromAnalysisStart);
             monthlyCashFlowAmounts[0].EndOfMonth.Should().Be(sut.StartingMonth.AddMonths(1).AddDays(-1));
             monthlyCashFlowAmounts[^1].EndOfMonth.Should().Be(sut.EndingMonth);
         }
@@ -474,7 +474,7 @@ namespace FireDotNetLibraryTests
             sut.AddCashFlowPeriod(new DateTime(2020, 1, 1), new DateTime(2021, 12, 30), 0);
             sut.RemoveCashFlowPeriod(standardCashFlowPeriod);
             double monthlyAmount = 100;
-            sut.AddCashFlowPeriod(new DateTime(2021, 1, 1), new DateTime(2021, 12, 30), monthlyAmount, InflationOptions.NoInflation);
+            sut.AddCashFlowPeriod(new DateTime(2021, 1, 1), new DateTime(2021, 12, 30), monthlyAmount, InflationOption.NoInflation);
 
             // Act
             var monthlyCashFlowAmounts = sut.MonthlyCashFlowAmounts;
@@ -501,7 +501,7 @@ namespace FireDotNetLibraryTests
             sut.AddCashFlowPeriod(new DateTime(2020, 1, 1), new DateTime(2021, 12, 30), 0);
             sut.RemoveCashFlowPeriod(standardCashFlowPeriod);
             double monthlyAmount = 100;
-            sut.AddCashFlowPeriod(new DateTime(2021, 1, 1), new DateTime(2021, 12, 30), monthlyAmount, InflationOptions.FromPeriodStart);
+            sut.AddCashFlowPeriod(new DateTime(2021, 1, 1), new DateTime(2021, 12, 30), monthlyAmount, InflationOption.FromPeriodStart);
             double monthlyInflationFactorDecimal = Math.Pow(sut.AnnualInflationRate / 100 + 1, 1d / 12);
 
             // Act
