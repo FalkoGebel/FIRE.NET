@@ -1,6 +1,6 @@
 # FIRE.NET - Just another FIRE calculator
 
-Current version: v3.0.0
+Current version: v4.0.0
 
 ## Features
 - Shows the remaining amount for the months in a chart and the probability of default based on the choosen parameters
@@ -9,7 +9,7 @@ Current version: v3.0.0
 	- Annual inflation rate
 	- Annual return
 	- Annual volatility
-	- Cash flow periods with starting month, ending month and amount of the cash flow
+	- Cash flow periods with starting month, ending month, amount of the cash flow and inflation option
 - Pressing button **_Calculate_** will also update the chart and the probability of default
 - When using an annual return and an annual volatility, there will be a calculation of possible outcomes based on 100,000 simulations - the chart will show three lines: the average values of the top 1,000 outcomes, the average of the median 1,000 outcomes and the average values of the lowest 1,000 outcomes
 

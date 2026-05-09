@@ -172,7 +172,7 @@
     <value>Starting Amount:</value>
   </data>
   <data name="MainView_Title" xml:space="preserve">
-    <value>FIRE.NET v3.0.0</value>
+    <value>FIRE.NET v4.0.0</value>
   </data>
   <data name="MainView_TabControl_Header_CashFlowPeriods" xml:space="preserve">
     <value>Cash Flow Periods</value>
