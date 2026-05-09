@@ -22,12 +22,12 @@ namespace FireDotNetLibrary
             _numberOfRuns = 1;
             _monthlyCashFlowAmounts = [];
 
-            // TODO - Refactor using add function
+            // Set default cash flow period with a duration of 30 years and a monthly amount of -500
+            _cashFlowPeriods = [];
             DateTime now = DateTime.Now,
                      startingMonth = new(now.Year, now.Month, 1),
                      endingMonth = startingMonth.AddMonths(12 * 30).AddDays(-1);
-            _cashFlowPeriods = [new CashFlowPeriod() { StartingMonth = startingMonth, EndingMonth = endingMonth, MonthlyAmount = -500 }];
-            UpdateValuesFromCashFlowPeriods();
+            AddCashFlowPeriod(startingMonth, endingMonth, -500);
         }
 
         public DateTime StartingMonth
