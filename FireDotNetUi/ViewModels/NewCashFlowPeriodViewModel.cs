@@ -1,11 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FireDotNetLibrary;
 using System.Windows;
 
 namespace FireDotNetUi.ViewModels
 {
     public partial class NewCashFlowPeriodViewModel : ObservableObject
     {
+        public class InflationOptionComboBoxItem(InflationOption inflationOption)
+        {
+            public string Description { get => Value.GetDisplayDescription(); }
+            public InflationOption Value { get; private set; } = inflationOption;
+        }
+
         public NewCashFlowPeriodViewModel() { }
 
         public NewCashFlowPeriodViewModel(DateTime startingMonth, DateTime endingMonth)
@@ -14,6 +21,8 @@ namespace FireDotNetUi.ViewModels
             _endingMonth = endingMonth;
             _durationInMonthsInput = ((EndingMonth.Year - StartingMonth.Year) * 12 + EndingMonth.Month - StartingMonth.Month + 1).ToString();
             _monthlyAmountInput = 0.ToString("0.00");
+            _inflationOptions = [.. Enum.GetValues<InflationOption>().Select(option => new InflationOptionComboBoxItem(option))];
+            _selectedInflationOption = new InflationOptionComboBoxItem(InflationOption.FromAnalysisStart);
         }
 
         [ObservableProperty]
@@ -30,6 +39,12 @@ namespace FireDotNetUi.ViewModels
 
         [ObservableProperty]
         private string _monthlyAmountInput = string.Empty;
+
+        [ObservableProperty]
+        private InflationOptionComboBoxItem? _selectedInflationOption;
+
+        [ObservableProperty]
+        private InflationOptionComboBoxItem[]? _inflationOptions;
 
         [RelayCommand]
         private static void Cancel(Window window)

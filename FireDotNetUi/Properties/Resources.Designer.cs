@@ -97,6 +97,15 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Inflation Option ähnelt.
+        /// </summary>
+        public static string MainView_CashFlowPeriods_Header_InflationOption {
+            get {
+                return ResourceManager.GetString("MainView_CashFlowPeriods_Header_InflationOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Monthly Amount ähnelt.
         /// </summary>
         public static string MainView_CashFlowPeriods_Header_MonthlyAmount {
@@ -268,7 +277,7 @@ namespace FireDotNetUi.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die FIRE.NET v3.0.0 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die FIRE.NET v4.0.0 ähnelt.
         /// </summary>
         public static string MainView_Title {
             get {
@@ -309,6 +318,15 @@ namespace FireDotNetUi.Properties {
         public static string NewCashFlowPeriodView_Label_EndingMonth {
             get {
                 return ResourceManager.GetString("NewCashFlowPeriodView_Label_EndingMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Inflation Option: ähnelt.
+        /// </summary>
+        public static string NewCashFlowPeriodView_Label_InflationOption {
+            get {
+                return ResourceManager.GetString("NewCashFlowPeriodView_Label_InflationOption", resourceCulture);
             }
         }
         

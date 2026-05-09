@@ -10,6 +10,7 @@
         xmlns:vm="clr-namespace:FireDotNetUi.ViewModels"
         xmlns:r="clr-namespace:FireDotNetUi.Properties"
         xmlns:uc="clr-namespace:FireDotNetUi.UserControls"
+        xmlns:converters="clr-namespace:FireDotNetUi.Converters"
         mc:Ignorable="d"
         Title="{x:Static r:Resources.MainView_Title}" WindowState="Maximized" Style="{DynamicResource ResourceKey=WindowDefaultStyle}">
     <Window.DataContext>
@@ -17,6 +18,8 @@
     </Window.DataContext>
 
     <Window.Resources>
+        <converters:InflationOptionConverter x:Key="InflationOptionConverter" />
+
         <Style TargetType="ListViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         </Style>
@@ -96,6 +99,11 @@
                                                     Header="{x:Static r:Resources.MainView_CashFlowPeriods_Header_MonthlyAmount}"
                                                     Width="165"
                                                     CellTemplate="{StaticResource MonthlyAmount}">
+                                                </GridViewColumn>
+                                                <GridViewColumn
+                                                    DisplayMemberBinding="{Binding Path=InflationOption, Converter={StaticResource InflationOptionConverter}}"
+                                                    Header="{x:Static r:Resources.MainView_CashFlowPeriods_Header_InflationOption}"
+                                                    Width="200">
                                                 </GridViewColumn>
                                             </GridView>
                                         </ListView.View>

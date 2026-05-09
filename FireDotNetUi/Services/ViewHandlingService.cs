@@ -1,4 +1,5 @@
-﻿using FireDotNetUi.ViewModels;
+﻿using FireDotNetLibrary;
+using FireDotNetUi.ViewModels;
 using FireDotNetUi.Views;
 
 namespace FireDotNetUi.Services
@@ -8,6 +9,7 @@ namespace FireDotNetUi.Services
         public DateTime NewCashFlowPeriodStartingMonth { get; set; }
         public DateTime NewCashFlowPeriodEndingMonth { get; set; }
         public double NewCashFlowPeriodEndingMonthyAmount { get; set; }
+        public InflationOption NewCashFlowPeriodInflationOption { get; set; }
 
         public bool ShowNewCashFlowPeriodDialog(DateTime startingMonth, DateTime endingMonth)
         {
@@ -24,6 +26,7 @@ namespace FireDotNetUi.Services
                 NewCashFlowPeriodStartingMonth = viewModel.StartingMonth;
                 NewCashFlowPeriodEndingMonth = viewModel.EndingMonth;
                 NewCashFlowPeriodEndingMonthyAmount = double.Parse(viewModel.MonthlyAmountInput);
+                NewCashFlowPeriodInflationOption = viewModel.SelectedInflationOption!.Value;
                 return true;
             }
             else

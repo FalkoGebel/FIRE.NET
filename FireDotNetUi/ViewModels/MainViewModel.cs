@@ -92,7 +92,8 @@ namespace FireDotNetUi.ViewModels
             {
                 _fireCalculator.AddCashFlowPeriod(viewHandlingService.NewCashFlowPeriodStartingMonth,
                                                   viewHandlingService.NewCashFlowPeriodEndingMonth,
-                                                  viewHandlingService.NewCashFlowPeriodEndingMonthyAmount);
+                                                  viewHandlingService.NewCashFlowPeriodEndingMonthyAmount,
+                                                  viewHandlingService.NewCashFlowPeriodInflationOption);
                 UpdateCashFlowPeriodsAndPlot();
             }
         }

@@ -22,11 +22,12 @@ namespace FireDotNetLibrary
             _numberOfRuns = 1;
             _monthlyCashFlowAmounts = [];
 
+            // Set default cash flow period with a duration of 30 years and a monthly amount of -500
+            _cashFlowPeriods = [];
             DateTime now = DateTime.Now,
                      startingMonth = new(now.Year, now.Month, 1),
                      endingMonth = startingMonth.AddMonths(12 * 30).AddDays(-1);
-            _cashFlowPeriods = [new CashFlowPeriod() { StartingMonth = startingMonth, EndingMonth = endingMonth, MonthlyAmount = -500 }];
-            UpdateValuesFromCashFlowPeriods();
+            AddCashFlowPeriod(startingMonth, endingMonth, -500);
         }
 
         public DateTime StartingMonth
@@ -122,10 +123,16 @@ namespace FireDotNetLibrary
 
                 for (int i = 0; i < DurationInMonths; i++)
                 {
-                    currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
+                    if (cashFlowPeriod.InflationOption == InflationOption.FromAnalysisStart)
+                        currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
 
                     if (i >= firstIndex && i <= lastIndex)
+                    {
+                        if (cashFlowPeriod.InflationOption == InflationOption.FromPeriodStart)
+                            currentMonthlyWithdrawalAmount *= monthlyInflationFactorDecimal;
+
                         newMonthlyWithdrawalAmounts[i].MonthlyAmount += currentMonthlyWithdrawalAmount;
+                    }
                 }
             }
 
@@ -269,8 +276,9 @@ namespace FireDotNetLibrary
         /// <param name="endingMonth">The ending month of the cash flow period. Must follow the starting month. The day is ignored;
         /// the last day of the month is always used.
         /// <param name="amount">The monthly amount that will be the base for the amounts of each month during the specified period.</param>
+        /// <param name="inflationOption">The inflation option to apply to the cash flow period.</param>
         /// <exception cref="ArgumentOutOfRangeException">This is triggered if the end month does not follow the start month.</exception>
-        public void AddCashFlowPeriod(DateTime startingMonth, DateTime endingMonth, double amount)
+        public void AddCashFlowPeriod(DateTime startingMonth, DateTime endingMonth, double amount, InflationOption inflationOption = InflationOption.FromAnalysisStart)
         {
             if (endingMonth <= startingMonth)
                 throw new ArgumentOutOfRangeException(null, Properties.Resources.FireCalculator_AddCashFlowPeriod_ArgumentException);
@@ -279,7 +287,8 @@ namespace FireDotNetLibrary
             {
                 StartingMonth = new DateTime(startingMonth.Year, startingMonth.Month, 1),
                 EndingMonth = (new DateTime(endingMonth.Year, endingMonth.Month, 1)).AddMonths(1).AddDays(-1),
-                MonthlyAmount = amount
+                MonthlyAmount = amount,
+                InflationOption = inflationOption
             });
 
             UpdateValuesFromCashFlowPeriods();
